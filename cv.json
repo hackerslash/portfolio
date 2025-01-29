@@ -1,275 +1,129 @@
 {
   "basics": {
-    "name": "Miguel Ángel Durán",
-    "label": "Full Stack Developer con más de 15 años de experiencia & Creador de Contenido de Programación",
-    "image": "/me.webp",
-    "email": "miduga@gmail.com",
-    "phone": "+34 688888888",
-    "url": "https://midu.dev",
-    "summary": "+15 años de experiencia como Desarrollador Web. Actualmente soy Creador de Contenido y Divulgador sobre Programación. Vivo en Barcelona, España. He trabajado en diferentes entornos: desde acelerar el desarrollo de start-ups hasta liderando equipos de empresas multinacionales.",
+    "name": "MD AFRIDI SK",
+    "label": "Full Stack Developer & AI Coding Specialist",
+    "image": "./profile-pic.png",
+    "email": "afridijnv19@gmail.com",
+    "phone": "+91 9351557660",
+    "url": "https://hackerslash.me",
+    "summary": "Full Stack Developer with expertise in AI, Web Development, and Cloud Technologies. Passionate about building scalable applications and optimizing AI models. Based in Bangalore, India.",
     "location": {
-      "address": "",
-      "postalCode": "08820",
-      "city": "el Prat de Llobregat",
-      "countryCode": "ES",
-      "region": "España"
+      "city": "Bangalore",
+      "countryCode": "IN",
+      "region": "India"
     },
     "profiles": [
       {
-        "network": "LinkedIn",
-        "username": "midudev",
-        "url": "https://linkedin.com/in/midudev"
-      },
-      {
-        "network": "X",
-        "username": "midudev",
-        "url": "https://x.com/midudev"
-      },
-      {
         "network": "GitHub",
-        "username": "midudev",
-        "url": "https://github.com/midudev"
+        "username": "hackerslash",
+        "url": "https://github.com/hackerslash"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "md-afridi-sk",
+        "url": "https://www.linkedin.com/in/md-afridi-sk/"
       }
     ]
   },
   "work": [
     {
-      "name": "midudev",
-      "position": "Divulgador sobre Programación Web",
-      "url": "https://twitch.tv/midudev",
-      "startDate": "2021-01-01",
+      "name": "Outlier AI - Scale Labs",
+      "position": "AI Coding Specialist (Contract/Freelance)",
+      "startDate": "2024-09-01",
       "endDate": null,
-      "summary": "Streamer de programación más visto en Español en Twitch. +1 millón de seguidores entre todas mis redes sociales. Reconocido por Google, Microsoft y GitHub por mi impacto en la comunidad de desarrolladores.",
+      "summary": "Optimizing LLM efficiency and code accuracy through RLHF and prompt tuning. Ensuring code compliance via QA audits and security checks.",
       "highlights": [
-        "Started the company"
-      ]
-    },
-    {
-      "name": "Adevinta",
-      "position": "Lead Frontend Architect",
-      "url": "https://twitch.tv/midudev",
-      "startDate": "2016-06-01",
-      "endDate": "2022-09-01",
-      "summary": "Lideré una convergencia técnica entre diferentes productos y migramos una arquitectura monolítica a otra más flexible y optimizada. Fomenté buenas prácticas y mejoras en la cultura de rendimiento, además de la entrega rápida de valor a los usuarios.",
-      "highlights": [
-        "Started the company"
-      ]
-    },
-    {
-      "name": "Hubii",
-      "position": "Senior FrontEnd Developer",
-      "startDate": "2011-03-01",
-      "endDate": "2016-05-01",
-      "summary": "Desarrollé una plataforma de noticias geolocalizadas y una API para consumir la información. Escalé los servicios para soportar la carga de más de cientos de miles de peticiones al día. Recorté los tiempos de entrega y despliegues a producción a la mitad. Colaboré con Mozilla y Telefónica para desarrollar la primera app para televisores con FirefoxOS.",
-      "highlights": [
-        "Started the company"
+        "Applied RLHF to optimize LLM efficiency and code accuracy.",
+        "Developed adaptive prompt strategies with tunable parameters.",
+        "Ensured legal/ethical compliance via audits and risk mitigation."
       ]
     }
   ],
-  "volunteer": [{
-    "organization": "Organization",
-    "position": "Volunteer",
-    "url": "https://organization.com/",
-    "startDate": "2012-01-01",
-    "endDate": "2013-01-01",
-    "summary": "Description…",
-    "highlights": [
-      "Awarded 'Volunteer of the Month'"
-    ]
-  }],
-  "education": [{
-    "institution": "Universitat Oberta de Catalunya",
-    "url": "https://www.uoc.edu/portal/es/index.html",
-    "area": "Ingeniero de Software",
-    "studyType": "Bachelor",
-    "startDate": "2003-01-01",
-    "endDate": "2009-01-01",
-    "score": "4.0",
-    "courses": [
-      "DB1101 - Basic SQL"
-    ]
-  }],
-  "awards": [{
-    "title": "Award",
-    "date": "2014-11-01",
-    "awarder": "Company",
-    "summary": "There is no spoon."
-  }],
-  "certificates": [{
-    "name": "Certificate",
-    "date": "2021-11-07",
-    "issuer": "Company",
-    "url": "https://certificate.com"
-  }],
-  "publications": [{
-    "name": "Publication",
-    "publisher": "Company",
-    "releaseDate": "2014-10-01",
-    "url": "https://publication.com",
-    "summary": "Description…"
-  }],
-  "skills": [
+  "education": [
     {
-      "name": "HTML",
-      "level": "Master",
-      "keywords": [
-        "Desarrollo Web", "Frontend"
-      ]
-    },
-    {
-      "name": "CSS",
-      "level": "Master",
-      "keywords": [
-        "Desarrollo Web", "Frontend", "Diseño Responsive"
-      ]
-    },
-    {
-      "name": "JavaScript",
-      "level": "Master",
-      "keywords": [
-        "Desarrollo Web", "Frontend", "Backend", "Fullstack"
-      ]
-    },
-    {
-      "name": "Tailwind",
-      "level": "Avanzado",
-      "keywords": [
-        "Desarrollo Web", "Frontend", "CSS Framework", "Diseño Responsive"
-      ]
-    },
-    {
-      "name": "TypeScript",
-      "level": "Avanzado",
-      "keywords": [
-        "Desarrollo Web", "Frontend", "Backend", "JavaScript Superset"
-      ]
-    },
-    {
-      "name": "Node",
-      "level": "Avanzado",
-      "keywords": [
-        "Desarrollo Web", "Backend", "JavaScript", "Servidor"
-      ]
-    },
-    {
-      "name": "MySQL",
-      "level": "Avanzado",
-      "keywords": [
-        "Bases de Datos", "SQL", "Almacenamiento de Datos", "Backend"
-      ]
-    },
-    {
-      "name": "Git",
-      "level": "Avanzado",
-      "keywords": [
-        "Control de Versiones", "Colaboración", "Código Fuente"
-      ]
-    },
-    {
-      "name": "GitHub",
-      "level": "Avanzado",
-      "keywords": [
-        "Control de Versiones", "Colaboración", "Código Fuente", "Git"
-      ]
-    },
-    {
-      "name": "Next.js",
-      "level": "Avanzado",
-      "keywords": [
-        "Desarrollo Web", "Frontend", "React Framework", "SSR", "Static Generation"
-      ]
-    },
-    {
-      "name": "React",
-      "level": "Avanzado",
-      "keywords": [
-        "Desarrollo Web", "Frontend", "JavaScript Library", "UI"
+      "institution": "IIT Kharagpur",
+      "area": "Biotechnology",
+      "studyType": "B.Tech",
+      "startDate": "2019",
+      "endDate": "2023",
+      "courses": [
+        "Programming and Data Structures",
+        "Algorithms",
+        "Digital Image Processing",
+        "Bioinformatics",
+        "Probability & Statistics"
       ]
     }
   ],
-  "languages": [
-    {
-      "language": "Spanish",
-      "fluency": "Native speaker"
-    },
-    {
-      "language": "English",
-      "fluency": "Advanced"
-    }
-  ],
-  "interests": [{
-    "name": "Wildlife",
-    "keywords": [
-      "Ferrets",
-      "Unicorns"
-    ]
-  }],
-  "references": [{
-    "name": "Jane Doe",
-    "reference": "Reference…"
-  }],
   "projects": [
     {
-      "name": "mars.codes",
-      "isActive": true,
-      "description": "Historia interactiva con retos de programación para viajar a Marte",
+      "name": "TrackZero",
+      "description": "Full-stack habit tracking app using React, Next.js, and Firebase for real-time data sync and authentication.",
+      "isActive": "true",
       "highlights": [
-        "Elige tu propia aventura",
-        "En desarrollo"
+        "Calendar with logs",
+        "Journaling feature",
+        "React Context & Tailwind CSS"
       ],
-      "url": "https://mars.codes"
+      "url": "https://trackzero.hackerslash.me",
+      "github": "https://github.com/hackerslash/trackzero"
     },
     {
-      "name": "AdventJS",
-      "isActive": true,
-      "description": "Retos de programación en JavaScript para cada día de diciembre hasta Navidad",
+      "name": "P2P FileShare",
+      "description": "A Next.js p2p file sharing app using WebRTC and PeerJS for secure, high-speed file sharing without any data caps",
+      "isActive": "true",
       "highlights": [
-        "+1 millón de visitas",
-        "Multidioma",
-        "JavaScript & TypeScript"
+        "Optimized performance",
+        "CI/CD integration",
+        "Modern UI"
       ],
-      "url": "https://adventjs.dev"
+      "url": "https://fileshare.hackerslash.me",
+      "github": "https://github.com/hackerslash/p2p-share"
+    }
+  ],
+  "skills": [
+    { "name": "JavaScript", "level": "Advanced" },
+    { "name": "TypeScript", "level": "Advanced" },
+    { "name": "React", "level": "Advanced" },
+    { "name": "Next.js", "level": "Advanced" },
+    { "name": "Node", "level": "Advanced" },
+    { "name": "MySQL", "level": "Intermediate" },
+    { "name": "Firebase", "level": "Intermediate" },
+    { "name": "Docker", "level": "Intermediate" },
+    { "name": "Kubernetes", "level": "Intermediate" },
+    { "name": "Redis", "level": "Intermediate" },
+    { "name": "Git", "level": "Intermediate" }
+  ],
+  "languages": [
+    { "language": "English", "fluency": "Advanced" },
+    { "language": "Hindi", "fluency": "Native speaker" }
+  ],
+  "awards": [
+    {
+      "title": "JEE Main 2019 - 99.10 percentile",
+      "date": "2019",
+      "awarder": "National Testing Agency",
+      "summary": "Scored 99.10 percentile among 8,74,469 candidates."
     },
     {
-      "name": "Codember",
-      "isActive": true,
-      "description": "Juego interactivo de programación con retos y secretos",
-      "highlights": [
-        "+2000 usuarios activos",
-        "Retos para cualquier lenguaje"
-      ],
-      "url": "https://codember.dev"
+      "title": "National Youth Parliament 2016-17",
+      "date": "2017",
+      "awarder": "Ministry of Parliamentary Affairs, Govt. of India",
+      "summary": "Secured 4th position in the National Youth Parliament competition."
+    }
+  ],
+  "certificates": [
+    {
+      "name": "AZ-201: Applied Algorithms & Data Structures",
+      "date": "2021",
+      "issuer": "AlgoZenith",
+      "url": ""
     },
     {
-      "name": "codi.link",
-      "isActive": true,
-      "description": "Playground de código HTML, CSS y JavaScript para compartir",
-      "highlights": [
-        "100k visitas al mes",
-        "Desarrollado por la comunidad"
-      ],
-      "url": "https://codi.link",
-      "github": "https://github.com/midudev/codi.link"
-    },
-    {
-      "name": "Pruebas Técnicas",
-      "isActive": true,
-      "description": "Lista de pruebas técnicas de empresas para practicar programación",
-      "highlights": [
-        "100% gratuito",
-        "+500 soluciones de la comunidad"
-      ],
-      "url": "https://pruebastecnicas.com",
-      "github": "https://github.com/midudev/pruebas-tecnicas"
-    },
-    {
-      "name": "miduConf",
-      "description": "Conferencia de programación en streaming para la comunidad hispanohablante con charlas top",
-      "highlights": [
-        "+15k tickets repartidos",
-        "+50k espectadores en directo"
-      ],
-      "url": "https://miduconf.com"
+      "name": "Full Stack Open",
+      "date": "2023",
+      "issuer": "University of Helsinki",
+      "url": ""
     }
   ]
 }
