@@ -1,12 +1,12 @@
 {
   "basics": {
     "name": "MD AFRIDI SK",
-    "label": "Full Stack Developer & AI Coding Specialist",
+    "label": "Full Stack Developer & Coding Enthusiast",
     "image": "./profile-pic.png",
     "email": "afridijnv19@gmail.com",
     "phone": "+91 9351557660",
     "url": "https://hackerslash.me",
-    "summary": "Full Stack Developer with expertise in AI, Web Development, and Cloud Technologies. Passionate about building scalable applications and optimizing AI models. Based in Bangalore, India.",
+    "summary": "Full Stack Developer with expertise in AI, Web Development, and Cloud Technologies. Passionate about building scalable applications and solving real life problems. Based in Bangalore, India.",
     "location": {
       "city": "Bangalore",
       "countryCode": "IN",
@@ -64,7 +64,9 @@
       "highlights": [
         "Calendar with logs",
         "Journaling feature",
-        "React Context & Tailwind CSS"
+        "React Context & Tailwind CSS",
+        "Firebase Authentication",
+        "Firestore Database"
       ],
       "url": "https://trackzero.hackerslash.me",
       "github": "https://github.com/hackerslash/trackzero"
@@ -76,28 +78,105 @@
       "highlights": [
         "Optimized performance",
         "CI/CD integration",
-        "Modern UI"
+        "Modern UI",
+        "PeerJS",
+        "WebRTC"
       ],
       "url": "https://fileshare.hackerslash.me",
       "github": "https://github.com/hackerslash/p2p-share"
+    },
+    {
+      "name": "DSArch: A Search Engine for LeetCode",
+      "description": "A LeetCode search engine made by scraping 2000+ Leetcode questions and using TF-IDF with cosine similarity for efficient search.",
+      "highlights": [
+        "Scraped 2000+ Leetcode problems",
+        "TF-IDF and cosine similarity",
+        "Stemming and lemmatization",
+        "Node.js, Express, and EJS"
+      ],
+      "url": "https://github.com/hackerslash/dsarch",
+      "github": "https://github.com/hackerslash/dsarch"
+    },
+    {
+      "name": "doc-shadow-removal",
+      "description": "Implementation of 'An Effective Background Estimation Method for Shadows Removal of Document Images' using MATLAB and neighboring pixel-based shadow mapping.",
+      "highlights": [
+        "Employs background estimation for shadow detection and removal",
+        "Utilizes neighboring pixel-based shadow mapping",
+        "Developed in MATLAB"
+      ],
+      "url": "https://github.com/hackerslash/doc-shadow-removal",
+      "github": "https://github.com/hackerslash/doc-shadow-removal"
+    },
+    {
+      "name": "Invoice Comparator",
+      "description": "Compares an input invoice to a database using text, layout, and content similarity metrics.",
+      "highlights": [
+        "TF-IDF & Cosine Similarity",
+        "Layout similarity using SSIM on images",
+        "Content similarity using Levenshtein Distance",
+        "PDF processing with pdfplumber & pdf2image",
+        "Ranks invoices based on combined score"
+      ],
+      "url": "https://github.com/hackerslash/invoice_comparator",
+      "github": "https://github.com/hackerslash/invoice_comparator"
     }
   ],
   "skills": [
-    { "name": "JavaScript", "level": "Advanced" },
-    { "name": "TypeScript", "level": "Advanced" },
-    { "name": "React", "level": "Advanced" },
-    { "name": "Next.js", "level": "Advanced" },
-    { "name": "Node", "level": "Advanced" },
-    { "name": "MySQL", "level": "Intermediate" },
-    { "name": "Firebase", "level": "Intermediate" },
-    { "name": "Docker", "level": "Intermediate" },
-    { "name": "Kubernetes", "level": "Intermediate" },
-    { "name": "Redis", "level": "Intermediate" },
-    { "name": "Git", "level": "Intermediate" }
+    {
+      "name": "JavaScript",
+      "level": "Advanced"
+    },
+    {
+      "name": "TypeScript",
+      "level": "Advanced"
+    },
+    {
+      "name": "React",
+      "level": "Advanced"
+    },
+    {
+      "name": "Next.js",
+      "level": "Advanced"
+    },
+    {
+      "name": "Node",
+      "level": "Advanced"
+    },
+    {
+      "name": "MySQL",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Firebase",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Docker",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Kubernetes",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Redis",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Git",
+      "level": "Intermediate"
+    }
   ],
   "languages": [
-    { "language": "English", "fluency": "Advanced" },
-    { "language": "Hindi", "fluency": "Native speaker" }
+    {
+      "language": "English",
+      "fluency": "Advanced"
+    },
+    {
+      "language": "Hindi",
+      "fluency": "Native speaker"
+    }
   ],
   "awards": [
     {
