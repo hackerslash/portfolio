@@ -58,6 +58,19 @@
   ],
   "projects": [
     {
+      "name": "Slack AI Chatbot",
+      "description": "OAuth 2.0 compliant Slack AI Chatbot integrating Slack events, AI APIs, and secure token management for dynamic conversations.",
+      "isActive": "true",
+      "highlights": [
+        "Modular architecture with configuration, middleware, and models",
+        "Robust OAuth 2.0 authentication and request verification",
+        "Real-time conversation management using Redis and MongoDB",
+        "Seamless Slack and LLM API integrations"
+      ],
+      "url": "https://slackai.hackerslash.me",
+      "github": "https://github.com/hackerslash/slack-ai-chatbot"
+    },
+    {
       "name": "TrackZero",
       "description": "Full-stack habit tracking app using React, Next.js, and Firebase for real-time data sync and authentication.",
       "isActive": "true",
