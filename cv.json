@@ -63,7 +63,7 @@
       "isActive": "true",
       "highlights": [
         "Modular architecture",
-        "OAuth 2.0 and request verification",
+        "implemented OAuth 2.0 and request verification from scratch",
         "Redis and MongoDB",
         "Slack and LLM API integrations"
       ],
