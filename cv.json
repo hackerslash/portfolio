@@ -27,19 +27,6 @@
   },
   "work": [
   {
-    "name": "Outlier AI - Scale Labs",
-    "position": "AI Coding Specialist (Contract/Freelance)",
-    "url": "https://outlier.ai",
-    "startDate": "2024-09-01",
-    "endDate": "2025-03-31",
-    "summary": "Optimizing LLM efficiency and code accuracy through RLHF and prompt tuning. Ensuring code compliance via QA audits and security checks.",
-    "highlights": [
-      "Applied RLHF to optimize LLM efficiency and code accuracy through iterative training pipelines refined via human evaluator feedback.",
-      "Developed adaptive prompt strategies with tunable parameters.",
-      "Ensured legal/ethical compliance via audits and risk mitigation for licensing & security."
-    ]
-  },
-  {
     "name": "Ayoo.care - Ayoo Medical Pvt Ltd.",
     "position": "Backend Developer",
     "url": "https://ayoo.care",
@@ -50,6 +37,19 @@
       "Designed and implemented comprehensive E2E test suites using pytest and FastAPI TestClient, automating critical backend flows.",
       "Integrated OpenTelemetry tracking across services, enabling distributed logging and improving issue traceability across environments.",
       "Optimized API response times through async I/O enhancements, while cutting AWS costs by 25% via improved resource provisioning and autoscaling policies."
+    ]
+  },
+    {
+    "name": "Outlier AI - Scale Labs",
+    "position": "AI Coding Specialist (Contract/Freelance)",
+    "url": "https://outlier.ai",
+    "startDate": "2024-09-01",
+    "endDate": "2025-03-31",
+    "summary": "Optimizing LLM efficiency and code accuracy through RLHF and prompt tuning. Ensuring code compliance via QA audits and security checks.",
+    "highlights": [
+      "Applied RLHF to optimize LLM efficiency and code accuracy through iterative training pipelines refined via human evaluator feedback.",
+      "Developed adaptive prompt strategies with tunable parameters.",
+      "Ensured legal/ethical compliance via audits and risk mitigation for licensing & security."
     ]
   },
   {
