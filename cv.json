@@ -1,12 +1,12 @@
 {
   "basics": {
     "name": "MD AFRIDI SK",
-    "label": "Full Stack Developer & Coding Enthusiast",
+    "label": "Backend Developer & Tech Enthusiast",
     "image": "./profile-pic.png",
     "email": "afridijnv19@gmail.com",
     "phone": "+91 9351557660",
     "url": "https://hackerslash.me",
-    "summary": "Full Stack Developer with expertise in AI, Web Development, and Cloud Technologies. Passionate about building scalable applications and solving real life problems. Based in Bangalore, India.",
+    "summary": "Backend Developer with expertise in AI, Web Development, and Cloud Technologies. Passionate about building scalable applications and solving real life problems. Based in Bangalore, India.",
     "location": {
       "city": "Bangalore",
       "countryCode": "IN",
