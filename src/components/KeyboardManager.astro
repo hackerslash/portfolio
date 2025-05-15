@@ -59,7 +59,7 @@ const profilesInfo = profiles.map(({ network, url }) => {
 ---
 
 <footer id="normal-footer" class="no-print">
-  Press <kbd>Cmd</kbd> + <kbd>K</kbd> to open the command palette.  
+  Press <kbd>Cmd</kbd> + <kbd>K</kbd> to open the command palette.
 </footer>
 
 <div id="footer-button" class="no-print">
@@ -131,6 +131,18 @@ const profilesInfo = profiles.map(({ network, url }) => {
       section: "Actions",
       handler: () => {
         window.print()
+      }
+    },
+    {
+      id: "blog",
+      title: "View Blog",
+      icon: `<svg style="margin-right: 8px" width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path><path d="M8 7h6"></path><path d="M8 11h8"></path><path d="M8 15h5"></path>
+</svg>`,
+      hotkey: "ctrl+B",
+      section: "Navigation",
+      handler: () => {
+        window.location.href = "/#blogs"
       }
     },
     ...data

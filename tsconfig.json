@@ -6,6 +6,9 @@
       "@cv": [
         "./cv.json"
       ],
+      "@blogs": [
+        "./src/utils/loadBlogs.js"
+      ],
       "@/*": [
         "src/*"
       ]

@@ -6,6 +6,7 @@ import Phone from "@/icons/Phone.astro"
 import X from "@/icons/X.astro"
 import LinkedIn from "@/icons/LinkedIn.astro"
 import GitHub from "@/icons/GitHub.astro"
+import Blog from "@/icons/Blog.astro"
 import WorldMap from "@/icons/WorldMap.astro"
 import type { SocialIcon } from "@/types"
 
@@ -77,6 +78,14 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
             )
           })
         }
+        <a
+          href="/#blogs"
+          title="Read my blog posts"
+          class="blog-link"
+        >
+          <Blog />
+          <span class="blog-text">Blogs</span>
+        </a>
       </footer>
     </div>
     <figure>
@@ -147,6 +156,16 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
     width: 32px;
     border-radius: 6px;
     transition: all 0.3s ease;
+  }
+
+  footer a.blog-link {
+    width: auto;
+    padding: 4px 12px 4px 4px;
+  }
+
+  .blog-text {
+    margin-left: 4px;
+    font-size: 0.75rem;
   }
 
   footer a:hover {

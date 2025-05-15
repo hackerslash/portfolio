@@ -1,0 +1,334 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { getBlogs, getBlogById } from "@blogs"
+import { formatDate } from "@/utils/formatDate"
+import MarkdownIt from 'markdown-it'
+import Home from "@/icons/Home.astro"
+
+export async function getStaticPaths() {
+  const blogs = getBlogs()
+  return blogs.map(blog => ({
+    params: { id: blog.id },
+    props: { blog },
+  }))
+}
+
+const { blog } = Astro.props
+const { title, date, author, content } = blog
+const formattedDate = formatDate(date)
+
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true,
+  breaks: true,
+})
+
+const renderedContent = md.render(content)
+---
+
+<Layout title={`${title} - Blog | Md Afridi Sk`}>
+  <main>
+    <nav class="blog-nav">
+      <a href="/#blogs" class="home-link" title="Back to Blogs">
+        <Home />
+        <span>Back to Blogs</span>
+      </a>
+    </nav>
+    <article class="blog-post">
+      <header>
+        <h1>{title}</h1>
+        <div class="meta">
+          <time datetime={date}>{formattedDate}</time>
+          <span class="author">By {author}</span>
+        </div>
+      </header>
+      <div class="content">
+        <div set:html={renderedContent} />
+      </div>
+      <footer>
+        <a href="/#blogs" class="back-button blog-footer-link">← Back to Blogs</a>
+      </footer>
+    </article>
+
+
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 4rem;
+    margin: auto;
+    width: 100%;
+    max-width: 800px;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    box-sizing: border-box; /* Include padding in width calculation */
+  }
+
+  .blog-nav {
+    margin-bottom: 2rem;
+  }
+
+  .home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #333;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: #eee;
+    transition: all 0.3s ease;
+  }
+
+  .home-link:hover {
+    background-color: #ddd;
+  }
+
+  .blog-post {
+    width: 100%;
+    margin-bottom: 2rem;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+
+  header {
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .meta {
+    display: flex;
+    gap: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .content {
+    line-height: 1.6;
+    color: #333;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%; /* Ensure content doesn't exceed container */
+    box-sizing: border-box; /* Include padding in width calculation */
+  }
+
+  .content > div {
+    width: 100%;
+    display: block;
+    max-width: 100%; /* Ensure content doesn't exceed container */
+    box-sizing: border-box; /* Include padding in width calculation */
+    overflow: visible; /* Allow content to be fully visible */
+  }
+
+  .content img {
+    max-width: 100%; /* Ensure images don't exceed container width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove any default inline spacing */
+    margin: 1.5rem auto; /* Add margin above and below, center horizontally */
+    border-radius: 8px; /* Optional: add rounded corners */
+    object-fit: contain; /* Ensure the entire image is visible without cropping */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+  }
+
+  .content img:hover {
+    transform: scale(1.01); /* Subtle zoom effect on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+  }
+
+  /* Handle very large images */
+  .content img[src*="cover"] {
+    max-height: 400px; /* Limit height for cover/banner images */
+    width: 100%;
+    object-fit: cover; /* Cover ensures the image fills the container */
+  }
+
+  /* Support for figure and figcaption elements */
+  .content figure {
+    margin: 2rem 0;
+    width: 100%;
+  }
+
+  .content figcaption {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  /* Support for flex containers (side-by-side images) */
+  .content div[style*="display: flex"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  /* Responsive adjustments for flex containers on mobile */
+  @media (width <= 700px) {
+    .content div[style*="display: flex"] {
+      flex-direction: column;
+    }
+
+    .content div[style*="display: flex"] img {
+      width: 100% !important; /* Override any inline width */
+    }
+  }
+
+  /* Style for image captions */
+  .content img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: -1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .content h1 {
+    font-size: 2rem;
+    margin: 2rem 0 1rem;
+  }
+
+  .content h2 {
+    font-size: 1.75rem;
+    margin: 1.75rem 0 0.75rem;
+  }
+
+  .content h3 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .content p {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    color: #333;
+  }
+
+  .content pre {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .content code {
+    font-family: monospace;
+    background-color: #f5f5f5;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+  }
+
+  .content pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+
+
+
+  .content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    display: block;
+  }
+
+  .content table th,
+  .content table td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+  }
+
+  .content table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+  }
+
+  .content table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .content blockquote {
+    border-left: 4px solid #ddd;
+    padding: 0 1rem;
+    margin: 1.5rem 0;
+    color: #666;
+  }
+
+  footer {
+    margin-top: 3rem;
+  }
+
+  .back-button {
+    display: inline-block;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: #eee;
+    transition: all 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #ddd;
+  }
+
+  @media (width <= 700px) {
+    main {
+      padding: 2rem 1rem; /* Reduced horizontal padding for more content space */
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .content {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .content img {
+      margin: 1rem auto; /* Slightly reduced margins on mobile */
+    }
+
+    .blog-nav {
+      margin-bottom: 1.5rem;
+    }
+
+    .home-link {
+      font-size: 0.9rem;
+      padding: 6px 12px;
+    }
+  }
+</style>
+
+<script>
+  // Get all "Back to Blogs" links
+  const backToBlogsLinks = document.querySelectorAll('.home-link, .blog-footer-link');
+
+  // Add click event listener to each link
+  backToBlogsLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent default navigation
+
+      // Navigate to the homepage with blogs section
+      window.location.href = '/#blogs';
+    });
+  });
+</script>
+
+

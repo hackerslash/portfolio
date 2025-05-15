@@ -1,0 +1,126 @@
+---
+import Section from "../Section.astro"
+import { getBlogs } from "@blogs"
+import { formatDate } from "@/utils/formatDate"
+
+const blogs = getBlogs()
+---
+
+<Section title="Blogs">
+  {blogs.length === 0 ? (
+    <div class="no-blogs">
+      <p>No Blogs</p>
+    </div>
+  ) : (
+    <ul>
+      {
+        blogs.map(({ id, title, date, excerpt, author }) => {
+          const formattedDate = formatDate(date)
+
+          return (
+            <li>
+              <article>
+                <header>
+                  <h3>
+                    <a href={`/blog/${id}`} title={`Read ${title}`}>
+                      {title}
+                    </a>
+                  </h3>
+                  <time datetime={date}>{formattedDate}</time>
+                  <p class="author">By {author}</p>
+                </header>
+                <div>
+                  <p>{excerpt}</p>
+                </div>
+                <footer>
+                  <a href={`/blog/${id}`} class="read-more">Read More</a>
+                </footer>
+              </article>
+            </li>
+          )
+        })
+      }
+    </ul>
+  )}
+</Section>
+
+<style>
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  article {
+    border-radius: 8px;
+    border: 1px solid #eee;
+    padding: 16px;
+    transition: all 0.3s ease;
+  }
+
+  article:hover {
+    border-color: #ddd;
+    background-color: #fafafa;
+  }
+
+  header {
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    margin-bottom: 4px;
+  }
+
+  h3 a {
+    color: #111;
+  }
+
+  h3 a:hover {
+    text-decoration: underline;
+  }
+
+  time {
+    font-size: 0.85rem;
+    color: #555;
+  }
+
+  .author {
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 4px;
+  }
+
+  footer {
+    margin-top: 16px;
+  }
+
+  .read-more {
+    display: inline-block;
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background-color: #eee;
+    transition: all 0.3s ease;
+  }
+
+  .read-more:hover {
+    background-color: #ddd;
+  }
+
+  .no-blogs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    background-color: #fafafa;
+  }
+
+  .no-blogs p {
+    font-size: 1rem;
+    color: #555;
+  }
+</style>
