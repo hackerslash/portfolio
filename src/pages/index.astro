@@ -8,7 +8,8 @@ import Hero from "@/components/sections/Hero.astro"
 import Projects from "@/components/sections/Projects.astro"
 import Skills from "@/components/sections/Skills.astro"
 import Blogs from "@/components/sections/Blogs.astro"
-import KeyboardManager from "@/components/KeyboardManager.astro"
+
+const currentYear = new Date().getFullYear()
 ---
 
 <Layout title={`PortFolio - Md Afridi Sk`}>
@@ -24,7 +25,9 @@ import KeyboardManager from "@/components/KeyboardManager.astro"
     </div>
   </main>
 
-  <KeyboardManager />
+  <footer class="no-print">
+    <p>© {currentYear} Md Afridi Sk - Made with ❤️</p>
+  </footer>
 </Layout>
 
 <style>
@@ -32,6 +35,14 @@ import KeyboardManager from "@/components/KeyboardManager.astro"
     padding: 4rem;
     margin: auto;
     width: 100%;
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
   }
 
   @media (width <= 700px) {
