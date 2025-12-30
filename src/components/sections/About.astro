@@ -6,7 +6,17 @@ const { summary } = basics
 ---
 
 <Section title="About Me">
-  <p>
+  <p class="about-text">
     {summary}
   </p>
 </Section>
+
+<style>
+  .about-text {
+    transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .about-text:hover {
+    font-size: calc(0.9rem + 0.5px);
+  }
+</style>

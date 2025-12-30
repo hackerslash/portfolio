@@ -56,14 +56,15 @@ const blogs = getBlogs()
     border: 1px solid var(--card-border);
     background: var(--card-bg);
     padding: 24px;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(8px);
   }
 
   article:hover {
     border-color: var(--accent-color);
     background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(1, 155, 89, 0.12);
   }
 
   header {
@@ -108,13 +109,14 @@ const blogs = getBlogs()
     border-radius: 8px;
     background-color: var(--card-bg);
     border: 1px solid var(--card-border);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .read-more:hover {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
     color: #fff;
+    transform: translateX(4px);
   }
 
   .no-blogs {
