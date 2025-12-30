@@ -62,19 +62,20 @@ import { work } from "@cv"
 
   article h3 {
     font-weight: 500;
-    color: #111;
+    color: #fff;
   }
 
   article a {
-    color: #111;
+    color: #fff;
   }
 
   article a:hover {
-    text-decoration: underline;
+    color: var(--accent-color);
+    text-decoration: none;
   }
 
   article h4 {
-    color: #222;
+    color: var(--text-color);
     font-weight: 400;
   }
 
@@ -86,7 +87,7 @@ import { work } from "@cv"
   }
 
   time {
-    color: #555;
+    color: var(--text-muted);
     font-size: 0.85rem;
     min-width: 102px;
     cursor: default;
@@ -100,7 +101,7 @@ import { work } from "@cv"
 
   [data-title]:after {
     content: attr(data-title);
-    background-color: #333;
+    background-color: #1a1a1a;
     color: #fff;
     font-size: .75rem;
     font-family: Menlo, Monaco, Lucida Console, "Courier New", monospace;;
@@ -109,12 +110,13 @@ import { work } from "@cv"
     bottom: -1.4rem;
     left: 50%;
     white-space: nowrap;
-    box-shadow: 1px 1px 1px #222222;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     opacity: 0;
-    border: 1px solid #111111;
+    border: 1px solid var(--card-border);
     z-index: 99999;
     visibility: hidden;
     border-radius: 6px;
+    backdrop-filter: blur(4px);
   }
 
   [data-title] {

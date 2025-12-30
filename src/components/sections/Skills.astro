@@ -70,13 +70,22 @@ const SKILLS_ICONS: Record<string, any> = {
 
   li {
     align-items: center;
-    background: #eee;
-    border-radius: 6px;
-    color: black;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    color: var(--text-color);
     display: flex;
     font-size: 0.8rem;
     font-weight: 500;
-    gap: 4px;
-    padding: 0.2rem 0.6rem;
+    gap: 6px;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  li:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
   }
 </style>

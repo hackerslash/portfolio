@@ -19,10 +19,21 @@ const { title } = Astro.props
   }
 
   h2 {
-    margin-bottom: 8px;
+    margin-bottom: 24px;
     font-weight: 700;
     line-height: 1.5;
     font-size: 1.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  h2::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(to right, var(--card-border), transparent);
   }
 
   @media (width <= 700px) {

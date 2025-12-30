@@ -191,11 +191,12 @@ const profilesInfo = profiles.map(({ network, url }) => {
     }
 
     #footer-button {
-      background: #fff;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
       position: fixed;
-      border: 1px solid #eee;
-      right: 10px;
-      bottom: 10px;
+      border: 1px solid var(--glass-border);
+      right: 20px;
+      bottom: 20px;
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -203,18 +204,27 @@ const profilesInfo = profiles.map(({ network, url }) => {
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 100;
+    }
+
+    #footer-button svg {
+      stroke: var(--text-color);
     }
   }
 
   footer {
-    background: #fdfdfd;
-    border-top: 1px solid #eee;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-muted);
     position: fixed;
     bottom: 0px;
     width: 100%;
-    padding-block: 8px;
+    padding-block: 10px;
     text-align: center;
     font-size: 0.85rem;
+    z-index: 100;
 
     view-timeline-name: --revealing;
     view-timeline-axis: block;
@@ -225,9 +235,12 @@ const profilesInfo = profiles.map(({ network, url }) => {
   }
 
   kbd {
-    background: #eee;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-color);
     border-radius: 4px;
-    padding: 2px 4px;
-    font-size: 12px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-family: inherit;
   }
 </style>

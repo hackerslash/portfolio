@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro"
 import { getBlogs, getBlogById } from "@blogs"
 import { formatDate } from "@/utils/formatDate"
 import MarkdownIt from 'markdown-it'
+import { createHighlighter } from 'shiki'
 import Home from "@/icons/Home.astro"
 
 export async function getStaticPaths() {
@@ -17,11 +18,21 @@ const { blog } = Astro.props
 const { title, date, author, content } = blog
 const formattedDate = formatDate(date)
 
+const highlighter = await createHighlighter({
+  themes: ['github-dark'],
+  langs: ['javascript', 'typescript', 'css', 'html', 'bash', 'json', 'python', 'markdown']
+})
+
 const md = new MarkdownIt({
   html: true,
   linkify: true,
   typographer: true,
-  breaks: true,
+  highlight: (code, lang) => {
+    return highlighter.codeToHtml(code, {
+      lang: lang || 'text',
+      theme: 'github-dark'
+    })
+  }
 })
 
 const renderedContent = md.render(content)
@@ -73,218 +84,168 @@ const renderedContent = md.render(content)
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #333;
+    color: var(--text-color);
     font-size: 0.95rem;
     font-weight: 500;
     padding: 8px 16px;
-    border-radius: 4px;
-    background-color: #eee;
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
     transition: all 0.3s ease;
   }
 
   .home-link:hover {
-    background-color: #ddd;
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
   }
 
   .blog-post {
     width: 100%;
     margin-bottom: 2rem;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden;
   }
 
   header {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
   h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #fff, #a3a3a3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .meta {
     display: flex;
-    gap: 1rem;
-    color: #666;
-    font-size: 0.9rem;
+    gap: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
   }
 
   .content {
-    line-height: 1.6;
-    color: #333;
+    line-height: 1.8;
+    color: var(--text-color);
     overflow-wrap: break-word;
     word-wrap: break-word;
     overflow-x: hidden;
     width: 100%;
-    max-width: 100%; /* Ensure content doesn't exceed container */
-    box-sizing: border-box; /* Include padding in width calculation */
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .content > div {
     width: 100%;
     display: block;
-    max-width: 100%; /* Ensure content doesn't exceed container */
-    box-sizing: border-box; /* Include padding in width calculation */
-    overflow: visible; /* Allow content to be fully visible */
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: visible;
   }
 
   .content img {
-    max-width: 100%; /* Ensure images don't exceed container width */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Remove any default inline spacing */
-    margin: 1.5rem auto; /* Add margin above and below, center horizontally */
-    border-radius: 8px; /* Optional: add rounded corners */
-    object-fit: contain; /* Ensure the entire image is visible without cropping */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2.5rem auto;
+    border-radius: 12px;
+    object-fit: contain;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .content img:hover {
-    transform: scale(1.01); /* Subtle zoom effect on hover */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
   }
 
-  /* Handle very large images */
-  .content img[src*="cover"] {
-    max-height: 400px; /* Limit height for cover/banner images */
-    width: 100%;
-    object-fit: cover; /* Cover ensures the image fills the container */
-  }
-
-  /* Support for figure and figcaption elements */
-  .content figure {
-    margin: 2rem 0;
-    width: 100%;
-  }
-
-  .content figcaption {
-    text-align: center;
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: 0.5rem;
-    font-style: italic;
-  }
-
-  /* Support for flex containers (side-by-side images) */
-  .content div[style*="display: flex"] {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 1.5rem 0;
-  }
-
-  /* Responsive adjustments for flex containers on mobile */
-  @media (width <= 700px) {
-    .content div[style*="display: flex"] {
-      flex-direction: column;
-    }
-
-    .content div[style*="display: flex"] img {
-      width: 100% !important; /* Override any inline width */
-    }
-  }
-
-  /* Style for image captions */
-  .content img + em {
-    display: block;
-    text-align: center;
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: -1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .content h1 {
-    font-size: 2rem;
-    margin: 2rem 0 1rem;
-  }
-
-  .content h2 {
-    font-size: 1.75rem;
-    margin: 1.75rem 0 0.75rem;
-  }
-
-  .content h3 {
-    font-size: 1.5rem;
-    margin: 1.5rem 0 0.75rem;
+  .content h1, .content h2, .content h3 {
+    color: #fff;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
   }
 
   .content p {
     margin-bottom: 1.5rem;
-    font-size: 1rem;
-    color: #333;
+    font-size: 1.1rem;
+    color: var(--text-color);
   }
 
   .content pre {
-    background-color: #f5f5f5;
-    padding: 1rem;
-    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     overflow-x: auto;
-    margin: 1.5rem 0;
+    margin: 2rem 0;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   }
 
   .content code {
-    font-family: monospace;
-    background-color: #f5f5f5;
-    padding: 0.2rem 0.4rem;
-    border-radius: 3px;
+    font-family: Menlo, Monaco, monospace;
+    background-color: rgba(1, 155, 89, 0.15);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
     font-size: 0.9rem;
+    color: #4ade80;
+    border: 1px solid rgba(1, 155, 89, 0.2);
   }
 
   .content pre code {
     background-color: transparent;
     padding: 0;
-  }
-
-
-
-  .content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1.5rem 0;
-    overflow-x: auto;
-    display: block;
+    color: #f8fafc;
+    text-shadow: none;
+    border: none;
   }
 
   .content table th,
   .content table td {
-    border: 1px solid #ddd;
-    padding: 8px 12px;
+    border: 1px solid var(--card-border);
+    padding: 12px 16px;
     text-align: left;
   }
 
   .content table th {
-    background-color: #f5f5f5;
+    background-color: rgba(255, 255, 255, 0.05);
     font-weight: 600;
   }
 
-  .content table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
   .content blockquote {
-    border-left: 4px solid #ddd;
-    padding: 0 1rem;
-    margin: 1.5rem 0;
-    color: #666;
+    border-left: 4px solid var(--accent-color);
+    background: rgba(1, 155, 89, 0.05);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: var(--text-muted);
   }
 
   footer {
-    margin-top: 3rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--card-border);
+    padding-top: 2rem;
   }
 
   .back-button {
     display: inline-block;
-    color: #333;
+    color: var(--text-color);
     font-size: 1rem;
     font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 4px;
-    background-color: #eee;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
     transition: all 0.3s ease;
   }
 
   .back-button:hover {
-    background-color: #ddd;
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
   }
 
   @media (width <= 700px) {

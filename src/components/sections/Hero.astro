@@ -115,7 +115,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
   }
 
   h2 {
-    color: #444;
+    color: var(--text-muted);
     font-weight: 500;
     font-size: 1.1rem;
     text-wrap: balance;
@@ -125,11 +125,20 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
     aspect-ratio: 1 / 1;
     object-fit: cover;
     width: 128px;
-    border-radius: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  img:hover {
+    transform: scale(1.1);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(1, 155, 89, 0.4);
   }
 
   span {
-    color: #666;
+    color: var(--text-muted);
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -138,19 +147,20 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
   }
 
   footer {
-    color: #555;
+    color: var(--text-muted);
     font-size: 0.65rem;
     display: flex;
-    gap: 4px;
+    gap: 8px;
     margin-top: 8px;
   }
 
   footer a {
-    color: #777;
+    color: var(--text-muted);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #eee;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
     padding: 4px;
     height: 32px;
     width: 32px;
@@ -160,7 +170,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
 
   footer a.blog-link {
     width: auto;
-    padding: 4px 12px 4px 4px;
+    padding: 4px 12px 4px 8px;
   }
 
   .blog-text {
@@ -169,8 +179,14 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
   }
 
   footer a:hover {
-    background: #eee;
-    border: 1px solid #ddd;
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+  }
+
+  footer a:hover .blog-text {
+    color: #fff;
   }
 
   @media (width <= 700px) {
