@@ -63,7 +63,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
           )
         }
         {
-          profiles.map(({ network, url, username }) => {
+          profiles.map(({ network, url }) => {
             const Icon = SOCIAL_ICONS[network]
 
             return (
@@ -108,7 +108,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
     root.classList.add('light');
   }
 
-  toggle?.addEventListener('click', (e) => {
+  toggle?.addEventListener('click', () => {
     const rect = profileImg?.getBoundingClientRect();
     if (!rect) return;
 
@@ -121,12 +121,14 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
     const isLight = root.classList.contains('light');
     const newTheme = isLight ? 'dark' : 'light';
 
+    // @ts-ignore
     if (!document.startViewTransition) {
       root.classList.toggle('light');
       localStorage.setItem('theme', newTheme);
       return;
     }
 
+    // @ts-ignore
     document.startViewTransition(() => {
       root.classList.toggle('light');
       localStorage.setItem('theme', newTheme);
