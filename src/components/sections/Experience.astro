@@ -42,7 +42,7 @@ import { work } from "@cv"
                 </header>
 
                 <footer>
-                  <p>{summary}</p>
+                  <p class="experience-text">{summary}</p>
                 </footer>
               </article>
             </li>
@@ -61,7 +61,7 @@ import { work } from "@cv"
   }
 
   article {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   article:hover {
@@ -71,27 +71,10 @@ import { work } from "@cv"
   article h3 {
     font-weight: 500;
     color: #fff;
-    transition: color 0.3s ease;
   }
 
   article a {
     color: #fff;
-    position: relative;
-  }
-
-  article a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -2px;
-    left: 0;
-    background: var(--accent-color);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  article a:hover::after {
-    width: 100%;
   }
 
   article a:hover {

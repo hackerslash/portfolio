@@ -25,7 +25,7 @@ import { education } from "@cv"
               </header>
 
               <footer>
-                <p>{studyType}, {area}</p>
+                <p class="education-text">{studyType}, {area}</p>
               </footer>
             </article>
           </li>
@@ -58,6 +58,14 @@ import { education } from "@cv"
     color: var(--text-muted);
     font-size: 0.85rem;
     min-width: 102px;
+  }
+
+  .education-text {
+    transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .education-text:hover {
+    font-size: calc(0.9rem + 0.25px);
   }
 
   @media (width <= 700px) {
