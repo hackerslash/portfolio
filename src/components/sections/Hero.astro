@@ -88,13 +88,87 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
         </a>
       </footer>
     </div>
-    <figure>
-      <img src={image} alt={name} />
+    <figure class="profile-container">
+      <img src={image} alt={name} id="profile-img" />
+      <div id="theme-toggle" title="Toggle Theme">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </div>
     </figure>
   </div>
 </Section>
 
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  const profileImg = document.getElementById('profile-img');
+  const root = document.documentElement;
+
+  // Initialize theme from localStorage
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    root.classList.add('light');
+  }
+
+  toggle?.addEventListener('click', (e) => {
+    const rect = profileImg?.getBoundingClientRect();
+    if (!rect) return;
+
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    root.style.setProperty('--reveal-x', `${x}px`);
+    root.style.setProperty('--reveal-y', `${y}px`);
+
+    const isLight = root.classList.contains('light');
+    const newTheme = isLight ? 'dark' : 'light';
+
+    if (!document.startViewTransition) {
+      root.classList.toggle('light');
+      localStorage.setItem('theme', newTheme);
+      return;
+    }
+
+    document.startViewTransition(() => {
+      root.classList.toggle('light');
+      localStorage.setItem('theme', newTheme);
+    });
+  });
+</script>
+
 <style>
+  .profile-container {
+    position: relative;
+    cursor: pointer;
+  }
+
+  #theme-toggle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #019b59;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    border: 2px solid var(--bg-color);
+    z-index: 20;
+    transform: scale(0.5);
+  }
+
+  .profile-container:hover #theme-toggle {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .profile-container:hover img {
+    transform: scale(1.05);
+  }
+
   .container {
     display: flex;
     flex-direction: row;
@@ -132,9 +206,10 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
   }
 
   img:hover {
-    transform: scale(1.1);
+    transform: scale(1.3);
     border-color: var(--accent-color);
-    box-shadow: 0 0 20px rgba(1, 155, 89, 0.4);
+    box-shadow: 0 0 35px rgba(1, 155, 89, 0.7);
+    z-index: 30;
   }
 
   span {

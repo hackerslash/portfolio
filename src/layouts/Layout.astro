@@ -34,64 +34,20 @@ const { image, summary, url } = basics
     <meta name="twitter:image" content="" />
   </head>
   <body>
-    <div id="mouse-haze" class="no-print"></div>
+    <div id="theme-reveal" class="no-print"></div>
     <slot />
-    <script>
-      const haze = document.getElementById('mouse-haze');
-      let x = -600, y = -600;
-      let targetX = -600, targetY = -600;
-
-      document.addEventListener('mousemove', (e) => {
-        targetX = e.clientX;
-        targetY = e.clientY;
-      });
-
-      function animate() {
-        x += (targetX - x) * 0.05;
-        y += (targetY - y) * 0.05;
-        
-        if (haze) {
-          haze.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-        }
-        requestAnimationFrame(animate);
+    <script is:inline>
+      const root = document.documentElement;
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        root.classList.add('light');
       }
-      animate();
     </script>
   </body>
 </html>
 
 <style is:global>
-  #mouse-haze {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(
-      circle at center,
-      rgba(1, 155, 89, 0.35) 0%,
-      rgba(1, 155, 89, 0.15) 30%,
-      rgba(1, 155, 89, 0.05) 50%,
-      transparent 80%
-    );
-    pointer-events: none;
-    z-index: 1;
-    mix-blend-mode: screen;
-    filter: blur(80px);
-    border-radius: 50%;
-    will-change: transform;
-    opacity: 0.7;
-    margin-top: -400px;
-    margin-left: -400px;
-    animation: pulse 12s ease-in-out infinite alternate;
-  }
-
-  @keyframes pulse {
-    0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-    100% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
-  }
-
-  /* Ensure content is above the haze but maintains transparency */
+  /* Ensure content is above any background effects but maintains transparency */
   main, section, article, nav, footer {
     position: relative;
     z-index: 10;
@@ -105,6 +61,52 @@ const { image, summary, url } = basics
     --card-border: rgba(255, 255, 255, 0.08);
     --glass-bg: rgba(10, 10, 10, 0.6);
     --glass-border: rgba(255, 255, 255, 0.1);
+  }
+
+  :root.light {
+    --bg-color: #f8fafc;
+    --text-color: #0f172a;
+    --text-muted: #475569;
+    --accent-color: #059669;
+    --card-bg: rgba(0, 0, 0, 0.02);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.1);
+  }
+
+  :root.light h1, :root.light h2, :root.light h3, :root.light h4, :root.light h3 a {
+    color: #0f172a !important;
+  }
+
+  :root.light body {
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(5, 150, 105, 0.1), transparent 70%),
+      radial-gradient(circle at 100% 0%, rgba(5, 150, 105, 0.05), transparent 50%);
+  }
+
+  #theme-reveal {
+    display: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 9999;
+    clip-path: circle(0% at var(--reveal-x, 50%) var(--reveal-y, 50%));
+    animation: reveal-out 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  @keyframes reveal-out {
+    from { clip-path: circle(0% at var(--reveal-x, 50%) var(--reveal-y, 50%)); }
+    to { clip-path: circle(150% at var(--reveal-x, 50%) var(--reveal-y, 50%)); }
   }
 
   html {
