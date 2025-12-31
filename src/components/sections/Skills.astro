@@ -83,6 +83,12 @@ const SKILLS_ICONS: Record<string, any> = {
     backdrop-filter: blur(4px);
   }
 
+  @media (width <= 700px) {
+    ul {
+      justify-content: center;
+    }
+  }
+
   li:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
