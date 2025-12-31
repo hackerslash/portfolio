@@ -37,12 +37,15 @@ export function getBlogs() {
         date: data.date,
         author: data.author,
         excerpt: data.excerpt,
-        content: content
+        content: content,
+        active: data.active !== false // Default to true if not specified
       };
     });
     
-    // Sort blogs by date (newest first)
-    return blogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Filter out inactive blogs and sort by date (newest first)
+    return blogs
+      .filter(blog => blog.active === true)
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
   } catch (error) {
     console.error('Error loading blogs:', error);
     return [];
