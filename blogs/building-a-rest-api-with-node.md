@@ -23,8 +23,6 @@ npm init -y
 npm install express mongoose dotenv
 ```
 
-<img src="https://expressjs.com/images/express-facebook-share.png" alt="Mountain landscape" width="100%" />
-
 
 ## Creating the Server
 
@@ -156,8 +154,6 @@ async function getUser(req, res, next) {
 
 module.exports = router;
 ```
-
-![API Routing](https://www.mongodb.com/assets/images/mongodb_logo.svg)
 
 ## Integrating Routes with Server
 
