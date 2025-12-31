@@ -98,7 +98,6 @@
     {
       "name": "TrackZero",
       "description": "Full-stack habit tracking app using React, Next.js, and Firebase for real-time data sync and authentication.",
-      "isActive": "true",
       "highlights": [
         "Calendar with logs",
         "Journaling feature",
@@ -106,7 +105,7 @@
         "Firebase Authentication",
         "Firestore Database"
       ],
-      "url": "https://trackzero.hackerslash.me",
+      "url": "https://github.com/hackerslash/trackzero",
       "github": "https://github.com/hackerslash/trackzero"
     },
     {
@@ -120,7 +119,7 @@
         "PeerJS",
         "WebRTC"
       ],
-      "url": "https://fileshare.hackerslash.me",
+      "url": "https://fileshare.hackerslash.dev",
       "github": "https://github.com/hackerslash/p2p-share"
     },
     {
