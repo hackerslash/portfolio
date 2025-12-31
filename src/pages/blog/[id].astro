@@ -433,6 +433,8 @@ const renderedContent = md.render(content)
   copyButtons.forEach(button => {
     button.addEventListener('click', async () => {
       const wrapper = button.parentElement;
+      if (!wrapper) return;
+      
       const codeBlock = wrapper.querySelector('pre code');
       
       if (codeBlock) {
