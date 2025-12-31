@@ -1,66 +1,82 @@
----
-import Section from "../Section.astro"
----
+<section class="comments-section">
+  <h2>Comments</h2>
+  <div class="giscus"></div>
+</section>
 
-<Section title="Comments">
-  <div class="giscus-container">
-    <script
-      src="https://giscus.app/client.js"
-      data-repo="hackerslash/portfolio"
-      data-repo-id="R_kgDON-fBWA"
-      data-category="General"
-      data-category-id="DIC_kwDON-fBWM4CnvX1"
-      data-mapping="pathname"
-      data-strict="0"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="top"
-      data-theme="transparent_dark"
-      data-lang="en"
-      data-loading="lazy"
-      crossorigin="anonymous"
-      async
-    ></script>
-  </div>
-</Section>
+<style>
+  .comments-section {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .comments-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+  }
+
+  .giscus {
+    margin-top: 1rem;
+  }
+</style>
 
 <script>
-  const updateGiscusTheme = () => {
-    const theme = document.documentElement.classList.contains('light') ? 'light' : 'transparent_dark';
-    const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
-    if (!iframe) return;
+  const loadGiscus = () => {
+    const giscusContainer = document.querySelector('.giscus');
+    if (!giscusContainer) return;
 
-    iframe.contentWindow?.postMessage(
-      { giscus: { setConfig: { theme } } },
-      'https://giscus.app'
-    );
+    // Remove existing giscus if any
+    giscusContainer.innerHTML = '';
+
+    // Get current theme
+    const theme = document.documentElement.classList.contains('light') 
+      ? 'light' 
+      : 'dark';
+
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', 'hackerslash/portfolio');
+    script.setAttribute('data-repo-id', 'R_kgDONxM1_w');
+    script.setAttribute('data-category', 'Announcements');
+    script.setAttribute('data-category-id', 'DIC_kwDONxM1_84C0bzr');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'bottom');
+    script.setAttribute('data-theme', theme);
+    script.setAttribute('data-lang', 'en');
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
+
+    giscusContainer.appendChild(script);
   };
 
+  // Load Giscus on page load
+  loadGiscus();
+
+  // Reload Giscus when theme changes
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.attributeName === 'class') {
-        updateGiscusTheme();
+        const theme = document.documentElement.classList.contains('light') 
+          ? 'light' 
+          : 'dark';
+        
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (iframe) {
+          iframe.contentWindow?.postMessage(
+            { giscus: { setConfig: { theme } } },
+            'https://giscus.app'
+          );
+        }
       }
     });
   });
 
-  observer.observe(document.documentElement, { attributes: true });
-
-  window.addEventListener('message', (event) => {
-    if (event.origin !== 'https://giscus.app') return;
-    if (!(typeof event.data === 'object' && event.data.giscus)) return;
-    updateGiscusTheme();
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
   });
 </script>
-
-<style>
-  .giscus-container {
-    margin-top: 2rem;
-    padding: 1rem;
-    border-radius: 12px;
-    border: 1px solid var(--card-border);
-    background: var(--card-bg);
-    backdrop-filter: blur(8px);
-    min-height: 150px;
-  }
-</style>
