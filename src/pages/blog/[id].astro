@@ -5,6 +5,7 @@ import { formatDate } from "@/utils/formatDate"
 import MarkdownIt from 'markdown-it'
 import { createHighlighter } from 'shiki'
 import Home from "@/icons/Home.astro"
+import Comments from "@/components/sections/Comments.astro"
 
 export async function getStaticPaths() {
   const blogs = getBlogs()
@@ -87,7 +88,7 @@ const renderedContent = md.render(content)
       </footer>
     </article>
 
-
+    <Comments />
   </main>
 </Layout>
 
