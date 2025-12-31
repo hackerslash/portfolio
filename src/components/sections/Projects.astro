@@ -175,7 +175,11 @@ import { projects } from "@cv"
   }
 
   .github-code-link:hover {
-    color: #fff !important;
+    color: var(--accent-color) !important;
+  }
+
+  :global(.light) .github-code-link:hover {
+    color: var(--accent-color) !important;
   }
 
   @keyframes flicker {
