@@ -64,9 +64,9 @@
           ? 'light' 
           : 'dark';
         
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (iframe) {
-          iframe.contentWindow?.postMessage(
+        const iframe = document.querySelector('iframe.giscus-frame') as HTMLIFrameElement;
+        if (iframe?.contentWindow) {
+          iframe.contentWindow.postMessage(
             { giscus: { setConfig: { theme } } },
             'https://giscus.app'
           );
