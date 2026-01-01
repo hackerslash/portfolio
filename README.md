@@ -25,6 +25,14 @@ pnpm dev
 pnpm build
 ```
 
+## ⚙️ Configuration
+
+The portfolio is easily configurable through JSON file:
+
+- **`cv.json`** - Your personal information, work experience, education, skills, and projects
+
+Simply update `cv.json` with your details and the entire portfolio will automatically reflect your information.
+
 ## 📝 Adding Blog Posts
 
 Create a markdown file in the `blogs/` directory with frontmatter:
