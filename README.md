@@ -62,7 +62,7 @@ Your blog content here...
 
 ## 📄 License
 
-MIT
+MIT Licence
 
 ## 🙏 Credits
 
