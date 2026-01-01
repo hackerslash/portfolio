@@ -83,32 +83,6 @@
   ],
   "projects": [
     {
-      "name": "Slack AI Chatbot",
-      "description": "OAuth 2.0 compliant Slack AI Chatbot integrating Slack events, AI APIs, and secure token management for dynamic conversations.",
-      "isActive": "true",
-      "highlights": [
-        "Modular architecture",
-        "implemented OAuth 2.0 and request verification from scratch",
-        "Redis and MongoDB",
-        "Slack and LLM API integrations"
-      ],
-      "url": "https://bit.ly/4jYEV6h",
-      "github": "https://github.com/hackerslash/slack_backend_oauth"
-    },
-    {
-      "name": "TrackZero",
-      "description": "Full-stack habit tracking app using React, Next.js, and Firebase for real-time data sync and authentication.",
-      "highlights": [
-        "Calendar with logs",
-        "Journaling feature",
-        "React Context & Tailwind CSS",
-        "Firebase Authentication",
-        "Firestore Database"
-      ],
-      "url": "https://github.com/hackerslash/trackzero",
-      "github": "https://github.com/hackerslash/trackzero"
-    },
-    {
       "name": "P2P FileShare",
       "description": "A Next.js p2p file sharing app using WebRTC and PeerJS for secure, high-speed file sharing without any data caps",
       "isActive": "true",
@@ -121,6 +95,33 @@
       ],
       "url": "https://fileshare.hackerslash.dev",
       "github": "https://github.com/hackerslash/p2p-share"
+    },
+    {
+      "name": "Portfolio Website",
+      "description": "A modern, minimalist portfolio with a fully-functional blog system, tagging, comments, and dark mode support built with Astro.",
+      "isActive": "true",
+      "highlights": [
+        "Markdown-based blog with syntax highlighting",
+        "Tag filtering and pagination",
+        "Giscus comments integration",
+        "Dark/Light theme with smooth transitions",
+        "Responsive design with interactive UI"
+      ],
+      "url": "https://www.hackerslash.dev",
+      "github": "https://github.com/hackerslash/portfolio"
+    },
+    {
+      "name": "Slack AI Chatbot",
+      "description": "OAuth 2.0 compliant Slack AI Chatbot integrating Slack events, AI APIs, and secure token management for dynamic conversations.",
+      "isActive": "true",
+      "highlights": [
+        "Modular architecture",
+        "implemented OAuth 2.0 and request verification from scratch",
+        "Redis and MongoDB",
+        "Slack and LLM API integrations"
+      ],
+      "url": "https://bit.ly/4jYEV6h",
+      "github": "https://github.com/hackerslash/slack_backend_oauth"
     },
     {
       "name": "DSArch: A Search Engine for LeetCode",

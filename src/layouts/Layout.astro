@@ -42,6 +42,12 @@ const { image, summary, url } = basics
       if (savedTheme === 'light') {
         root.classList.add('light');
       }
+
+      // Prevent auto-scroll on page load
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
     </script>
   </body>
 </html>

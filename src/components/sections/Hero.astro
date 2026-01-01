@@ -9,9 +9,13 @@ import GitHub from "@/icons/GitHub.astro"
 import Blog from "@/icons/Blog.astro"
 import Location from "@/icons/Location.astro"
 import type { SocialIcon } from "@/types"
+import { getBlogs } from "@blogs"
 
 const { name, label, image, location, profiles, phone, email } = basics
 const { city, region } = location
+
+const blogs = getBlogs()
+const blogCount = blogs.length
 
 const SOCIAL_ICONS: SocialIcon = {
   GitHub,
@@ -85,6 +89,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
         >
           <Blog />
           <span class="blog-text">Blogs</span>
+          <span class="blog-badge">{blogCount}</span>
         </a>
       </footer>
     </div>
@@ -248,6 +253,23 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
   footer a.blog-link {
     width: auto;
     padding: 4px 12px 4px 8px;
+    position: relative;
+  }
+
+  .blog-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: var(--accent-color);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+    border: 2px solid var(--bg-color);
+    box-shadow: 0 2px 8px rgba(1, 155, 89, 0.4);
   }
 
   .blog-text {

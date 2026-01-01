@@ -282,7 +282,7 @@ const BLOGS_PER_PAGE = 2
   const nextBtn = document.getElementById('next-btn') as HTMLButtonElement;
   const currentPageSpan = document.getElementById('current-page');
 
-  function showPage(page: number) {
+  function showPage(page: number, shouldScroll = false) {
     blogItems.forEach((item, index) => {
       const startIndex = (page - 1) * BLOGS_PER_PAGE;
       const endIndex = startIndex + BLOGS_PER_PAGE;
@@ -308,10 +308,12 @@ const BLOGS_PER_PAGE = 2
       nextBtn.disabled = page === totalPages;
     }
 
-    // Smooth scroll to blogs section
-    const blogsSection = document.getElementById('blogs');
-    if (blogsSection) {
-      blogsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Only scroll when explicitly requested (on pagination button clicks)
+    if (shouldScroll) {
+      const blogsSection = document.getElementById('blogs');
+      if (blogsSection) {
+        blogsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   }
 
@@ -319,7 +321,7 @@ const BLOGS_PER_PAGE = 2
     prevBtn.addEventListener('click', () => {
       if (currentPage > 1) {
         currentPage--;
-        showPage(currentPage);
+        showPage(currentPage, true);
       }
     });
   }
@@ -328,11 +330,11 @@ const BLOGS_PER_PAGE = 2
     nextBtn.addEventListener('click', () => {
       if (currentPage < totalPages) {
         currentPage++;
-        showPage(currentPage);
+        showPage(currentPage, true);
       }
     });
   }
 
-  // Initialize
-  showPage(currentPage);
+  // Initialize - don't scroll on page load
+  showPage(currentPage, false);
 </script>
