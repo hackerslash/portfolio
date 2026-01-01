@@ -38,7 +38,8 @@ export function getBlogs() {
         author: data.author,
         excerpt: data.excerpt,
         content: content,
-        active: data.active !== false // Default to true if not specified
+        active: data.active !== false, // Default to true if not specified
+        tags: data.tags || []
       };
     });
     

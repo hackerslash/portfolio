@@ -1,0 +1,320 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { getBlogs } from "@blogs"
+import { formatDate } from "@/utils/formatDate"
+import Home from "@/icons/Home.astro"
+import Tag from "@/components/Tag.astro"
+
+export async function getStaticPaths() {
+  const blogs = getBlogs()
+  
+  const allTags = new Set<string>()
+  blogs.forEach(blog => {
+    if (blog.tags && Array.isArray(blog.tags)) {
+      blog.tags.forEach((tag: string) => allTags.add(tag))
+    }
+  })
+  
+  return Array.from(allTags).map(tag => ({
+    params: { tag },
+    props: { 
+      tag,
+      blogs: blogs.filter(blog => 
+        blog.tags && blog.tags.includes(tag)
+      )
+    },
+  }))
+}
+
+const { tag, blogs } = Astro.props
+---
+
+<Layout title={`Posts tagged with "${tag}" | Md Afridi Sk`}>
+  <main>
+    <nav class="blog-nav">
+      <a href="/#blogs" class="home-link" title="Back to Blogs">
+        <Home />
+        <span>Back to Blogs</span>
+      </a>
+    </nav>
+
+    <header class="tag-header">
+      <h1>Posts tagged with <span class="tag-name">#{tag}</span></h1>
+      <p class="blog-count">{blogs.length} {blogs.length === 1 ? 'post' : 'posts'} found</p>
+    </header>
+
+    <section class="blogs-list">
+      {blogs.length === 0 ? (
+        <div class="no-blogs">
+          <p>No blogs found with this tag.</p>
+        </div>
+      ) : (
+        <ul>
+          {blogs.map(({ id, title, date, excerpt, author, tags }) => {
+            const formattedDate = formatDate(date)
+
+            return (
+              <li>
+                <article>
+                  <div class="article-content">
+                    <div class="text-content">
+                      <header>
+                        <h3>
+                          <a href={`/blog/${id}`} title={`Read ${title}`}>
+                            {title}
+                          </a>
+                        </h3>
+                        <time datetime={date}>{formattedDate}</time>
+                        <p class="author">By {author}</p>
+                      </header>
+                      <div>
+                        <p>{excerpt}</p>
+                      </div>
+                      {tags && tags.length > 0 && (
+                        <div class="tags">
+                          {tags.map((t: string) => <Tag tag={t} />)}
+                        </div>
+                      )}
+                    </div>
+                    <div class="image-container">
+                      <img src="https://picsum.photos/200" alt={title} loading="lazy" />
+                    </div>
+                  </div>
+                  <a href={`/blog/${id}`} class="read-more-overlay">Read More →</a>
+                </article>
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 4rem;
+    margin: auto;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .blog-nav {
+    margin-bottom: 2rem;
+  }
+
+  .home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    transition: all 0.3s ease;
+  }
+
+  .home-link:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+  }
+
+  .tag-header {
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+
+  .tag-name {
+    color: var(--accent-color);
+    font-weight: 700;
+  }
+
+  .blog-count {
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+
+  .blogs-list ul {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  article {
+    position: relative;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    padding: 24px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+  }
+
+  article:hover {
+    border-color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(1, 155, 89, 0.12);
+  }
+
+  .read-more-overlay {
+    position: absolute;
+    bottom: 16px;
+    right: 24px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    text-decoration: none;
+  }
+
+  article:hover .read-more-overlay {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .read-more-overlay:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+    transform: translateY(0) scale(1.05);
+  }
+
+  .article-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding-bottom: 56px;
+  }
+
+  .text-content {
+    flex: 1;
+  }
+
+  .image-container {
+    flex-shrink: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image-container img {
+    width: 200px;
+    height: 100%;
+    min-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+  }
+
+  header {
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    margin-bottom: 8px;
+  }
+
+  h3 a {
+    color: #fff;
+    font-size: 1.4rem;
+  }
+
+  h3 a:hover {
+    color: var(--accent-color);
+    text-decoration: none;
+  }
+
+  time {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .author {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 16px;
+  }
+
+  .no-blogs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 48px;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    background-color: var(--card-bg);
+    backdrop-filter: blur(8px);
+  }
+
+  .no-blogs p {
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
+
+  @media (width <= 700px) {
+    main {
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    .article-content {
+      flex-direction: column;
+      padding-bottom: 0;
+    }
+
+    .image-container {
+      align-self: auto;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      min-height: auto;
+      aspect-ratio: 16 / 9;
+    }
+
+    .read-more-overlay {
+      position: static;
+      display: inline-block;
+      margin-top: 16px;
+    }
+  }
+</style>
+
+<script>
+  const backToBlogsLinks = document.querySelectorAll('.home-link');
+  
+  backToBlogsLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+      window.location.href = '/#blogs';
+    });
+  });
+</script>

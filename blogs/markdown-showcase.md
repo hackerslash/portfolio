@@ -4,7 +4,11 @@ title: Complete Markdown Features Showcase
 date: 2024-12-31
 author: Md Afridi Sk
 excerpt: A comprehensive demonstration of all supported markdown features including text formatting, code blocks, tables, lists, blockquotes, images, videos, and more.
-active : false
+active: true
+tags:
+  - Markdown
+  - Tutorial
+  - Showcase
 ---
 
 # Complete Markdown Features Showcase

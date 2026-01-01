@@ -6,6 +6,7 @@ import MarkdownIt from 'markdown-it'
 import { createHighlighter } from 'shiki'
 import Home from "@/icons/Home.astro"
 import Comments from "@/components/sections/Comments.astro"
+import Tag from "@/components/Tag.astro"
 
 export async function getStaticPaths() {
   const blogs = getBlogs()
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 const { blog } = Astro.props
-const { title, date, author, content } = blog
+const { title, date, author, content, tags } = blog
 const formattedDate = formatDate(date)
 
 const highlighter = await createHighlighter({
@@ -79,6 +80,11 @@ const renderedContent = md.render(content)
           <time datetime={date}>{formattedDate}</time>
           <span class="author">By {author}</span>
         </div>
+        {tags && tags.length > 0 && (
+          <div class="tags">
+            {tags.map((tag: string) => <Tag tag={tag} />)}
+          </div>
+        )}
       </header>
       <div class="content">
         <div set:html={renderedContent} />
@@ -155,6 +161,13 @@ const renderedContent = md.render(content)
     gap: 1.5rem;
     color: var(--text-muted);
     font-size: 0.95rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 16px;
   }
 
   .content {
