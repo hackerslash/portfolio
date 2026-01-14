@@ -52,7 +52,7 @@ const BLOGS_PER_PAGE = 3
       ) : (
         <div>
           <ul class="blogs-container">
-            {blogs.map(({ id, title, date, excerpt, author, tags }, index) => {
+            {blogs.map(({ id, title, date, excerpt, author, tags, readingTime }, index) => {
               const formattedDate = formatDate(date)
 
               return (
@@ -66,7 +66,10 @@ const BLOGS_PER_PAGE = 3
                               {title}
                             </a>
                           </h3>
-                          <time datetime={date}>{formattedDate}</time>
+                          <div class="meta-row">
+                            <time datetime={date}>{formattedDate}</time>
+                            <span class="reading-time">{readingTime}</span>
+                          </div>
                           <p class="author">By {author}</p>
                         </header>
                         <div>
@@ -301,6 +304,23 @@ const BLOGS_PER_PAGE = 3
   time {
     font-size: 0.85rem;
     color: var(--text-muted);
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .reading-time {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .reading-time::before {
+    content: '•';
+    margin-right: 8px;
+    color: var(--accent-color);
   }
 
   .author {

@@ -3,6 +3,37 @@ import path from 'path';
 import matter from 'gray-matter';
 
 /**
+ * Calculate estimated reading time for content
+ * @param {string} content - The markdown/text content
+ * @returns {string} Reading time in format "X min read"
+ */
+function calculateReadingTime(content) {
+  // Average reading speed (words per minute)
+  const wordsPerMinute = 200;
+
+  // Strip markdown syntax and HTML tags for more accurate word count
+  const plainText = content
+    .replace(/```[\s\S]*?```/g, '') // Remove code blocks
+    .replace(/`[^`]*`/g, '')        // Remove inline code
+    .replace(/#+\s*/g, '')          // Remove headings markers
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // Convert links to just text
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '')  // Remove images
+    .replace(/[*_~]/g, '')          // Remove emphasis markers
+    .replace(/<[^>]*>/g, '')        // Remove HTML tags
+    .replace(/\n+/g, ' ')           // Replace newlines with spaces
+    .trim();
+
+  // Count words
+  const wordCount = plainText.split(/\s+/).filter(word => word.length > 0).length;
+
+  // Calculate reading time
+  const readingTime = Math.ceil(wordCount / wordsPerMinute);
+
+  // Return formatted string
+  return readingTime === 1 ? '1 min read' : `${readingTime} min read`;
+}
+
+/**
  * Load all blog posts from the /blogs directory
  * @returns {Array} Array of blog post objects
  */
@@ -10,26 +41,26 @@ export function getBlogs() {
   try {
     // Get the blogs directory path
     const blogsDirectory = path.join(process.cwd(), 'blogs');
-    
+
     // Check if directory exists
     if (!fs.existsSync(blogsDirectory)) {
       console.error('Blogs directory not found:', blogsDirectory);
       return [];
     }
-    
+
     // Get all markdown files from the blogs directory
     const fileNames = fs.readdirSync(blogsDirectory)
       .filter(fileName => fileName.endsWith('.md'));
-    
+
     // Map through each file and get the metadata and content
     const blogs = fileNames.map(fileName => {
       // Read the file content
       const filePath = path.join(blogsDirectory, fileName);
       const fileContent = fs.readFileSync(filePath, 'utf8');
-      
+
       // Parse the frontmatter using gray-matter
       const { data, content } = matter(fileContent);
-      
+
       // Return the blog post object
       return {
         id: data.id || fileName.replace(/\.md$/, ''),
@@ -38,11 +69,12 @@ export function getBlogs() {
         author: data.author,
         excerpt: data.excerpt,
         content: content,
+        readingTime: calculateReadingTime(content),
         active: data.active !== false, // Default to true if not specified
         tags: data.tags || []
       };
     });
-    
+
     // Filter out inactive blogs and sort by date (newest first)
     return blogs
       .filter(blog => blog.active === true)

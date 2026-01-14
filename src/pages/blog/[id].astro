@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 const { blog } = Astro.props
-const { title, date, author, content, tags } = blog
+const { title, date, author, content, tags, readingTime } = blog
 const formattedDate = formatDate(date)
 
 const highlighter = await createHighlighter({
@@ -78,6 +78,7 @@ const renderedContent = md.render(content)
         <h1>{title}</h1>
         <div class="meta">
           <time datetime={date}>{formattedDate}</time>
+          <span class="reading-time">{readingTime}</span>
           <span class="author">By {author}</span>
         </div>
         {tags && tags.length > 0 && (
@@ -161,6 +162,16 @@ const renderedContent = md.render(content)
     gap: 1.5rem;
     color: var(--text-muted);
     font-size: 0.95rem;
+  }
+
+  .reading-time {
+    color: var(--text-muted);
+  }
+
+  .reading-time::before {
+    content: '•';
+    margin-right: 1.5rem;
+    color: var(--accent-color);
   }
 
   .tags {
