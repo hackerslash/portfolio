@@ -33,9 +33,9 @@ const currentYear = new Date().getFullYear()
   </footer>
 </Layout>
 
-<script>
+<script is:inline>
   // Wait for GoatCounter to load and fetch total visitor count
-  const checkGoatCounter = setInterval(() => {
+  var checkGoatCounter = setInterval(function() {
     if (window.goatcounter && window.goatcounter.visit_count) {
       clearInterval(checkGoatCounter);
       window.goatcounter.visit_count({
@@ -48,9 +48,9 @@ const currentYear = new Date().getFullYear()
   }, 100);
 
   // Timeout after 5 seconds if GoatCounter doesn't load
-  setTimeout(() => {
+  setTimeout(function() {
     clearInterval(checkGoatCounter);
-    const el = document.getElementById('visitor-count');
+    var el = document.getElementById('visitor-count');
     if (el && el.textContent === 'Loading...') {
       el.textContent = '—';
     }
