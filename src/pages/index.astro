@@ -25,8 +25,37 @@ const currentYear = new Date().getFullYear()
 
   <footer class="no-print">
     <p>© {currentYear} Md Afridi Sk - Made with ❤️</p>
+    <div class="visitor-counter">
+      <span class="counter-icon">👁️</span>
+      <span id="visitor-count">Loading...</span>
+      <span class="counter-label">visitors</span>
+    </div>
   </footer>
 </Layout>
+
+<script>
+  // Wait for GoatCounter to load and fetch total visitor count
+  const checkGoatCounter = setInterval(() => {
+    if (window.goatcounter && window.goatcounter.visit_count) {
+      clearInterval(checkGoatCounter);
+      window.goatcounter.visit_count({
+        append: '#visitor-count',
+        path: 'TOTAL',
+        type: 'html',
+        no_branding: true,
+      });
+    }
+  }, 100);
+
+  // Timeout after 5 seconds if GoatCounter doesn't load
+  setTimeout(() => {
+    clearInterval(checkGoatCounter);
+    const el = document.getElementById('visitor-count');
+    if (el && el.textContent === 'Loading...') {
+      el.textContent = '—';
+    }
+  }, 5000);
+</script>
 
 <style>
   main {
@@ -37,10 +66,42 @@ const currentYear = new Date().getFullYear()
 
   footer {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
     padding: 2rem;
     color: var(--text-muted);
     font-size: 0.8rem;
+  }
+
+  .visitor-counter {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  .visitor-counter:hover {
+    opacity: 1;
+  }
+
+  .counter-icon {
+    font-size: 0.85rem;
+  }
+
+  #visitor-count {
+    font-weight: 600;
+    color: var(--accent-color);
+  }
+
+  .counter-label {
+    color: var(--text-muted);
   }
 
   @media (width <= 700px) {
