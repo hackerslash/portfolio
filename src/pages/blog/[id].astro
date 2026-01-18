@@ -7,6 +7,7 @@ import { createHighlighter } from 'shiki'
 import Home from "@/icons/Home.astro"
 import Comments from "@/components/sections/Comments.astro"
 import Tag from "@/components/Tag.astro"
+import { basics } from "@cv"
 
 export async function getStaticPaths() {
   const blogs = getBlogs()
@@ -17,8 +18,39 @@ export async function getStaticPaths() {
 }
 
 const { blog } = Astro.props
-const { title, date, author, content, tags, readingTime } = blog
+const { title, date, author, content, tags, readingTime, excerpt } = blog
 const formattedDate = formatDate(date)
+
+// SEO props
+const siteUrl = basics.url
+const canonicalUrl = `${siteUrl}/blog/${blog.id}`
+const pageTitle = `${title} - Blog | Md Afridi Sk`
+
+// JSON-LD structured data for BlogPosting
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": excerpt,
+  "author": {
+    "@type": "Person",
+    "name": author,
+    "url": siteUrl
+  },
+  "datePublished": date,
+  "dateModified": date,
+  "publisher": {
+    "@type": "Person",
+    "name": "Md Afridi Sk",
+    "url": siteUrl
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": canonicalUrl
+  },
+  "url": canonicalUrl,
+  "keywords": tags?.join(", ") || ""
+}
 
 const highlighter = await createHighlighter({
   themes: ['github-dark', 'solarized-light'],
@@ -65,7 +97,13 @@ md.renderer.rules.fence = (tokens, idx) => {
 const renderedContent = md.render(content)
 ---
 
-<Layout title={`${title} - Blog | Md Afridi Sk`}>
+<Layout 
+  title={pageTitle}
+  description={excerpt}
+  canonicalUrl={canonicalUrl}
+  ogType="article"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <main>
     <nav class="blog-nav">
       <a href="/#blogs" class="home-link" title="Back to Blogs">

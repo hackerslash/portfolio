@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // Basic configuration
+  site: 'https://hackerslash.dev',
+  integrations: [sitemap()],
 });

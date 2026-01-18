@@ -5,7 +5,7 @@
     "image": "/profile-pic.png",
     "email": "afridijnv19@gmail.com",
     "phone": "+91 9351557660",
-    "url": "https://hackerslash.me",
+    "url": "https://hackerslash.dev",
     "summary": "Backend Developer with expertise in AI, Web Development, and Cloud Technologies. Passionate about building scalable applications and solving real life problems. Based in Bangalore, India.",
     "location": {
       "city": "Bangalore",
@@ -26,45 +26,45 @@
     ]
   },
   "work": [
-  {
-    "name": "Ayoo.care - Ayoo Medical Pvt Ltd.",
-    "position": "Backend Developer",
-    "url": "https://ayoo.care",
-    "startDate": "2025-04-01",
-    "endDate": null,
-    "summary": "Building scalable backend services and improving observability for a healthtech platform, focusing on test automation, telemetry, and performance optimization.",
-    "highlights": [
-      "Designed and implemented comprehensive E2E test suites using pytest and FastAPI TestClient, automating critical backend flows.",
-      "Integrated OpenTelemetry tracking across services, enabling distributed logging and improving issue traceability across environments.",
-      "Optimized API response times through async I/O enhancements, while cutting AWS costs by 25% via improved resource provisioning and autoscaling policies."
-    ]
-  },
     {
-    "name": "Outlier AI - Scale Labs",
-    "position": "AI Coding Specialist (Freelance)",
-    "url": "https://outlier.ai",
-    "startDate": "2024-09-01",
-    "endDate": "2025-03-31",
-    "summary": "Optimizing LLM efficiency and code accuracy through RLHF and prompt tuning. Ensuring code compliance via QA audits and security checks.",
-    "highlights": [
-      "Applied RLHF to optimize LLM efficiency and code accuracy through iterative training pipelines refined via human evaluator feedback.",
-      "Developed adaptive prompt strategies with tunable parameters.",
-      "Ensured legal/ethical compliance via audits and risk mitigation for licensing & security."
-    ]
-  },
-  {
-    "name": "Zlink Universal",
-    "position": "Full Stack Developer (Freelance)",
-    "url": "https://zlink.co.in",
-    "startDate": "2023-05-01",
-    "endDate": "2024-09-30",
-    "summary": "Delivered end-to-end web solutions for SMB clients using the MERN stack, with a focus on domain-specific dashboards and backend efficiency.",
-    "highlights": [
-      "Delivered full-stack apps using MERN stack, building responsive UIs and scalable APIs for local clients across domains like e-commerce, mosque management, and vendor payment systems.",
-      "Architected custom dashboards and admin panels, integrating role-based access to streamline the operations for SMB clients."
-    ]
-  }
-],
+      "name": "Ayoo.care - Ayoo Medical Pvt Ltd.",
+      "position": "Backend Developer",
+      "url": "https://ayoo.care",
+      "startDate": "2025-04-01",
+      "endDate": null,
+      "summary": "Building scalable backend services and improving observability for a healthtech platform, focusing on test automation, telemetry, and performance optimization.",
+      "highlights": [
+        "Designed and implemented comprehensive E2E test suites using pytest and FastAPI TestClient, automating critical backend flows.",
+        "Integrated OpenTelemetry tracking across services, enabling distributed logging and improving issue traceability across environments.",
+        "Optimized API response times through async I/O enhancements, while cutting AWS costs by 25% via improved resource provisioning and autoscaling policies."
+      ]
+    },
+    {
+      "name": "Outlier AI - Scale Labs",
+      "position": "AI Coding Specialist (Freelance)",
+      "url": "https://outlier.ai",
+      "startDate": "2024-09-01",
+      "endDate": "2025-03-31",
+      "summary": "Optimizing LLM efficiency and code accuracy through RLHF and prompt tuning. Ensuring code compliance via QA audits and security checks.",
+      "highlights": [
+        "Applied RLHF to optimize LLM efficiency and code accuracy through iterative training pipelines refined via human evaluator feedback.",
+        "Developed adaptive prompt strategies with tunable parameters.",
+        "Ensured legal/ethical compliance via audits and risk mitigation for licensing & security."
+      ]
+    },
+    {
+      "name": "Zlink Universal",
+      "position": "Full Stack Developer (Freelance)",
+      "url": "https://zlink.co.in",
+      "startDate": "2023-05-01",
+      "endDate": "2024-09-30",
+      "summary": "Delivered end-to-end web solutions for SMB clients using the MERN stack, with a focus on domain-specific dashboards and backend efficiency.",
+      "highlights": [
+        "Delivered full-stack apps using MERN stack, building responsive UIs and scalable APIs for local clients across domains like e-commerce, mosque management, and vendor payment systems.",
+        "Architected custom dashboards and admin panels, integrating role-based access to streamline the operations for SMB clients."
+      ]
+    }
+  ],
   "education": [
     {
       "institution": "IIT Kharagpur",

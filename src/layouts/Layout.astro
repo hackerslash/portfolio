@@ -3,35 +3,46 @@ import { basics } from "@cv"
 
 interface Props {
   title: string
+  description?: string
+  canonicalUrl?: string
+  ogImage?: string
+  ogType?: string
 }
 
-const { title } = Astro.props
+const { title, description, canonicalUrl, ogImage, ogType } = Astro.props
 
 const { image, summary, url } = basics
+
+// Use props or fall back to defaults from cv.json
+const metaDescription = description || summary
+const pageCanonicalUrl = canonicalUrl || new URL(Astro.url.pathname, url).href
+const pageOgImage = ogImage || `${url}/profile-pic.png`
+const pageOgType = ogType || 'website'
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>{title}</title>
-    <meta name="description" content={summary} />
+    <meta name="description" content={metaDescription} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" as="image" href={image} />
+    <link rel="canonical" href={pageCanonicalUrl} />
 
-    <meta property="og:url" content={url} />
-    <meta property="og:type" content="website" />
+    <meta property="og:url" content={pageCanonicalUrl} />
+    <meta property="og:type" content={pageOgType} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={summary} />
-    <meta property="og:image" content="" />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:image" content={pageOgImage} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="twitter:domain" content={url.split("//")[1] ?? ''} />
-    <meta property="twitter:url" content={url} />
+    <meta property="twitter:url" content={pageCanonicalUrl} />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={summary} />
-    <meta name="twitter:image" content="" />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={pageOgImage} />
   </head>
   <body>
     <div id="theme-reveal" class="no-print"></div>
