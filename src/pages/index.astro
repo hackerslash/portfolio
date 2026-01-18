@@ -27,34 +27,32 @@ const currentYear = new Date().getFullYear()
     <p>© {currentYear} Md Afridi Sk - Made with ❤️</p>
     <div class="visitor-counter">
       <span class="counter-icon">👁️</span>
-      <span id="visitor-count">Loading...</span>
+      <span id="visitor-count">—</span>
       <span class="counter-label">visitors</span>
     </div>
   </footer>
 </Layout>
 
 <script is:inline>
-  // Wait for GoatCounter to load and fetch total visitor count
-  var checkGoatCounter = setInterval(function() {
-    if (window.goatcounter && window.goatcounter.visit_count) {
-      clearInterval(checkGoatCounter);
-      window.goatcounter.visit_count({
-        append: '#visitor-count',
-        path: 'TOTAL',
-        type: 'html',
-        no_branding: true,
-      });
-    }
-  }, 100);
-
-  // Timeout after 5 seconds if GoatCounter doesn't load
-  setTimeout(function() {
-    clearInterval(checkGoatCounter);
+  // Fetch total visitor count from GoatCounter JSON API
+  (function() {
     var el = document.getElementById('visitor-count');
-    if (el && el.textContent === 'Loading...') {
-      el.textContent = '—';
-    }
-  }, 5000);
+    if (!el) return;
+    
+    fetch('https://hackerslash.goatcounter.com/counter/TOTAL.json')
+      .then(function(response) {
+        if (!response.ok) throw new Error('Failed to fetch');
+        return response.json();
+      })
+      .then(function(data) {
+        if (data && data.count !== undefined) {
+          el.textContent = data.count_unique || data.count || '0';
+        }
+      })
+      .catch(function() {
+        el.textContent = '—';
+      });
+  })();
 </script>
 
 <style>
