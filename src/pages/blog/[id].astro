@@ -91,7 +91,12 @@ md.renderer.rules.fence = (tokens, idx) => {
   const token = tokens[idx]
   const code = token.content
   const lang = token.info || 'text'
-  
+
+  // Handle Mermaid diagrams
+  if (lang === 'mermaid') {
+    return `<div class="mermaid-wrapper"><pre class="mermaid">${code}</pre></div>`
+  }
+
   const darkHtml = highlighter.codeToHtml(code, {
     lang: lang,
     theme: 'github-dark'
@@ -100,7 +105,7 @@ md.renderer.rules.fence = (tokens, idx) => {
     lang: lang,
     theme: 'solarized-light'
   })
-  
+
   return `<div class="code-block-wrapper"><button class="copy-button" aria-label="Copy code"><svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></button><div class="code-block-dark">${darkHtml}</div><div class="code-block-light">${lightHtml}</div></div>`
 }
 
@@ -622,6 +627,29 @@ renderedContent = addHeadingIds(renderedContent)
     color: var(--text-muted);
   }
 
+  /* Mermaid diagram styles */
+  .content :global(.mermaid-wrapper) {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .content :global(.mermaid-wrapper pre.mermaid) {
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-align: center;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+
   footer {
     margin-top: 4rem;
     border-top: 1px solid var(--card-border);
@@ -797,23 +825,64 @@ renderedContent = addHeadingIds(renderedContent)
 </style>
 
 <script>
+  import mermaid from 'mermaid';
+
+  // Initialize Mermaid with theme based on current color scheme
+  const initializeMermaid = () => {
+    const isDark = !document.documentElement.classList.contains('light');
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: isDark ? 'dark' : 'default',
+      themeVariables: {
+        primaryColor: isDark ? '#019b59' : '#059669',
+        primaryTextColor: isDark ? '#fff' : '#0f172a',
+        primaryBorderColor: isDark ? '#019b59' : '#059669',
+        lineColor: isDark ? '#4ade80' : '#10b981',
+        secondaryColor: isDark ? '#1e293b' : '#f1f5f9',
+        tertiaryColor: isDark ? '#334155' : '#e2e8f0',
+        background: isDark ? '#0f172a' : '#ffffff',
+        mainBkg: isDark ? '#1e293b' : '#f8fafc',
+        textColor: isDark ? '#e2e8f0' : '#1e293b',
+        fontSize: '16px'
+      }
+    });
+  };
+
+  // Initialize on page load
+  initializeMermaid();
+
+  // Re-initialize when theme changes
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class') {
+        initializeMermaid();
+        mermaid.run();
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
   // Copy button functionality
   const copyButtons = document.querySelectorAll('.copy-button');
-  
+
   copyButtons.forEach(button => {
     button.addEventListener('click', async () => {
       const wrapper = button.parentElement;
       if (!wrapper) return;
-      
+
       const codeBlock = wrapper.querySelector('pre code');
-      
+
       if (codeBlock) {
         const code = codeBlock.textContent || '';
-        
+
         try {
           await navigator.clipboard.writeText(code);
           button.classList.add('copied');
-          
+
           setTimeout(() => {
             button.classList.remove('copied');
           }, 2000);
