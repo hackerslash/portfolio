@@ -47,6 +47,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
             <a
               href={`mailto:${email}`}
               title={`Send an email to ${name} at the email address ${email}`}
+              aria-label={`Email ${name}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -58,7 +59,8 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
           phone && (
             <a
               href={`tel:${phone}`}
-              title={`Call ${name} at the phone number ${phone}.  `}
+              title={`Call ${name} at the phone number ${phone}`}
+              aria-label={`Call ${name}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -74,6 +76,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
               <a
                 href={url}
                 title={`Visit ${name}'s profile on ${network}`}
+                aria-label={`${name}'s ${network} profile`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -85,59 +88,51 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
         <a
           href="/#blogs"
           title="Read my blog posts"
+          aria-label={`Read blog posts (${blogCount} posts)`}
           class="blog-link"
         >
           <Blog />
           <span class="blog-text">Blogs</span>
-          <span class="blog-badge">{blogCount}</span>
+          <span class="blog-badge" aria-hidden="true">{blogCount}</span>
         </a>
       </footer>
     </div>
     <figure class="profile-container">
       <img src={image} alt={name} id="profile-img" />
-      <div id="theme-toggle" title="Toggle Theme">
+      <button id="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle Theme">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-      </div>
+      </button>
     </figure>
   </div>
 </Section>
 
 <script>
+  import { toggleTheme } from '@/utils/theme';
+
   const toggle = document.getElementById('theme-toggle');
   const profileImg = document.getElementById('profile-img');
-  const root = document.documentElement;
 
-  // Initialize theme from localStorage
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') {
-    root.classList.add('light');
-  }
-
-  toggle?.addEventListener('click', () => {
+  function handleThemeToggle() {
     const rect = profileImg?.getBoundingClientRect();
-    if (!rect) return;
-
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-
-    root.style.setProperty('--reveal-x', `${x}px`);
-    root.style.setProperty('--reveal-y', `${y}px`);
-
-    const isLight = root.classList.contains('light');
-    const newTheme = isLight ? 'dark' : 'light';
-
-    // @ts-ignore
-    if (!document.startViewTransition) {
-      root.classList.toggle('light');
-      localStorage.setItem('theme', newTheme);
+    if (!rect) {
+      toggleTheme();
       return;
     }
 
-    // @ts-ignore
-    document.startViewTransition(() => {
-      root.classList.toggle('light');
-      localStorage.setItem('theme', newTheme);
-    });
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    toggleTheme(x, y);
+  }
+
+  // Click event
+  toggle?.addEventListener('click', handleThemeToggle);
+
+  // Keyboard accessibility
+  toggle?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleThemeToggle();
+    }
   });
 </script>
 
@@ -165,6 +160,18 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
     border: 2px solid var(--bg-color);
     z-index: 20;
     transform: scale(0.5);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  #theme-toggle:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+
+  #theme-toggle:focus-visible {
+    opacity: 1;
+    transform: scale(1);
   }
 
   .profile-container:hover #theme-toggle {

@@ -309,6 +309,7 @@ const renderedContent = md.render(content)
   .content :global(.code-block-wrapper) {
     position: relative;
     margin: 5px 0;
+    contain: layout style; /* Performance optimization for hidden theme blocks */
   }
 
   .content :global(.copy-button) {
@@ -316,6 +317,8 @@ const renderedContent = md.render(content)
     top: 0.75rem;
     right: 0.75rem;
     padding: 0.5rem;
+    min-width: 36px;
+    min-height: 36px;
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px;
@@ -327,6 +330,13 @@ const renderedContent = md.render(content)
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  /* Show copy button on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    .content :global(.copy-button) {
+      opacity: 0.7;
+    }
   }
 
   .content :global(.copy-button .check-icon) {
@@ -341,7 +351,8 @@ const renderedContent = md.render(content)
     display: block;
   }
 
-  .content :global(.code-block-wrapper:hover .copy-button) {
+  .content :global(.code-block-wrapper:hover .copy-button),
+  .content :global(.code-block-wrapper:focus-within .copy-button) {
     opacity: 1;
   }
 
@@ -363,20 +374,25 @@ const renderedContent = md.render(content)
     margin: 0;
   }
 
+  /* Hide inactive theme and remove from render tree */
   .content :global(.code-block-light) {
     display: none;
+    content-visibility: hidden; /* Modern browsers: skip rendering hidden content */
   }
 
   .content :global(.code-block-dark) {
     display: block;
+    content-visibility: auto;
   }
 
   :global(.light) .content :global(.code-block-light) {
     display: block;
+    content-visibility: auto;
   }
 
   :global(.light) .content :global(.code-block-dark) {
     display: none;
+    content-visibility: hidden;
   }
 
   .content code {
@@ -465,6 +481,12 @@ const renderedContent = md.render(content)
       padding: 1rem 1.5rem !important;
     }
 
+    /* Always show copy button on mobile for better discoverability */
+    .content :global(.copy-button) {
+      opacity: 0.8;
+    }
+  }
+
     .blog-nav {
       margin-bottom: 1.5rem;
     }
@@ -477,19 +499,6 @@ const renderedContent = md.render(content)
 </style>
 
 <script>
-  // Get all "Back to Blogs" links
-  const backToBlogsLinks = document.querySelectorAll('.home-link, .blog-footer-link');
-
-  // Add click event listener to each link
-  backToBlogsLinks.forEach(link => {
-    link.addEventListener('click', function(event) {
-      event.preventDefault(); // Prevent default navigation
-
-      // Navigate to the homepage with blogs section
-      window.location.href = '/#blogs';
-    });
-  });
-
   // Copy button functionality
   const copyButtons = document.querySelectorAll('.copy-button');
   

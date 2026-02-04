@@ -48,6 +48,7 @@ const pageOgType = ogType || 'website'
     <div id="theme-reveal" class="no-print"></div>
     <slot />
     <script is:inline>
+      // Initialize theme from localStorage
       const root = document.documentElement;
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light') {

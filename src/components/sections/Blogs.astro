@@ -3,9 +3,10 @@ import Section from "../Section.astro"
 import { getBlogs } from "@blogs"
 import { formatDate } from "@/utils/formatDate"
 import Tag from "@/components/Tag.astro"
+import { BLOG_POSTS_PER_PAGE_HOME } from "@/utils/constants"
 
 const blogs = getBlogs()
-const BLOGS_PER_PAGE = 2
+const BLOGS_PER_PAGE = BLOG_POSTS_PER_PAGE_HOME
 ---
 
 <Section title="Blogs" id="blogs">

@@ -4,6 +4,7 @@ import { getBlogs } from "@blogs"
 import { formatDate } from "@/utils/formatDate"
 import Home from "@/icons/Home.astro"
 import Tag from "@/components/Tag.astro"
+import { BLOG_POSTS_PER_PAGE_TAG } from "@/utils/constants"
 
 export async function getStaticPaths() {
   const blogs = getBlogs()
@@ -27,7 +28,7 @@ export async function getStaticPaths() {
 }
 
 const { tag, blogs } = Astro.props
-const BLOGS_PER_PAGE = 3
+const BLOGS_PER_PAGE = BLOG_POSTS_PER_PAGE_TAG
 ---
 
 <Layout title={`Posts tagged with "${tag}" | Md Afridi Sk`}>
