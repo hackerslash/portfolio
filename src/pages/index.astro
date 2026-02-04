@@ -132,6 +132,17 @@ const currentYear = new Date().getFullYear()
     color: var(--text-muted);
   }
 
+  /* Mobile landscape optimizations */
+  @media (max-height: 500px) and (orientation: landscape) {
+    main {
+      padding: 2rem;
+    }
+
+    footer {
+      padding: 1rem;
+    }
+  }
+
   @media (width <= 700px) {
     main {
       padding: 1.5rem;

@@ -16,13 +16,29 @@ const BLOGS_PER_PAGE = BLOG_POSTS_PER_PAGE_HOME
     </div>
   ) : (
     <div>
+      <div class="search-container">
+        <input
+          type="search"
+          id="blog-search"
+          class="search-input"
+          placeholder="🔍 Search blog posts..."
+          aria-label="Search blog posts"
+        />
+        <p class="search-results-count" id="search-results" aria-live="polite"></p>
+      </div>
       <ul class="blogs-container">
         {
           blogs.map(({ id, title, date, excerpt, author, tags, readingTime }, index) => {
             const formattedDate = formatDate(date)
 
+            const searchData = JSON.stringify({ title, excerpt, author, tags: tags?.join(' ') || '' }).toLowerCase()
+
             return (
-              <li data-blog-index={index} class={index < BLOGS_PER_PAGE ? "blog-visible" : "blog-hidden"}>
+              <li
+                data-blog-index={index}
+                data-search={searchData}
+                class={index < BLOGS_PER_PAGE ? "blog-visible" : "blog-hidden"}
+              >
                 <article>
                   <div class="article-content">
                     <div class="text-content">
@@ -34,7 +50,9 @@ const BLOGS_PER_PAGE = BLOG_POSTS_PER_PAGE_HOME
                         </h3>
                         <div class="meta-row">
                           <time datetime={date}>{formattedDate}</time>
-                          <span class="reading-time">{readingTime}</span>
+                          <span class="reading-time" aria-label={`Reading time: ${readingTime}`}>
+                            📖 {readingTime}
+                          </span>
                         </div>
                         <p class="author">By {author}</p>
                       </header>
@@ -72,6 +90,39 @@ const BLOGS_PER_PAGE = BLOG_POSTS_PER_PAGE_HOME
 </Section>
 
 <style>
+  .search-container {
+    margin-bottom: 2rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(1, 155, 89, 0.1);
+  }
+
+  .search-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .search-results-count {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    min-height: 1.2rem;
+  }
+
   ul.blogs-container {
     display: flex;
     flex-direction: column;
@@ -353,6 +404,58 @@ const BLOGS_PER_PAGE = BLOG_POSTS_PER_PAGE_HOME
         currentPage++;
         showPage(currentPage, true);
       }
+    });
+  }
+
+  // Search functionality
+  const searchInput = document.getElementById('blog-search') as HTMLInputElement;
+  const searchResults = document.getElementById('search-results');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+
+      if (!query) {
+        if (searchResults) {
+          searchResults.textContent = '';
+        }
+        showPage(currentPage, false);
+        if (prevBtn) prevBtn.style.display = '';
+        if (nextBtn) nextBtn.style.display = '';
+        const paginationInfo = document.querySelector('.pagination-info') as HTMLElement;
+        if (paginationInfo) paginationInfo.style.display = '';
+        return;
+      }
+
+      let matchCount = 0;
+
+      blogItems.forEach((item) => {
+        const searchData = item.getAttribute('data-search') || '';
+        if (searchData.includes(query)) {
+          item.classList.remove('blog-hidden');
+          item.classList.add('blog-visible');
+          matchCount++;
+        } else {
+          item.classList.remove('blog-visible');
+          item.classList.add('blog-hidden');
+        }
+      });
+
+      if (searchResults) {
+        if (matchCount === 0) {
+          searchResults.textContent = 'No blog posts found';
+        } else if (matchCount === 1) {
+          searchResults.textContent = '1 post found';
+        } else {
+          searchResults.textContent = `${matchCount} posts found`;
+        }
+      }
+
+      // Hide pagination when searching
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      const paginationInfo = document.querySelector('.pagination-info') as HTMLElement;
+      if (paginationInfo) paginationInfo.style.display = 'none';
     });
   }
 

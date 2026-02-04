@@ -69,7 +69,9 @@ const BLOGS_PER_PAGE = BLOG_POSTS_PER_PAGE_TAG
                           </h3>
                           <div class="meta-row">
                             <time datetime={date}>{formattedDate}</time>
-                            <span class="reading-time">{readingTime}</span>
+                            <span class="reading-time" aria-label={`Reading time: ${readingTime}`}>
+                              📖 {readingTime}
+                            </span>
                           </div>
                           <p class="author">By {author}</p>
                         </header>

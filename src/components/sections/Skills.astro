@@ -54,8 +54,8 @@ const SKILLS_ICONS: Record<string, any> = {
         const Icon = SKILLS_ICONS[iconName]
 
         return (
-          <li>
-            {Icon && <Icon />} <span>{name}</span>
+          <li role="listitem" aria-label={`${name} skill`}>
+            {Icon && <Icon />} <span aria-hidden="false">{name}</span>
           </li>
         )
       })

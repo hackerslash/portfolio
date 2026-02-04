@@ -253,4 +253,23 @@ const pageOgType = ogType || 'website'
       break-inside: avoid;
     }
   }
+
+  /* Mobile landscape optimizations */
+  @media (max-height: 500px) and (orientation: landscape) {
+    body {
+      font-size: 14px;
+    }
+
+    h1 {
+      font-size: 1.5rem !important;
+    }
+
+    h2 {
+      font-size: 1.2rem !important;
+    }
+
+    section {
+      padding: 1rem 0 !important;
+    }
+  }
 </style>

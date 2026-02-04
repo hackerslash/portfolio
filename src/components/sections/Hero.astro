@@ -33,7 +33,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
   <div class="container">
     <div class="info">
       <h1>{name}</h1>
-      <h2>{label}</h2>
+      <p class="label">{label}</p>
       <span>
         <Location />
         {city}, {region}
@@ -147,8 +147,8 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
     bottom: 0;
     right: 0;
     background: #019b59;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -202,11 +202,12 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
     font-size: 2rem;
   }
 
-  h2 {
+  .label {
     color: var(--text-muted);
     font-weight: 500;
     font-size: 1.1rem;
     text-wrap: balance;
+    margin: 0;
   }
 
   img {
@@ -251,8 +252,8 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
     border: 1px solid var(--card-border);
     background: var(--card-bg);
     padding: 4px;
-    height: 32px;
-    width: 32px;
+    min-height: 44px;
+    min-width: 44px;
     border-radius: 6px;
     transition: all 0.3s ease;
   }
@@ -313,7 +314,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
       align-items: center;
     }
 
-    h2 {
+    .label {
       text-wrap: balance;
     }
 
