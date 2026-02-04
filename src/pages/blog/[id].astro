@@ -240,6 +240,20 @@ renderedContent = addHeadingIds(renderedContent)
     </article>
 
     <Comments />
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" hidden aria-hidden="true">
+      <div class="lightbox-backdrop"></div>
+      <button class="lightbox-close" aria-label="Close lightbox">×</button>
+      <div class="lightbox-viewport">
+        <div id="lightbox-container"></div>
+      </div>
+      <div class="lightbox-controls">
+        <button id="zoom-in" aria-label="Zoom in">+</button>
+        <button id="zoom-reset" aria-label="Reset zoom">Reset</button>
+        <button id="zoom-out" aria-label="Zoom out">−</button>
+      </div>
+    </div>
   </main>
 </Layout>
 
@@ -862,6 +876,193 @@ renderedContent = addHeadingIds(renderedContent)
       margin-bottom: 1rem;
     }
   }
+
+  /* Lightbox Styles */
+  #lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #lightbox:not([hidden]) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 2rem;
+    line-height: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
+  }
+
+  .lightbox-close:active {
+    transform: scale(0.95);
+  }
+
+  .lightbox-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: default;
+    z-index: 100001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-viewport.zoomed {
+    cursor: grab;
+  }
+
+  .lightbox-viewport.dragging {
+    cursor: grabbing;
+  }
+
+  #lightbox-container {
+    position: relative;
+    transform-origin: center center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #lightbox-container img,
+  #lightbox-container svg {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    display: block;
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  #lightbox-container svg {
+    padding: 2rem;
+  }
+
+  .lightbox-controls {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 100002;
+  }
+
+  .lightbox-controls button {
+    width: 44px;
+    height: 44px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .lightbox-controls button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
+  }
+
+  .lightbox-controls button:active {
+    transform: scale(0.95);
+  }
+
+  #zoom-reset {
+    font-size: 0.75rem;
+    width: auto;
+    padding: 0 0.75rem;
+  }
+
+  /* Cursor hints for clickable images/diagrams */
+  .content :global(img),
+  .content :global(.mermaid-wrapper) {
+    cursor: zoom-in;
+  }
+
+  /* Mobile responsive adjustments */
+  @media (width <= 700px) {
+    .lightbox-close {
+      top: 1rem;
+      right: 1rem;
+      width: 44px;
+      height: 44px;
+      font-size: 1.75rem;
+    }
+
+    .lightbox-controls {
+      bottom: 1rem;
+      right: 1rem;
+      flex-direction: column;
+    }
+
+    #lightbox-container img,
+    #lightbox-container svg {
+      max-width: 95vw;
+      max-height: 85vh;
+    }
+
+    #lightbox-container svg {
+      padding: 1rem;
+    }
+  }
+
+  /* Prevent body scroll when lightbox is open */
+  body.lightbox-open {
+    overflow: hidden;
+  }
 </style>
 
 <script>
@@ -931,6 +1132,294 @@ renderedContent = addHeadingIds(renderedContent)
         }
       }
     });
+  });
+
+  // Lightbox functionality
+  const lightboxState = {
+    isOpen: false,
+    currentScale: 1,
+    minScale: 0.5,
+    maxScale: 5,
+    scaleStep: 0.3,
+    translateX: 0,
+    translateY: 0,
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+    lastTouchDistance: 0,
+    contentType: 'image'
+  };
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxContainer = document.getElementById('lightbox-container');
+  const lightboxViewport = document.querySelector('.lightbox-viewport');
+  const closeBtn = document.querySelector('.lightbox-close');
+  const backdrop = document.querySelector('.lightbox-backdrop');
+  const zoomInBtn = document.getElementById('zoom-in');
+  const zoomOutBtn = document.getElementById('zoom-out');
+  const zoomResetBtn = document.getElementById('zoom-reset');
+
+  function applyTransform() {
+    if (lightboxContainer) {
+      lightboxContainer.style.transform = `translate(${lightboxState.translateX}px, ${lightboxState.translateY}px) scale(${lightboxState.currentScale})`;
+    }
+  }
+
+  function resetLightboxState() {
+    lightboxState.currentScale = 1;
+    lightboxState.translateX = 0;
+    lightboxState.translateY = 0;
+    lightboxState.isDragging = false;
+    applyTransform();
+    if (lightboxViewport) {
+      lightboxViewport.classList.remove('zoomed', 'dragging');
+    }
+  }
+
+  function openLightbox(element) {
+    if (!lightbox || !lightboxContainer) return;
+
+    // Clear previous content
+    lightboxContainer.innerHTML = '';
+
+    // Clone and add content
+    if (element.tagName === 'IMG') {
+      const img = document.createElement('img');
+      img.src = element.src;
+      img.alt = element.alt || '';
+      lightboxState.contentType = 'image';
+      lightboxContainer.appendChild(img);
+    } else if (element.classList.contains('mermaid-wrapper')) {
+      const svg = element.querySelector('svg');
+      if (svg) {
+        const clonedSvg = svg.cloneNode(true);
+        lightboxState.contentType = 'svg';
+        lightboxContainer.appendChild(clonedSvg);
+      }
+    }
+
+    // Show lightbox
+    lightbox.removeAttribute('hidden');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lightbox-open');
+    lightboxState.isOpen = true;
+
+    // Focus close button for accessibility
+    setTimeout(() => {
+      if (closeBtn) closeBtn.focus();
+    }, 100);
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+
+    lightbox.setAttribute('hidden', '');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lightbox-open');
+    lightboxState.isOpen = false;
+
+    // Clear content and reset state
+    setTimeout(() => {
+      if (lightboxContainer) lightboxContainer.innerHTML = '';
+      resetLightboxState();
+    }, 300);
+  }
+
+  function zoomIn() {
+    lightboxState.currentScale = Math.min(lightboxState.currentScale + lightboxState.scaleStep, lightboxState.maxScale);
+    applyTransform();
+    if (lightboxState.currentScale > 1 && lightboxViewport) {
+      lightboxViewport.classList.add('zoomed');
+    }
+  }
+
+  function zoomOut() {
+    lightboxState.currentScale = Math.max(lightboxState.currentScale - lightboxState.scaleStep, lightboxState.minScale);
+    applyTransform();
+
+    // Reset pan when zoomed out to 1x or less
+    if (lightboxState.currentScale <= 1) {
+      lightboxState.translateX = 0;
+      lightboxState.translateY = 0;
+      applyTransform();
+      if (lightboxViewport) {
+        lightboxViewport.classList.remove('zoomed');
+      }
+    }
+  }
+
+  function zoomReset() {
+    resetLightboxState();
+  }
+
+  // Mouse drag events
+  function handleMouseDown(e) {
+    if (lightboxState.currentScale > 1) {
+      lightboxState.isDragging = true;
+      lightboxState.startX = e.clientX - lightboxState.translateX;
+      lightboxState.startY = e.clientY - lightboxState.translateY;
+      if (lightboxViewport) {
+        lightboxViewport.classList.add('dragging');
+      }
+    }
+  }
+
+  function handleMouseMove(e) {
+    if (lightboxState.isDragging && lightboxState.currentScale > 1) {
+      lightboxState.translateX = e.clientX - lightboxState.startX;
+      lightboxState.translateY = e.clientY - lightboxState.startY;
+      applyTransform();
+    }
+  }
+
+  function handleMouseUp() {
+    lightboxState.isDragging = false;
+    if (lightboxViewport) {
+      lightboxViewport.classList.remove('dragging');
+    }
+  }
+
+  // Touch events
+  function getTouchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function handleTouchStart(e) {
+    if (e.touches.length === 2) {
+      // Pinch zoom
+      lightboxState.lastTouchDistance = getTouchDistance(e.touches);
+    } else if (e.touches.length === 1 && lightboxState.currentScale > 1) {
+      // Pan
+      lightboxState.isDragging = true;
+      lightboxState.startX = e.touches[0].clientX - lightboxState.translateX;
+      lightboxState.startY = e.touches[0].clientY - lightboxState.translateY;
+    }
+  }
+
+  function handleTouchMove(e) {
+    if (e.touches.length === 2) {
+      // Pinch zoom
+      e.preventDefault();
+      const currentDistance = getTouchDistance(e.touches);
+      const delta = currentDistance - lightboxState.lastTouchDistance;
+
+      if (Math.abs(delta) > 5) {
+        lightboxState.currentScale += delta * 0.01;
+        lightboxState.currentScale = Math.max(lightboxState.minScale, Math.min(lightboxState.maxScale, lightboxState.currentScale));
+        applyTransform();
+        lightboxState.lastTouchDistance = currentDistance;
+
+        if (lightboxState.currentScale > 1 && lightboxViewport) {
+          lightboxViewport.classList.add('zoomed');
+        } else if (lightboxState.currentScale <= 1 && lightboxViewport) {
+          lightboxViewport.classList.remove('zoomed');
+          lightboxState.translateX = 0;
+          lightboxState.translateY = 0;
+          applyTransform();
+        }
+      }
+    } else if (e.touches.length === 1 && lightboxState.isDragging && lightboxState.currentScale > 1) {
+      // Pan
+      lightboxState.translateX = e.touches[0].clientX - lightboxState.startX;
+      lightboxState.translateY = e.touches[0].clientY - lightboxState.startY;
+      applyTransform();
+    }
+  }
+
+  function handleTouchEnd(e) {
+    if (e.touches.length < 2) {
+      lightboxState.lastTouchDistance = 0;
+    }
+    if (e.touches.length === 0) {
+      lightboxState.isDragging = false;
+    }
+  }
+
+  // Keyboard events
+  function handleKeyboard(e) {
+    if (!lightboxState.isOpen) return;
+
+    switch(e.key) {
+      case 'Escape':
+        closeLightbox();
+        break;
+      case '+':
+      case '=':
+        e.preventDefault();
+        zoomIn();
+        break;
+      case '-':
+      case '_':
+        e.preventDefault();
+        zoomOut();
+        break;
+      case '0':
+        e.preventDefault();
+        zoomReset();
+        break;
+    }
+  }
+
+  // Initialize lightbox click handlers
+  function initLightbox() {
+    // Add click handlers to images
+    const images = document.querySelectorAll('.content img');
+    images.forEach(img => {
+      img.addEventListener('click', () => openLightbox(img));
+    });
+
+    // Add click handlers to Mermaid diagrams
+    const mermaidWrappers = document.querySelectorAll('.mermaid-wrapper');
+    mermaidWrappers.forEach(wrapper => {
+      wrapper.addEventListener('click', () => openLightbox(wrapper));
+    });
+  }
+
+  // Event listeners for lightbox controls
+  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+  if (backdrop) backdrop.addEventListener('click', closeLightbox);
+  if (zoomInBtn) zoomInBtn.addEventListener('click', zoomIn);
+  if (zoomOutBtn) zoomOutBtn.addEventListener('click', zoomOut);
+  if (zoomResetBtn) zoomResetBtn.addEventListener('click', zoomReset);
+
+  // Mouse events
+  if (lightboxViewport) {
+    lightboxViewport.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  }
+
+  // Touch events
+  if (lightboxViewport) {
+    lightboxViewport.addEventListener('touchstart', handleTouchStart, { passive: false });
+    lightboxViewport.addEventListener('touchmove', handleTouchMove, { passive: false });
+    lightboxViewport.addEventListener('touchend', handleTouchEnd);
+  }
+
+  // Keyboard events
+  document.addEventListener('keydown', handleKeyboard);
+
+  // Initialize after delay to ensure Mermaid renders first
+  setTimeout(() => {
+    initLightbox();
+  }, 500);
+
+  // Re-initialize on theme changes (handles Mermaid re-renders)
+  const lightboxObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class') {
+        setTimeout(() => {
+          initLightbox();
+        }, 300);
+      }
+    });
+  });
+
+  lightboxObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
   });
 </script>
 
