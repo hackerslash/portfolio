@@ -1176,7 +1176,7 @@ renderedContent = addHeadingIds(renderedContent)
     }
   }
 
-  function openLightbox(element) {
+  function openLightbox(element: HTMLElement) {
     if (!lightbox || !lightboxContainer) return;
 
     // Clear previous content
@@ -1185,8 +1185,8 @@ renderedContent = addHeadingIds(renderedContent)
     // Clone and add content
     if (element.tagName === 'IMG') {
       const img = document.createElement('img');
-      img.src = element.src;
-      img.alt = element.alt || '';
+      img.src = (element as HTMLImageElement).src;
+      img.alt = (element as HTMLImageElement).alt || '';
       lightboxState.contentType = 'image';
       lightboxContainer.appendChild(img);
     } else if (element.classList.contains('mermaid-wrapper')) {
@@ -1206,7 +1206,7 @@ renderedContent = addHeadingIds(renderedContent)
 
     // Focus close button for accessibility
     setTimeout(() => {
-      if (closeBtn) closeBtn.focus();
+      if (closeBtn) (closeBtn as HTMLElement).focus();
     }, 100);
   }
 
@@ -1253,7 +1253,7 @@ renderedContent = addHeadingIds(renderedContent)
   }
 
   // Mouse drag events
-  function handleMouseDown(e) {
+  function handleMouseDown(e: MouseEvent) {
     if (lightboxState.currentScale > 1) {
       lightboxState.isDragging = true;
       lightboxState.startX = e.clientX - lightboxState.translateX;
@@ -1264,7 +1264,7 @@ renderedContent = addHeadingIds(renderedContent)
     }
   }
 
-  function handleMouseMove(e) {
+  function handleMouseMove(e: MouseEvent) {
     if (lightboxState.isDragging && lightboxState.currentScale > 1) {
       lightboxState.translateX = e.clientX - lightboxState.startX;
       lightboxState.translateY = e.clientY - lightboxState.startY;
@@ -1280,13 +1280,13 @@ renderedContent = addHeadingIds(renderedContent)
   }
 
   // Touch events
-  function getTouchDistance(touches) {
+  function getTouchDistance(touches: TouchList) {
     const dx = touches[0].clientX - touches[1].clientX;
     const dy = touches[0].clientY - touches[1].clientY;
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  function handleTouchStart(e) {
+  function handleTouchStart(e: TouchEvent) {
     if (e.touches.length === 2) {
       // Pinch zoom
       lightboxState.lastTouchDistance = getTouchDistance(e.touches);
@@ -1298,7 +1298,7 @@ renderedContent = addHeadingIds(renderedContent)
     }
   }
 
-  function handleTouchMove(e) {
+  function handleTouchMove(e: TouchEvent) {
     if (e.touches.length === 2) {
       // Pinch zoom
       e.preventDefault();
@@ -1328,7 +1328,7 @@ renderedContent = addHeadingIds(renderedContent)
     }
   }
 
-  function handleTouchEnd(e) {
+  function handleTouchEnd(e: TouchEvent) {
     if (e.touches.length < 2) {
       lightboxState.lastTouchDistance = 0;
     }
@@ -1338,7 +1338,7 @@ renderedContent = addHeadingIds(renderedContent)
   }
 
   // Keyboard events
-  function handleKeyboard(e) {
+  function handleKeyboard(e: KeyboardEvent) {
     if (!lightboxState.isOpen) return;
 
     switch(e.key) {
@@ -1367,13 +1367,13 @@ renderedContent = addHeadingIds(renderedContent)
     // Add click handlers to images
     const images = document.querySelectorAll('.content img');
     images.forEach(img => {
-      img.addEventListener('click', () => openLightbox(img));
+      img.addEventListener('click', () => openLightbox(img as HTMLElement));
     });
 
     // Add click handlers to Mermaid diagrams
     const mermaidWrappers = document.querySelectorAll('.mermaid-wrapper');
     mermaidWrappers.forEach(wrapper => {
-      wrapper.addEventListener('click', () => openLightbox(wrapper));
+      wrapper.addEventListener('click', () => openLightbox(wrapper as HTMLElement));
     });
   }
 
@@ -1386,16 +1386,16 @@ renderedContent = addHeadingIds(renderedContent)
 
   // Mouse events
   if (lightboxViewport) {
-    lightboxViewport.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mousemove', handleMouseMove);
+    lightboxViewport.addEventListener('mousedown', handleMouseDown as EventListener);
+    document.addEventListener('mousemove', handleMouseMove as EventListener);
     document.addEventListener('mouseup', handleMouseUp);
   }
 
   // Touch events
   if (lightboxViewport) {
-    lightboxViewport.addEventListener('touchstart', handleTouchStart, { passive: false });
-    lightboxViewport.addEventListener('touchmove', handleTouchMove, { passive: false });
-    lightboxViewport.addEventListener('touchend', handleTouchEnd);
+    lightboxViewport.addEventListener('touchstart', handleTouchStart as EventListener, { passive: false });
+    lightboxViewport.addEventListener('touchmove', handleTouchMove as EventListener, { passive: false });
+    lightboxViewport.addEventListener('touchend', handleTouchEnd as EventListener);
   }
 
   // Keyboard events
