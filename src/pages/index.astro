@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro"
+import { basics, work, education, skills } from "@cv"
 
 import About from "@/components/sections/About.astro"
 import Education from "@/components/sections/Education.astro"
@@ -10,9 +11,87 @@ import Skills from "@/components/sections/Skills.astro"
 import Blogs from "@/components/sections/Blogs.astro"
 
 const currentYear = new Date().getFullYear()
+
+// SEO optimized title and description
+const pageTitle = "Md Afridi Sk | Backend Developer & Full Stack Engineer | IIT Kharagpur"
+const pageDescription = "Md Afridi Sk - Backend Developer based in Bangalore, India. IIT Kharagpur graduate specializing in Python, Node.js, React, and AI. Building scalable applications at Ayoo.care. View projects, skills, and technical blog."
+
+// JSON-LD Structured Data for Person + WebSite
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${basics.url}/#website`,
+      "url": basics.url,
+      "name": "Md Afridi Sk - Portfolio",
+      "description": pageDescription,
+      "publisher": {
+        "@id": `${basics.url}/#person`
+      },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${basics.url}/#profilepage`,
+      "url": basics.url,
+      "name": pageTitle,
+      "isPartOf": {
+        "@id": `${basics.url}/#website`
+      },
+      "about": {
+        "@id": `${basics.url}/#person`
+      },
+      "description": pageDescription,
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "Person",
+      "@id": `${basics.url}/#person`,
+      "name": basics.name,
+      "alternateName": "hackerslash",
+      "url": basics.url,
+      "image": {
+        "@type": "ImageObject",
+        "url": `${basics.url}/profile-pic.png`,
+        "width": 400,
+        "height": 400
+      },
+      "description": basics.summary,
+      "email": `mailto:${basics.email}`,
+      "telephone": basics.phone,
+      "jobTitle": basics.label,
+      "worksFor": {
+        "@type": "Organization",
+        "name": work[0].name,
+        "url": work[0].url
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": education[0].institution,
+        "url": "https://www.iitkgp.ac.in"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": basics.location.city,
+        "addressRegion": basics.location.region,
+        "addressCountry": basics.location.countryCode
+      },
+      "sameAs": [
+        basics.profiles.find(p => p.network === "GitHub")?.url,
+        basics.profiles.find(p => p.network === "LinkedIn")?.url
+      ].filter(Boolean),
+      "knowsAbout": skills.map(s => s.name)
+    }
+  ]
+}
 ---
 
-<Layout title={`PortFolio - Md Afridi Sk`}>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  jsonLd={jsonLd}
+>
   <main>
     <Hero />
     <About />

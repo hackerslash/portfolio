@@ -8,19 +8,19 @@ import { BLOG_POSTS_PER_PAGE_TAG } from "@/utils/constants"
 
 export async function getStaticPaths() {
   const blogs = getBlogs()
-  
+
   const allTags = new Set<string>()
   blogs.forEach(blog => {
     if (blog.tags && Array.isArray(blog.tags)) {
       blog.tags.forEach((tag: string) => allTags.add(tag))
     }
   })
-  
+
   return Array.from(allTags).map(tag => ({
     params: { tag },
-    props: { 
+    props: {
       tag,
-      blogs: blogs.filter(blog => 
+      blogs: blogs.filter(blog =>
         blog.tags && blog.tags.includes(tag)
       )
     },
@@ -29,9 +29,18 @@ export async function getStaticPaths() {
 
 const { tag, blogs } = Astro.props
 const BLOGS_PER_PAGE = BLOG_POSTS_PER_PAGE_TAG
+
+// SEO for tag pages
+const pageTitle = `${tag} Articles & Tutorials | Md Afridi Sk Blog`
+const pageDescription = `Browse ${blogs.length} articles about ${tag} by Md Afridi Sk, Backend Developer at IIT Kharagpur. Technical tutorials, insights, and software engineering guides.`
+const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech blog, software engineering, programming`
 ---
 
-<Layout title={`Posts tagged with "${tag}" | Md Afridi Sk`}>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={tagKeywords}
+>
   <main>
     <nav class="blog-nav">
       <a href="/#blogs" class="home-link" title="Back to Blogs">

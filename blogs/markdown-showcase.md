@@ -1,9 +1,9 @@
 ---
 id: markdown-showcase
-title: Complete Markdown Features Showcase
+title: Blog Feature Showcase
 date: 2024-12-31
 author: Md Afridi Sk
-excerpt: A comprehensive demonstration of all supported markdown features including text formatting, code blocks, tables, lists, blockquotes, images, videos, and more.
+excerpt: A comprehensive demonstration of all supported blog features including text formatting, code blocks, mermaid diagrams, tables, lists, blockquotes, images, videos, and more.
 active: true
 tags:
   - Markdown
@@ -11,9 +11,9 @@ tags:
   - Showcase
 ---
 
-# Complete Markdown Features Showcase
+# Blog Feature Showcase
 
-This blog post demonstrates **all** the markdown features supported in this portfolio blog system. From basic formatting to advanced features like syntax-highlighted code, tables, and embedded media.
+This blog post demonstrates **all** the features supported in this portfolio blog system. From basic formatting to advanced features like syntax-highlighted code, mermaid diagrams, tables, and embedded media.
 
 ---
 
@@ -285,7 +285,107 @@ npm run deploy
 
 ---
 
-## 📊 Tables
+## 📊 Mermaid Diagrams
+
+This blog supports **Mermaid diagrams** for creating beautiful flowcharts, sequence diagrams, and more!
+
+### Flowchart
+
+```mermaid
+graph TD
+    A[Start] --> B{Is it working?}
+    B -->|Yes| C[Great!]
+    B -->|No| D[Debug]
+    D --> E[Fix the bug]
+    E --> B
+    C --> F[Deploy]
+    F --> G[End]
+```
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Server
+    participant Database
+
+    User->>Browser: Enter URL
+    Browser->>Server: HTTP Request
+    Server->>Database: Query Data
+    Database-->>Server: Return Data
+    Server-->>Browser: HTTP Response
+    Browser-->>User: Display Page
+```
+
+### Git Graph
+
+```mermaid
+gitGraph
+    commit id: "Initial commit"
+    commit id: "Add homepage"
+    branch develop
+    checkout develop
+    commit id: "Add blog feature"
+    commit id: "Fix styling"
+    checkout main
+    merge develop
+    commit id: "Release v1.0"
+```
+
+### Class Diagram
+
+```mermaid
+classDiagram
+    class User {
+        +String name
+        +String email
+        +login()
+        +logout()
+    }
+    class BlogPost {
+        +String title
+        +String content
+        +Date publishDate
+        +publish()
+        +delete()
+    }
+    class Comment {
+        +String text
+        +Date createdAt
+        +approve()
+    }
+
+    User "1" --> "*" BlogPost : writes
+    BlogPost "1" --> "*" Comment : has
+```
+
+### State Diagram
+
+```mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Review : Submit
+    Review --> Published : Approve
+    Review --> Draft : Request Changes
+    Published --> Archived : Archive
+    Archived --> [*]
+```
+
+### Pie Chart
+
+```mermaid
+pie title Programming Languages Usage
+    "JavaScript" : 45
+    "TypeScript" : 30
+    "Python" : 15
+    "CSS" : 10
+```
+
+---
+
+## 📋 Tables
 
 ### Simple Table
 
@@ -508,13 +608,14 @@ Press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Delete</kbd> for task manager
 
 ## 🏁 Conclusion
 
-This blog post demonstrates all the rich markdown features available in this portfolio blog system, including:
+This blog post demonstrates all the rich features available in this portfolio blog system, including:
 
 ✅ **Text Formatting** - Bold, italic, strikethrough, inline code
 ✅ **Headings** - All 6 levels with proper hierarchy
 ✅ **Blockquotes** - Including nested and styled quotes
 ✅ **Lists** - Ordered, unordered, nested, and task lists
 ✅ **Code Blocks** - Syntax highlighted in multiple languages
+✅ **Mermaid Diagrams** - Flowcharts, sequence diagrams, git graphs, and more
 ✅ **Tables** - With alignment and formatting
 ✅ **Links** - External, internal, and reference-style
 ✅ **Images** - With captions and titles

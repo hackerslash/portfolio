@@ -7,17 +7,23 @@ interface Props {
   canonicalUrl?: string
   ogImage?: string
   ogType?: string
+  keywords?: string
+  jsonLd?: object
 }
 
-const { title, description, canonicalUrl, ogImage, ogType } = Astro.props
+const { title, description, canonicalUrl, ogImage, ogType, keywords, jsonLd } = Astro.props
 
-const { image, summary, url } = basics
+const { image, summary, url, name, location } = basics
+
+// Default keywords for SEO
+const defaultKeywords = "Md Afridi Sk, Backend Developer, Full Stack Developer, Software Engineer, IIT Kharagpur, Bangalore Developer, Python Developer, Node.js Developer, React Developer, AI Developer, Web Developer India, hackerslash"
 
 // Use props or fall back to defaults from cv.json
 const metaDescription = description || summary
 const pageCanonicalUrl = canonicalUrl || new URL(Astro.url.pathname, url).href
 const pageOgImage = ogImage || `${url}/profile-pic.png`
 const pageOgType = ogType || 'website'
+const metaKeywords = keywords || defaultKeywords
 ---
 
 <!doctype html>
@@ -26,23 +32,46 @@ const pageOgType = ogType || 'website'
     <meta charset="UTF-8" />
     <title>{title}</title>
     <meta name="description" content={metaDescription} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" as="image" href={image} />
     <link rel="canonical" href={pageCanonicalUrl} />
 
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content={metaKeywords} />
+    <meta name="author" content={name} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#019b59" />
+
+    <!-- Geo Tags for Local SEO -->
+    <meta name="geo.region" content="IN-KA" />
+    <meta name="geo.placename" content={location.city} />
+    <meta name="geo.position" content="12.9716;77.5946" />
+    <meta name="ICBM" content="12.9716, 77.5946" />
+
+    <!-- Open Graph -->
     <meta property="og:url" content={pageCanonicalUrl} />
     <meta property="og:type" content={pageOgType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={metaDescription} />
     <meta property="og:image" content={pageOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Md Afridi Sk - Portfolio" />
+    <meta property="og:locale" content="en_US" />
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="twitter:domain" content={url.split("//")[1] ?? ''} />
     <meta property="twitter:url" content={pageCanonicalUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={pageOgImage} />
+    <meta name="twitter:creator" content="@hackerslash" />
+
+    <!-- JSON-LD Structured Data -->
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
     <div id="theme-reveal" class="no-print"></div>
