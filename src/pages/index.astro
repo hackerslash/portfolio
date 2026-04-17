@@ -39,7 +39,7 @@ const jsonLd = {
       "isPartOf": {
         "@id": `${basics.url}/#website`
       },
-      "about": {
+      "mainEntity": {
         "@id": `${basics.url}/#person`
       },
       "description": pageDescription,
@@ -51,6 +51,9 @@ const jsonLd = {
       "name": basics.name,
       "alternateName": "hackerslash",
       "url": basics.url,
+      "mainEntityOfPage": {
+        "@id": `${basics.url}/#profilepage`
+      },
       "image": {
         "@type": "ImageObject",
         "url": `${basics.url}/profile-pic.png`,
