@@ -1,12 +1,23 @@
 {
+  "site": {
+    "projects": {
+      "featuredCount": 6,
+      "defaultLink": "live",
+      "showYear": true
+    }
+  },
   "basics": {
-    "name": "MD AFRIDI SK",
-    "label": "Backend Developer & Tech Enthusiast",
+    "name": "Md Afridi Sk",
+    "username": "hackerslash",
+    "greeting": "hi, i'm",
+    "label": "Backend Engineer",
+    "headline": "I breathe tokens\nfor life.",
+    "intro": "Backend engineer in Bangalore. I take systems from architecture to production — agentic loops, real-time voice, peer-to-peer sync — and reach for whatever language the problem wants: TypeScript, Python, Rust, Go. IIT Kharagpur, 2023.",
     "image": "/profile-pic.png",
     "email": "afridijnv19@gmail.com",
     "phone": "+91 9351557660",
     "url": "https://hackerslash.dev",
-    "summary": "Backend Developer with expertise in AI, Web Development, and Cloud Technologies. Passionate about building scalable applications and solving real life problems. Based in Bangalore, India.",
+    "summary": "Backend engineer specializing in the rapid delivery of AI-native systems. Owns architecture end-to-end across production agentic AI, real-time voice pipelines, and consensus-free distributed coordination, consistently shipping with strict telemetry, tests, and cost controls.",
     "location": {
       "city": "Bangalore",
       "countryCode": "IN",
@@ -27,41 +38,33 @@
   },
   "work": [
     {
-      "name": "Ayoo.care - Ayoo Medical Pvt Ltd.",
+      "name": "Ayoo Medical Pvt Ltd.",
       "position": "Backend Developer",
       "url": "https://ayoo.care",
       "startDate": "2025-04-01",
       "endDate": null,
-      "summary": "Building scalable backend services and improving observability for a healthtech platform, focusing on test automation, telemetry, and performance optimization.",
+      "summary": "Owning backend architecture for a healthtech platform — the agentic booking system, the abuse defence in front of it, the worker infrastructure behind it, and the AWS bill under it.",
       "highlights": [
-        "Designed and implemented comprehensive E2E test suites using pytest and FastAPI TestClient, automating critical backend flows.",
-        "Integrated OpenTelemetry tracking across services, enabling distributed logging and improving issue traceability across environments.",
-        "Optimized API response times through async I/O enhancements, while cutting AWS costs by 25% via improved resource provisioning and autoscaling policies."
+        "Built a patient-facing booking agent using a 17-tool calling loop matching doctors to complaints and handling payments, with typed error envelopes for in-loop model recovery.",
+        "Layered abuse defence ahead of inference via pre-model extraction screening, an IP-banning strike tool, OTP quotas, HMAC-SHA256 session binding, and a 20-key PII redaction pipeline.",
+        "Closed the loop on agent outcomes with a reaper that classifies expired conversations via a 4-field structured LLM call, with robust retry accounting and retroactive status correction.",
+        "Built an AI session summariser generating doctor notes and patient-specific summaries; audio is transcribed via Deepgram ASR and indexed in Pinecone (Gemini) for RAG.",
+        "Led extraction of the notification and worker service from the FastAPI monolith; a 4-queue Redis Queue system with per-channel selective retry (FCM, Exotel SMS, SMTP) decouples lifecycle events and reminders from the request cycle.",
+        "Cut slot-query latency to sub-50ms across 200+ endpoints with a MongoDB-backed doctor-availability cache using compound indexes and explicit invalidation.",
+        "Rightsized ECS-on-EC2 fleets (Auto Scaling, Aurora read replicas), cutting AWS spend 25% at a 99.9% uptime SLA."
       ]
     },
     {
-      "name": "Outlier AI - Scale Labs",
-      "position": "AI Coding Specialist (Freelance)",
-      "url": "https://outlier.ai",
-      "startDate": "2024-09-01",
+      "name": "Independent",
+      "position": "Software Engineer & AI Consultant",
+      "url": "",
+      "startDate": "2023-06-01",
       "endDate": "2025-03-31",
-      "summary": "Optimizing LLM efficiency and code accuracy through RLHF and prompt tuning. Ensuring code compliance via QA audits and security checks.",
+      "summary": "Remote contract work, split between product delivery for SMB clients and evaluation work for AI labs.",
       "highlights": [
-        "Applied RLHF to optimize LLM efficiency and code accuracy through iterative training pipelines refined via human evaluator feedback.",
-        "Developed adaptive prompt strategies with tunable parameters.",
-        "Ensured legal/ethical compliance via audits and risk mitigation for licensing & security."
-      ]
-    },
-    {
-      "name": "Zlink Universal",
-      "position": "Full Stack Developer (Freelance)",
-      "url": "https://zlink.co.in",
-      "startDate": "2023-05-01",
-      "endDate": "2024-09-30",
-      "summary": "Delivered end-to-end web solutions for SMB clients using the MERN stack, with a focus on domain-specific dashboards and backend efficiency.",
-      "highlights": [
-        "Delivered full-stack apps using MERN stack, building responsive UIs and scalable APIs for local clients across domains like e-commerce, mosque management, and vendor payment systems.",
-        "Architected custom dashboards and admin panels, integrating role-based access to streamline the operations for SMB clients."
+        "Shipped 8+ production full-stack apps (React, Node.js, PostgreSQL) for SMB clients; owned architecture, CI/CD, and deploy lifecycle.",
+        "Reviewed 200+ LLM code solutions for Scale AI (Outlier); authored RLHF QA rubrics driving a 12% lift on coding benchmarks.",
+        "Engineered adversarial Docker terminal benchmarks (AfterQuery) exposing multi-step reasoning gaps in SOTA models; built reproducible evaluation harnesses."
       ]
     }
   ],
@@ -83,160 +86,379 @@
   ],
   "projects": [
     {
-      "name": "P2P FileShare",
-      "description": "A Next.js p2p file sharing app using WebRTC and PeerJS for secure, high-speed file sharing without any data caps",
-      "isActive": "true",
+      "name": "Colloquium",
+      "slug": "colloquium",
+      "tagline": "A Discord-style P2P desktop app with no backend at all — direct WebRTC calls, encrypted local history.",
+      "description": "A serverless Discord-style desktop app for Windows and macOS: group spaces, voice and video calls, and synced watch parties, with clients dialling each other directly over WebRTC. History lives in a local SQLCipher-encrypted SQLite file. A consensus-free sync engine built on hybrid logical clocks and gap-based state transfer keeps peers convergent without a coordinator, and watch parties run through a bundled ffmpeg sidecar that remuxes to HLS on the fly.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": true,
+      "isActive": false,
+      "primary": "github",
+      "stack": ["Tauri v2", "Rust", "WebRTC", "SQLCipher", "React", "ffmpeg"],
       "highlights": [
-        "Optimized performance",
-        "CI/CD integration",
-        "Modern UI",
-        "PeerJS",
-        "WebRTC"
+        "Consensus-free sync via hybrid logical clocks and gap-based state transfer",
+        "4K60 screen share over adaptive WebRTC Transport BWE",
+        "Echo cancelled at the OS layer, RNNoise suppression in an AudioWorklet",
+        "Watch parties via a bundled ffmpeg sidecar and loopback HTTP server"
+      ],
+      "url": "",
+      "github": "https://github.com/hackerslash/colloquium"
+    },
+    {
+      "name": "MyTorBox",
+      "slug": "my-torbox",
+      "tagline": "A stateless Stremio addon that turns a TorBox library into browsable catalogues. 10k+ calls in week one.",
+      "description": "A Stremio addon that turns a TorBox library into browsable movie and series catalogues, enriched with TMDB metadata and rated posters. Stateless by design — API keys ride inside the install URL rather than a database — with 250k+ library items matched to canonical TMDB entries through a four-tier parser.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": true,
+      "isActive": true,
+      "primary": "live",
+      "stack": ["Node.js", "Redis", "TMDB", "IBM Code Engine", "Express"],
+      "highlights": [
+        "95% cache hit rate across 10k+ API calls in its first week",
+        "Credentials sealed with AES-256-GCM stream sealing",
+        "Cache stampedes eliminated via promise-chained locks",
+        "Chunked metadata envelopes bypass native Redis byte limits"
+      ],
+      "url": "https://mytorbox.hackerslash.dev",
+      "github": "https://github.com/hackerslash/mytorbox"
+    },
+    {
+      "name": "AgriSetu",
+      "slug": "agri-setu",
+      "tagline": "A voice-first agricultural marketplace — farmers place collective orders by speaking, in their own language.",
+      "description": "A voice-first marketplace that lets fragmented farmer demand aggregate into collective orders. A real-time pipeline streams PCM audio over WebSocket to AWS Transcribe, runs it through an LLM, and answers with Polly TTS. A geospatial engine matches orders to vendors under Haversine distance constraints, with drift-free cross-unit price harmonisation and a bidding state machine. Flutter app for farmers, Next.js dashboard for vendors, one Express and Prisma backend.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": true,
+      "isActive": true,
+      "primary": "github",
+      "stack": ["Next.js", "Flutter", "AWS Transcribe", "PostgreSQL", "TypeScript", "Prisma"],
+      "highlights": [
+        "Real-time PCM over WebSocket to AWS Transcribe, back via Polly TTS",
+        "Geospatial demand aggregation under Haversine distance constraints",
+        "Drift-free cross-unit price harmonisation and a bidding state machine",
+        "Monorepo: Flutter mobile, Next.js web, Express + Prisma API"
+      ],
+      "url": "https://agrisetu.carrd.co/",
+      "github": "https://github.com/hackerslash/agrisetu"
+    },
+    {
+      "name": "Gofetch",
+      "slug": "go-fetch",
+      "tagline": "A Go download manager with segmented concurrent transfers, resumable state and a live terminal UI.",
+      "description": "A native Go CLI download manager with curl-like commands: concurrent segmented range downloads, pause and resume from a task file, a terminal UI showing per-thread progress and speed, same-host static site mirroring, and mirror benchmarking ranked by latency and throughput.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": true,
+      "isActive": false,
+      "primary": "github",
+      "stack": ["Go", "HTTP Range", "Concurrency", "TUI"],
+      "highlights": [
+        "Segmented Range downloads with configurable worker counts",
+        "Pause and resume from a task file kept out of the working directory",
+        "Same-host static mirroring for HTML, CSS, JS, images and fonts",
+        "Mirror benchmarking ranked by latency and throughput"
+      ],
+      "url": "",
+      "github": "https://github.com/hackerslash/gofetch"
+    },
+    {
+      "name": "LeetCode Companywise",
+      "slug": "leetcode-companywise",
+      "tagline": "Practise LeetCode filtered by company, frequency and difficulty — with progress charts that mean something.",
+      "description": "An interactive dashboard for practising LeetCode questions filtered by company, frequency and difficulty. It tracks what you have solved and visualises completion across difficulty and company, so interview prep has a shape instead of a list.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": true,
+      "isActive": true,
+      "primary": "live",
+      "stack": ["React", "JavaScript", "Recharts"],
+      "highlights": [
+        "Filter by company, frequency and difficulty",
+        "Solved-problem tracking with completion stats",
+        "Difficulty and company distribution charts",
+        "Dark mode"
+      ],
+      "url": "https://lc-companywise.hackerslash.dev/",
+      "github": "https://github.com/hackerslash/Leetcode-Companywise"
+    },
+    {
+      "name": "opsbot",
+      "slug": "ops-bot",
+      "tagline": "A DevOps agent skill that turns a coding agent into a careful senior engineer for your fleet.",
+      "description": "An agent skill that connects to remote hosts over SSH or AWS SSM and follows battle-tested procedures for diagnosis, deployment, nginx, security hardening and provisioning. It inspects before it mutates anything, and asks for explicit confirmation before any change — especially on a prod host.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": false,
+      "isActive": false,
+      "primary": "github",
+      "stack": ["Bash", "Agent Skills", "AWS SSM", "nginx"],
+      "highlights": [
+        "Resolves targets from a declarative host inventory",
+        "SSH via PEM key, or AWS SSM",
+        "Inspect before mutate, confirm before change on prod",
+        "Procedures for diagnosis, deploy, nginx, hardening, provisioning"
+      ],
+      "url": "",
+      "github": "https://github.com/hackerslash/opsbot"
+    },
+    {
+      "name": "CVPilot",
+      "slug": "cv-pilot",
+      "tagline": "Tailors a resume to a job posting — truthfully, inside a git worktree, straight to an ATS-ready PDF.",
+      "description": "A Claude Code skill that keeps a full career history in one structured file alongside a LaTeX shell, then for each job posting researches the role, selects only the truthful relevant material, and renders a one-page ATS-optimised PDF with a repo-local tectonic binary. The whole run happens inside an isolated git worktree, so tracked files never change.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": false,
+      "isActive": false,
+      "primary": "github",
+      "stack": ["Python", "Agent Skills", "LaTeX", "tectonic"],
+      "highlights": [
+        "One structured career database — no invented claims or metrics",
+        "Researches the role and company before selecting material",
+        "Renders a one-page ATS-optimised PDF locally",
+        "Runs in an isolated git worktree"
+      ],
+      "url": "",
+      "github": "https://github.com/hackerslash/cvpilot"
+    },
+    {
+      "name": "AI Battle Arena",
+      "slug": "ai-battle-arena",
+      "tagline": "Two LLMs fight in a real-time canvas arena — plug in any OpenAI-compatible endpoint and watch them think.",
+      "description": "A real-time battleship-style arena where two AI models compete against each other, each one configurable with its own base URL, model and API key so any OpenAI-compatible endpoint — local or hosted — can be dropped in. A 60fps canvas renderer drives the physics and combat while each model's intent and reasoning stream live to on-screen logs, side by side.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": true,
+      "isActive": false,
+      "primary": "live",
+      "stack": ["JavaScript", "Canvas", "Vite", "LLM APIs"],
+      "highlights": [
+        "Two independently configurable AI models fight live",
+        "Works with any OpenAI-compatible endpoint, local or hosted",
+        "60fps canvas physics and combat rendering",
+        "Live intent and reasoning logs streamed per model"
+      ],
+      "url": "https://ai-battle-arena-five.vercel.app",
+      "github": "https://github.com/hackerslash/ai_battle_arena"
+    },
+    {
+      "name": "GreenSpin Firefox",
+      "slug": "greenspin-firefox",
+      "tagline": "A Firefox theme that brings back the classic grey-and-green tab loading spinner.",
+      "description": "A minimal userChrome.css theme that patches only the tab throbber, restoring the grey connecting circle and green spinning loader from the Firefox 4–29 era. No other UI changes, dark-mode-aware brightening, and an install path built for AI coding agents to run themselves.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": false,
+      "isActive": false,
+      "primary": "github",
+      "stack": ["CSS", "userChrome.css", "Firefox"],
+      "highlights": [
+        "Patches only the tab throbber — zero other UI changes",
+        "Classic grey-then-green spinner from Firefox 4–29",
+        "Dark-mode-aware spinner brightening",
+        "Installable by an AI coding agent, not just by hand"
+      ],
+      "url": "",
+      "github": "https://github.com/hackerslash/GreenSpin-Firefox"
+    },
+    {
+      "name": "ccswitch",
+      "slug": "ccswitch",
+      "tagline": "A zero-dependency CLI for switching between Claude Code API configurations.",
+      "description": "A tiny, zero-dependency CLI that stores named Claude Code configurations — API key plus base URL — in a dotfile and writes the active one into Claude Code's settings. Add, test, list and switch from one command, on macOS, Linux or Windows.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": false,
+      "isActive": false,
+      "primary": "github",
+      "stack": ["Node.js", "CLI"],
+      "highlights": [
+        "Zero runtime dependencies",
+        "Live key and base-URL testing before you switch",
+        "Cross-platform: macOS, Linux, Windows"
+      ],
+      "url": "",
+      "github": "https://github.com/hackerslash/ccswitch"
+    },
+    {
+      "name": "Cloudpad",
+      "slug": "cloudpad",
+      "tagline": "An offline-first markdown notepad. IndexedDB, tabs, PDF export, no account.",
+      "description": "An offline-first markdown notepad that keeps every note in IndexedDB. Multiple tabs, pinned notes, search, live preview, PDF export and keyboard shortcuts, plus controls for theme, typography, sidebar position, density and width.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2026",
+      "featured": false,
+      "isActive": true,
+      "primary": "live",
+      "stack": ["React", "IndexedDB", "Markdown"],
+      "highlights": [
+        "Notes stored locally in IndexedDB — nothing leaves the browser",
+        "Tabs, pinned notes, search and live preview",
+        "Markdown to PDF export",
+        "Theme, typography, density and layout controls"
+      ],
+      "url": "https://cloudpad-five.vercel.app",
+      "github": "https://github.com/hackerslash/cloudpad"
+    },
+    {
+      "name": "P2P FileShare",
+      "slug": "p2p-fileshare",
+      "tagline": "Browser-to-browser file transfer over WebRTC. No server in the middle, no size cap.",
+      "description": "A peer-to-peer file sharing app built on WebRTC and PeerJS. Each side gets a peer ID, the two connect directly, and the file streams browser to browser — it never touches a server, so there is no upload limit and nothing left behind to delete.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2024",
+      "featured": false,
+      "isActive": true,
+      "primary": "live",
+      "stack": ["Next.js", "WebRTC", "PeerJS", "CI/CD"],
+      "highlights": [
+        "Direct browser-to-browser transfer, no server storage",
+        "Real-time transfer status",
+        "Works in any modern WebRTC browser"
       ],
       "url": "https://fileshare.hackerslash.dev",
       "github": "https://github.com/hackerslash/p2p-share"
     },
     {
-      "name": "Portfolio Website",
-      "description": "A modern, minimalist portfolio with a fully-functional blog system, tagging, comments, and dark mode support built with Astro.",
-      "isActive": "true",
-      "highlights": [
-        "Markdown-based blog with syntax highlighting",
-        "Tag filtering and pagination",
-        "Giscus comments integration",
-        "Dark/Light theme with smooth transitions",
-        "Responsive design with interactive UI"
-      ],
-      "url": "https://www.hackerslash.dev",
-      "github": "https://github.com/hackerslash/portfolio"
-    },
-    {
       "name": "Slack AI Chatbot",
-      "description": "OAuth 2.0 compliant Slack AI Chatbot integrating Slack events, AI APIs, and secure token management for dynamic conversations.",
-      "isActive": "true",
+      "slug": "slack-ai-chatbot",
+      "tagline": "OAuth 2.0 and Slack request verification written from scratch, then an LLM bolted on top.",
+      "description": "An OAuth 2.0 compliant Slack chatbot wiring Slack events to LLM APIs with secure token management. The OAuth handshake and Slack request-signature verification are implemented from scratch rather than pulled from an SDK, with Redis and MongoDB behind them.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2025",
+      "featured": false,
+      "isActive": true,
+      "primary": "live",
+      "stack": ["Node.js", "Redis", "MongoDB", "OAuth 2.0"],
       "highlights": [
-        "Modular architecture",
-        "implemented OAuth 2.0 and request verification from scratch",
-        "Redis and MongoDB",
-        "Slack and LLM API integrations"
+        "OAuth 2.0 and request-signature verification from scratch",
+        "Modular service architecture",
+        "Redis and MongoDB for session and token state"
       ],
       "url": "https://bit.ly/4jYEV6h",
       "github": "https://github.com/hackerslash/slack_backend_oauth"
     },
     {
-      "name": "DSArch: A Search Engine for LeetCode",
-      "description": "A LeetCode search engine made by scraping 2000+ Leetcode questions and using TF-IDF with cosine similarity for efficient search.",
+      "name": "Portfolio Website",
+      "slug": "portfolio",
+      "tagline": "This site. Astro, a markdown blog with Mermaid and Shiki, and a theme toggle that wipes.",
+      "description": "A minimalist portfolio with a markdown blog system — Shiki syntax highlighting, Mermaid diagrams, tag filtering, Giscus comments, and a light/dark toggle built on the View Transitions API.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2025",
+      "featured": false,
+      "isActive": true,
+      "primary": "live",
+      "stack": ["Astro", "TypeScript", "Markdown", "Shiki"],
       "highlights": [
-        "Scraped 2000+ Leetcode problems",
-        "TF-IDF and cosine similarity",
-        "Stemming and lemmatization",
-        "Node.js, Express, and EJS"
+        "Markdown blog with Shiki highlighting and Mermaid diagrams",
+        "Tag filtering and search",
+        "Giscus comments",
+        "Light/dark theme on the View Transitions API"
       ],
-      "url": "https://github.com/hackerslash/dsarch",
-      "github": "https://github.com/hackerslash/dsarch"
+      "url": "https://www.hackerslash.dev",
+      "github": "https://github.com/hackerslash/portfolio"
     },
     {
       "name": "doc-shadow-removal",
-      "description": "Implementation of 'An Effective Background Estimation Method for Shadows Removal of Document Images' using MATLAB and neighboring pixel-based shadow mapping.",
+      "slug": "doc-shadow-removal",
+      "tagline": "Paper implementation: background estimation to lift shadows off scanned documents.",
+      "description": "An implementation of “An Effective Background Estimation Method for Shadows Removal of Document Images” in MATLAB, using neighbouring-pixel shadow mapping to estimate and subtract the background illumination.",
+      "image": "",
+      "imageAlt": "",
+      "year": "2022",
+      "featured": false,
+      "isActive": false,
+      "primary": "github",
+      "stack": ["MATLAB", "Image Processing"],
       "highlights": [
-        "Employs background estimation for shadow detection and removal",
-        "Utilizes neighboring pixel-based shadow mapping",
-        "Developed in MATLAB"
+        "Background estimation for shadow detection and removal",
+        "Neighbouring-pixel shadow mapping"
       ],
-      "url": "https://github.com/hackerslash/doc-shadow-removal",
+      "url": "",
       "github": "https://github.com/hackerslash/doc-shadow-removal"
-    },
-    {
-      "name": "Invoice Comparator",
-      "description": "Compares an input invoice to a database using text, layout, and content similarity metrics.",
-      "highlights": [
-        "TF-IDF & Cosine Similarity",
-        "Layout similarity using SSIM on images",
-        "Content similarity using Levenshtein Distance",
-        "PDF processing with pdfplumber & pdf2image",
-        "Ranks invoices based on combined score"
-      ],
-      "url": "https://github.com/hackerslash/invoice_comparator",
-      "github": "https://github.com/hackerslash/invoice_comparator"
     }
   ],
   "skills": [
-    {
-      "name": "JavaScript",
-      "level": "Advanced"
-    },
-    {
-      "name": "TypeScript",
-      "level": "Advanced"
-    },
-    {
-      "name": "Python",
-      "level": "Advanced"
-    },
-    {
-      "name": "React",
-      "level": "Advanced"
-    },
-    {
-      "name": "Next.js",
-      "level": "Advanced"
-    },
-    {
-      "name": "Node",
-      "level": "Advanced"
-    },
-    {
-      "name": "MySQL",
-      "level": "Intermediate"
-    },
-    {
-      "name": "Firebase",
-      "level": "Intermediate"
-    },
-    {
-      "name": "Docker",
-      "level": "Intermediate"
-    },
-    {
-      "name": "Kubernetes",
-      "level": "Intermediate"
-    },
-    {
-      "name": "Redis",
-      "level": "Intermediate"
-    },
-    {
-      "name": "Git",
-      "level": "Intermediate"
-    }
+    { "name": "TypeScript", "category": "Languages" },
+    { "name": "Python", "category": "Languages" },
+    { "name": "Rust", "category": "Languages" },
+    { "name": "C/C++", "category": "Languages" },
+    { "name": "Java", "category": "Languages" },
+    { "name": "Go", "category": "Languages" },
+    { "name": "Dart", "category": "Languages" },
+    { "name": "SQL", "category": "Languages" },
+    { "name": "Bash", "category": "Languages" },
+
+    { "name": "FastAPI", "category": "Backend" },
+    { "name": "Express", "category": "Backend" },
+    { "name": "Node.js", "category": "Backend" },
+    { "name": "Spring Boot", "category": "Backend" },
+    { "name": "gRPC", "category": "Backend" },
+    { "name": "REST", "category": "Backend" },
+    { "name": "WebSocket", "category": "Backend" },
+    { "name": "WebRTC", "category": "Backend" },
+    { "name": "Celery", "category": "Backend" },
+    { "name": "JWT/OAuth", "category": "Backend" },
+
+    { "name": "LLMs", "category": "AI/ML" },
+    { "name": "RAG", "category": "AI/ML" },
+    { "name": "Tool-calling agents", "category": "AI/ML" },
+    { "name": "MCP", "category": "AI/ML" },
+    { "name": "RLHF", "category": "AI/ML" },
+    { "name": "Embeddings", "category": "AI/ML" },
+    { "name": "Vector search", "category": "AI/ML" },
+    { "name": "AWS Bedrock", "category": "AI/ML" },
+
+    { "name": "PostgreSQL", "category": "Data & infra" },
+    { "name": "MongoDB", "category": "Data & infra" },
+    { "name": "Redis", "category": "Data & infra" },
+    { "name": "Kafka", "category": "Data & infra" },
+    { "name": "Elasticsearch", "category": "Data & infra" },
+    { "name": "Docker", "category": "Data & infra" },
+    { "name": "Kubernetes", "category": "Data & infra" },
+    { "name": "AWS", "category": "Data & infra" },
+    { "name": "Terraform", "category": "Data & infra" },
+    { "name": "CI/CD", "category": "Data & infra" }
   ],
   "languages": [
-    {
-      "language": "English",
-      "fluency": "Advanced"
-    },
-    {
-      "language": "Hindi",
-      "fluency": "Native speaker"
-    }
+    { "language": "English", "fluency": "Advanced" },
+    { "language": "Hindi", "fluency": "Native speaker" }
   ],
   "awards": [
     {
-      "title": "JEE Main 2019 - 99.10 percentile",
+      "title": "JEE Main 2019 — 99.10 percentile",
       "date": "2019",
       "awarder": "National Testing Agency",
-      "summary": "Scored 99.10 percentile among 8,74,469 candidates."
+      "summary": "99.10 percentile among 8,74,469 candidates. Ranked 28th in the OBC category in WBJEE 2019."
     },
     {
-      "title": "National Youth Parliament 2016-17",
+      "title": "National Youth Parliament 2016–17",
       "date": "2017",
       "awarder": "Ministry of Parliamentary Affairs, Govt. of India",
-      "summary": "Secured 4th position in the National Youth Parliament competition."
+      "summary": "Awarded for 4th place nationally."
     }
   ],
   "certificates": [
     {
-      "name": "AZ-201: Applied Algorithms & Data Structures",
+      "name": "Applied Algorithms & Data Structures",
       "date": "2021",
       "issuer": "AlgoZenith",
       "url": ""

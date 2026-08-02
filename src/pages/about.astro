@@ -1,0 +1,99 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Intro from "@/components/sections/About.astro"
+import Experience from "@/components/sections/Experience.astro"
+import Education from "@/components/sections/Education.astro"
+import Skills from "@/components/sections/Skills.astro"
+import Recognition from "@/components/sections/Recognition.astro"
+import Mail from "@/icons/Mail.astro"
+import { basics, languages } from "@cv"
+
+const { name, email, url } = basics
+
+const pageTitle = "About — Md Afridi Sk"
+const pageDescription =
+  "Md Afridi Sk — backend engineer in Bangalore. Agentic AI and worker infrastructure at Ayoo.care, contract work for SMB clients and AI labs before that, B.Tech from IIT Kharagpur. The full stack, awards and certificates."
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": `${url}/about#about`,
+  url: `${url}/about`,
+  name: pageTitle,
+  description: pageDescription,
+  isPartOf: { "@id": `${url}/#website` },
+  mainEntity: { "@id": `${url}/#person` },
+}
+---
+
+<Layout title={pageTitle} description={pageDescription} jsonLd={jsonLd}>
+  <main class="page">
+    <header class="doc-head">
+      <h1>About</h1>
+    </header>
+
+    <Intro />
+    <Experience />
+    <Education />
+    <Skills />
+    <Recognition />
+
+    <section class="closing">
+      <p class="closing__langs">
+        Speaks {languages.map((l) => `${l.language} (${l.fluency.toLowerCase()})`).join(", ")}.
+      </p>
+      <p>
+        The fastest way to reach {name.split(" ").slice(-1)[0].toLowerCase()} is email.
+        <a class="closing__link" href={`mailto:${email}`}>
+          <Mail />
+          {email}
+        </a>
+      </p>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .doc-head {
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding-block-end: var(--space-lg);
+    margin-block-end: var(--space-lg);
+    border-block-end: var(--rule-thick) solid var(--color-rule-2);
+  }
+
+  h1 {
+    font-size: var(--text-display-s);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--track-display);
+  }
+
+  .closing {
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding-block-start: var(--space-lg);
+    border-block-start: var(--rule-hair) solid var(--color-rule);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .closing__langs {
+    color: var(--color-ink-3);
+  }
+
+  .closing__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
+    margin-inline-start: var(--space-3xs);
+    color: var(--color-accent-text);
+    border-block-end: var(--rule-hair) solid var(--color-rule-2);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .closing__link:hover {
+    border-block-end-color: var(--color-accent);
+  }
+</style>

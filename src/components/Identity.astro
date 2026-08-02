@@ -1,0 +1,161 @@
+---
+import { basics } from "@cv"
+
+const { name, username, greeting = "hi, i'm" } = basics as {
+  name: string
+  username?: string
+  greeting?: string
+}
+
+const idents = [username, name].filter(Boolean) as string[]
+const widest = Math.max(...idents.map((s) => s.length))
+---
+
+<p class="ident">
+  <span class="ident__lead">{greeting}</span>
+  <span class="sr-only">{username ? `${name}, also known as ${username}.` : name}</span>
+  <span
+    class="ident__slot"
+    style={`--ident-ch:${widest}`}
+    data-idents={idents.join("|")}
+    aria-hidden="true">{idents[0]}</span
+  >
+</p>
+
+<style>
+  .ident {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2xs);
+    margin-block-end: var(--space-2xs);
+    color: var(--color-ink-3);
+    font-size: var(--text-md);
+    line-height: var(--leading-snug);
+  }
+
+  .ident__slot {
+    display: inline-block;
+    /* Reserve the widest name so the scramble can't nudge the line. */
+    min-width: calc(var(--ident-ch, 12) * 1ch);
+    color: var(--color-ink);
+    font-weight: 700;
+    white-space: pre;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .ident__slot.is-glitching {
+    color: var(--color-accent-text);
+    animation: identJitter 180ms steps(3, end) infinite;
+  }
+
+  @keyframes identJitter {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    33% {
+      transform: translate3d(-1px, 1px, 0);
+    }
+    66% {
+      transform: translate3d(1px, -1px, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ident__slot.is-glitching {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const GLYPHS = "!<>-_\\/[]{}=+*^?#01"
+  const DWELL = 2200
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)")
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
+
+  document.querySelectorAll<HTMLElement>(".ident__slot").forEach((slot) => {
+    const idents = (slot.dataset.idents ?? "").split("|").filter(Boolean)
+    if (idents.length < 2) return
+
+    if (reduce.matches) {
+      slot.textContent = idents.join(" / ")
+      return
+    }
+
+    let onScreen = true
+    new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting
+    }).observe(slot)
+
+    function scramble(from: string, to: string): Promise<void> {
+      const len = Math.max(from.length, to.length)
+      const queue = Array.from({ length: len }, (_, i) => {
+        const start = Math.floor(Math.random() * 6)
+        return {
+          from: from[i] ?? "",
+          to: to[i] ?? "",
+          start,
+          end: start + 4 + Math.floor(Math.random() * 8),
+          ch: "",
+        }
+      })
+
+      return new Promise((resolve) => {
+        let frame = 0
+
+        const tick = () => {
+          let out = ""
+          let settled = 0
+
+          for (const cell of queue) {
+            if (frame >= cell.end) {
+              out += cell.to
+              settled++
+            } else if (frame >= cell.start) {
+              if (!cell.ch || Math.random() < 0.3) {
+                cell.ch = GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
+              }
+              out += cell.ch
+            } else {
+              out += cell.from
+            }
+          }
+
+          slot.textContent = out
+
+          if (settled === queue.length) {
+            resolve()
+            return
+          }
+
+          frame++
+          requestAnimationFrame(tick)
+        }
+
+        requestAnimationFrame(tick)
+      })
+    }
+
+    let current = 0
+
+    async function cycle() {
+      for (;;) {
+        await sleep(DWELL)
+        if (document.hidden || !onScreen || reduce.matches) continue
+
+        const next = (current + 1) % idents.length
+        slot.classList.add("is-glitching")
+        await scramble(idents[current], idents[next])
+        slot.classList.remove("is-glitching")
+        current = next
+      }
+    }
+
+    cycle()
+  })
+</script>

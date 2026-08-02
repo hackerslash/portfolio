@@ -1,99 +1,93 @@
 ---
 import Section from "../Section.astro"
-import HTML from "@/icons/html.astro"
-import CSS from "@/icons/css.astro"
-import JavaScript from "@/icons/javascript.astro"
-import TypeScript from "@/icons/type.astro"
-import Python from "@/icons/python.astro"
-import React from "@/icons/react.astro"
-import Node from "@/icons/node.astro"
-import MySQL from "@/icons/sql.astro"
-import Git from "@/icons/git.astro"
-import GitHub from "@/icons/GitHub.astro"
-import Tailwind from "@/icons/tailwind.astro"
-import Next from "@/icons/next.astro"
 import { skills } from "@cv"
-import Swift from "@/icons/swift.astro"
-import SwiftUI from "@/icons/swiftui.astro"
-import Kotlin from "@/icons/kotlin.astro"
-import Flutter from "@/icons/flutter.astro"
-import Firebase from "@/icons/firebase.astro"
-import Docker from "@/icons/docker.astro"
-import Kubernetes from "@/icons/kubernetes.astro"
-import Redis from "@/icons/redis.astro"
 
-const SKILLS_ICONS: Record<string, any> = {
-  HTML,
-  CSS,
-  JavaScript,
-  TypeScript,
-  Python,
-  React,
-  Node,
-  MySQL,
-  Git,
-  GitHub,
-  Next,
-  Tailwind,
-  Swift,
-  SwiftUI,
-  Kotlin,
-  Flutter,
-  Firebase,
-  Docker,
-  Kubernetes,
-  Redis
+// Grouped by `category`, falling back to `level` for older cv.json shapes.
+// Group order follows first appearance, so the JSON controls reading order.
+const groups: { key: string; items: string[] }[] = []
+
+for (const skill of skills as Array<{ name: string; category?: string; level?: string }>) {
+  const key = skill.category ?? skill.level ?? "Other"
+  const group = groups.find((g) => g.key === key)
+  if (group) group.items.push(skill.name)
+  else groups.push({ key, items: [skill.name] })
 }
 ---
 
-<Section title="Skills">
-  <ul>
+<Section title="Skills" id="skills">
+  <dl class="skills">
     {
-      skills.map(({ name }) => {
-        const iconName = name === "Next.js" ? "Next" : name
-        const Icon = SKILLS_ICONS[iconName]
-
-        return (
-          <li role="listitem" aria-label={`${name} skill`}>
-            {Icon && <Icon />} <span aria-hidden="false">{name}</span>
-          </li>
-        )
-      })
+      groups.map(({ key, items }) => (
+        <div class="skills__group">
+          <dt>{key.toLowerCase()}</dt>
+          <dd>
+            <ul>
+              {items.map((name) => (
+                <li>{name}</li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      ))
     }
-  </ul>
+  </dl>
 </Section>
 
 <style>
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .skills__group {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--space-sm);
+    align-items: start;
+  }
+
+  .skills__group + .skills__group {
+    padding-block-start: var(--space-md);
+    border-block-start: var(--rule-hair) solid var(--color-rule);
+  }
+
+  dt {
+    color: var(--color-ink-4);
+    font-size: var(--text-xs);
+    padding-block-start: 3px;
+  }
+
+  dt::after {
+    content: " ›";
+    color: var(--color-accent-text);
+  }
+
+  dd {
+    margin: 0;
+    min-width: 0;
+  }
+
   ul {
-    display: inline-flex;
-    gap: 8px;
+    display: flex;
     flex-wrap: wrap;
+    gap: var(--space-3xs);
   }
 
   li {
-    align-items: center;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    color: var(--text-color);
-    display: flex;
-    font-size: 0.8rem;
-    font-weight: 500;
-    gap: 6px;
-    padding: 0.4rem 0.8rem;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(4px);
+    padding: 1px var(--space-2xs);
+    background: var(--color-paper-2);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-2);
+    font-size: var(--text-xs);
+    letter-spacing: 0;
   }
 
-  @media (width <= 700px) {
-    ul {
-      justify-content: center;
+  @media (width <= 40rem) {
+    .skills__group {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xs);
     }
-  }
-
-  li:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--accent-color);
-    transform: translateY(-2px);
   }
 </style>

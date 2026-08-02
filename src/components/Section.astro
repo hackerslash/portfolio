@@ -1,55 +1,104 @@
 ---
-// se ejecuta en el servidor o en build time <----
-const { title, id } = Astro.props
+interface Props {
+  title?: string
+  id?: string
+  wide?: boolean
+  action?: string
+  actionHref?: string
+}
+
+const { title, id, wide = false, action, actionHref } = Astro.props
 ---
 
-<section id={id}>
-  {title && <h2>{title}</h2>}
+<section id={id} class:list={["section", { "section--wide": wide }]}>
+  {
+    title && (
+      <div class="section__head">
+        <h2>{title}</h2>
+        <span class="section__rule" aria-hidden="true" />
+        {action && actionHref && (
+          <a class="section__action" href={actionHref}>
+            {action} <span aria-hidden="true">→</span>
+          </a>
+        )}
+      </div>
+    )
+  }
   <slot />
 </section>
 
-<script>
-  // se ejecuta en el cliente <----
-</script>
-
 <style>
-  section {
-    max-width: 700px;
-    margin: 0 auto 48px;
+  .section {
     width: 100%;
-    opacity: 0;
-    animation: fadeInUp 0.6s ease-out forwards;
+    max-width: var(--measure);
+    margin-inline: auto;
+    margin-block-end: var(--space-2xl);
   }
 
-  section:nth-child(1) { animation-delay: 0.1s; }
-  section:nth-child(2) { animation-delay: 0.2s; }
-  section:nth-child(3) { animation-delay: 0.3s; }
-  section:nth-child(4) { animation-delay: 0.4s; }
-  section:nth-child(5) { animation-delay: 0.5s; }
-  section:nth-child(6) { animation-delay: 0.6s; }
-  section:nth-child(7) { animation-delay: 0.7s; }
+  .section--wide {
+    max-width: var(--page);
+  }
 
-  h2 {
-    margin-bottom: 24px;
-    font-weight: 700;
-    line-height: 1.5;
-    font-size: 1.5rem;
-    position: relative;
+  .section__head {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--space-sm);
+    margin-block-end: var(--space-md);
   }
 
-  h2::after {
-    content: "";
-    height: 1px;
+  h2 {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: -0.02em;
+    line-height: var(--leading-snug);
+    color: var(--color-ink);
+  }
+
+  .section__rule {
     flex: 1;
-    background: linear-gradient(to right, var(--card-border), transparent);
+    height: var(--rule-hair);
+    min-width: var(--space-sm);
+    background: var(--color-rule);
   }
 
-  @media (width <= 700px) {
-    section {
-      margin-bottom: 38px;
+  .section__action {
+    flex-shrink: 0;
+    color: var(--color-ink-3);
+    font-size: var(--text-sm);
+    white-space: nowrap;
+    border-block-end: var(--rule-hair) solid var(--color-rule-2);
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .section__action:hover {
+    color: var(--color-accent-text);
+    border-block-end-color: var(--color-accent);
+  }
+
+  .section__action:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (width <= 40rem) {
+    .section {
+      margin-block-end: var(--space-xl);
+    }
+
+    .section__head {
+      flex-wrap: wrap;
+      gap: var(--space-2xs) var(--space-sm);
+    }
+
+    .section__rule {
+      order: 3;
+      flex-basis: 100%;
     }
   }
 </style>

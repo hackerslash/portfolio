@@ -1,22 +1,30 @@
 ---
-import Section from "../Section.astro"
-
 import { basics } from "@cv"
+
 const { summary } = basics
 ---
 
-<Section title="About Me">
-  <p class="about-text">
-    {summary}
-  </p>
-</Section>
+<div class="lede">
+  <p>{summary}</p>
+</div>
 
 <style>
-  .about-text {
-    transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  .lede {
+    max-width: var(--measure);
+    margin-inline: auto;
+    margin-block-end: var(--space-2xl);
   }
 
-  .about-text:hover {
-    font-size: calc(0.9rem + 0.25px);
+  .lede p {
+    color: var(--color-ink-2);
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    text-wrap: pretty;
+  }
+
+  @media (width <= 40rem) {
+    .lede {
+      margin-block-end: var(--space-xl);
+    }
   }
 </style>

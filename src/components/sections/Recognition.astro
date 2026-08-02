@@ -1,0 +1,103 @@
+---
+import Section from "../Section.astro"
+
+import { awards, certificates } from "@cv"
+
+const rows = [
+  ...awards.map((a) => ({ title: a.title, meta: a.awarder, date: a.date, note: a.summary, url: "" })),
+  ...certificates.map((c) => ({ title: c.name, meta: c.issuer, date: c.date, note: "", url: c.url })),
+]
+---
+
+{
+  rows.length > 0 && (
+    <Section title="Awards & certificates" id="recognition">
+      <dl class="rows">
+        {rows.map(({ title, meta, date, note, url }) => (
+          <div class="row">
+            <dt>
+              {url ? (
+                <a href={url} target="_blank" rel="noopener noreferrer">
+                  {title}
+                </a>
+              ) : (
+                title
+              )}
+            </dt>
+            <dd>
+              <span class="row__meta">
+                {meta} · <span class="row__date">{date}</span>
+              </span>
+              {note && <span class="row__note">{note}</span>}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Section>
+  )
+}
+
+<style>
+  .rows {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 20rem);
+    gap: var(--space-sm);
+    align-items: baseline;
+    padding-block: var(--space-xs);
+  }
+
+  .row + .row {
+    border-block-start: var(--rule-hair) solid var(--color-rule);
+  }
+
+  dt {
+    color: var(--color-ink);
+    font-size: var(--text-base);
+  }
+
+  dt a {
+    border-block-end: var(--rule-hair) solid var(--color-rule-2);
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+
+  dt a:hover {
+    color: var(--color-accent-text);
+    border-block-end-color: var(--color-accent);
+  }
+
+  dd {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    margin: 0;
+  }
+
+  .row__meta {
+    color: var(--color-ink-3);
+    font-size: var(--text-xs);
+  }
+
+  .row__date {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .row__note {
+    color: var(--color-ink-4);
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+  }
+
+  @media (width <= 40rem) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: var(--space-3xs);
+    }
+  }
+</style>

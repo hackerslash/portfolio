@@ -4,79 +4,95 @@ import Section from "../Section.astro"
 import { education } from "@cv"
 ---
 
-<Section title="Education">
-  <ul> 
+<Section title="Education" id="education">
+  <ol class="degrees">
     {
-      education.map(({ institution, startDate, endDate, area, studyType }) => {
-        const startYear = new Date(startDate).getFullYear()
-        const endYear =
-          endDate != null ? new Date(endDate).getFullYear() : "Actual"
-        const years = `${startYear} - ${endYear}`
+      education.map(({ institution, startDate, endDate, area, studyType, courses }) => (
+        <li class="degree">
+          <div class="degree__head">
+            <h3 class="degree__title">{institution}</h3>
+            <p class="degree__dates">
+              {startDate} — {endDate ?? "Present"}
+            </p>
+          </div>
 
-        return (
-          <li>
-            <article>
-              <header>
-                <div>
-                  <h3>{institution}</h3>
-                </div>
+          <p class="degree__award">
+            {studyType}, {area}
+          </p>
 
-                <time>{years}</time>
-              </header>
-
-              <footer>
-                <p class="education-text">{studyType}, {area}</p>
-              </footer>
-            </article>
-          </li>
-        )
-      })
+          {courses?.length > 0 && (
+            <ul class="degree__courses">
+              {courses.map((course: string) => (
+                <li>{course}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
     }
-  </ul>
+  </ol>
 </Section>
 
 <style>
-  ul {
+  .degrees {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: var(--space-lg);
   }
 
-  article h3 {
-    font-weight: 500;
-    color: #fff;
+  .degree {
+    padding-inline-start: var(--space-sm);
+    border-inline-start: var(--rule-hair) solid var(--color-rule);
   }
 
-  header {
+  .degree__head {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 4px;
+    gap: var(--space-sm);
+    margin-block-end: var(--space-3xs);
   }
 
-  time {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    min-width: 102px;
-    text-align: right;
+  .degree__title {
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 600;
+    letter-spacing: -0.015em;
   }
 
-  .education-text {
-    transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  .degree__dates {
+    flex-shrink: 0;
+    color: var(--color-ink-3);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
-  .education-text:hover {
-    font-size: calc(0.9rem + 0.25px);
+  .degree__award {
+    color: var(--color-ink-2);
+    font-size: var(--text-base);
   }
 
-  @media (width <= 700px) {
-    header {
+  .degree__courses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs);
+    margin-block-start: var(--space-2xs);
+  }
+
+  .degree__courses li {
+    padding: 1px var(--space-2xs);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-3);
+    font-size: var(--text-xs);
+    letter-spacing: 0;
+  }
+
+  @media (width <= 40rem) {
+    .degree__head {
       flex-direction: column;
-      gap: 4px;
-    }
-
-    time {
-      text-align: left;
+      gap: var(--space-3xs);
     }
   }
 </style>

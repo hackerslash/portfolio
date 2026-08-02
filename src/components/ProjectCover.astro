@@ -1,0 +1,112 @@
+---
+interface Props {
+  slug: string
+  name: string
+  image?: string
+  imageAlt?: string
+  eager?: boolean
+}
+
+const { slug, name, image = "", imageAlt = "", eager = false } = Astro.props
+
+function patternFor(value: string): number {
+  let h = 0
+  for (let i = 0; i < value.length; i++) h = (h * 31 + value.charCodeAt(i)) | 0
+  return Math.abs(h) % 4
+}
+
+function monogramFor(value: string): string {
+  const parts = value.split("-").filter(Boolean)
+  if (parts.length > 1) return parts.slice(0, 3).map((p) => p[0]).join("").toUpperCase()
+  return (parts[0] ?? "??").slice(0, 2).toUpperCase()
+}
+
+const pattern = patternFor(slug)
+const monogram = monogramFor(slug)
+---
+
+{
+  image ? (
+    <img
+      class="cover cover--photo"
+      src={image}
+      alt={imageAlt || `${name} screenshot`}
+      loading={eager ? "eager" : "lazy"}
+      fetchpriority={eager ? "high" : "auto"}
+      decoding="async"
+    />
+  ) : (
+    <div class="cover cover--plate" data-pattern={pattern} role="img" aria-label={`${name} — no screenshot yet`}>
+      <span class="cover__mark" data-mark={monogram} aria-hidden="true">
+        {monogram}
+      </span>
+    </div>
+  )
+}
+
+<style>
+  .cover {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: var(--color-paper-2);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .cover--photo {
+    object-fit: cover;
+  }
+
+  .cover--plate {
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .cover--plate::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .cover--plate[data-pattern="0"]::before {
+    background-image: radial-gradient(var(--color-rule-2) 1px, transparent 1px);
+    background-size: 12px 12px;
+  }
+
+  .cover--plate[data-pattern="1"]::before {
+    background-image: repeating-linear-gradient(45deg, var(--color-rule) 0 1px, transparent 1px 11px);
+  }
+
+  .cover--plate[data-pattern="2"]::before {
+    background-image:
+      linear-gradient(var(--color-rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-rule) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  .cover--plate[data-pattern="3"]::before {
+    background-image: repeating-linear-gradient(0deg, var(--color-rule) 0 1px, transparent 1px 10px);
+  }
+
+  .cover__mark {
+    position: relative;
+    z-index: var(--z-raised);
+    font-family: var(--font-body);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--color-ink-faint);
+  }
+
+  .cover__mark::after {
+    content: attr(data-mark);
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    translate: 3px -3px;
+    color: var(--color-accent-dim);
+  }
+</style>

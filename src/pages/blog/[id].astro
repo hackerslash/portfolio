@@ -54,7 +54,7 @@ const jsonLd = {
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": `${siteUrl}/#blogs`
+          "item": `${siteUrl}/blog`
         },
         {
           "@type": "ListItem",
@@ -162,7 +162,7 @@ renderedContent = addHeadingIds(renderedContent)
 >
   <main>
     <nav class="blog-nav">
-      <a href="/#blogs" class="home-link" title="Back to Blogs">
+      <a href="/blog" class="home-link" title="Back to Blogs">
         <Home />
         <span>Back to Blogs</span>
       </a>
@@ -235,7 +235,7 @@ renderedContent = addHeadingIds(renderedContent)
             )}
           </div>
         </nav>
-        <a href="/#blogs" class="back-button blog-footer-link">← Back to Blogs</a>
+        <a href="/blog" class="back-button blog-footer-link">← Back to Blogs</a>
       </footer>
     </article>
 
@@ -289,7 +289,7 @@ renderedContent = addHeadingIds(renderedContent)
   .home-link:hover {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
-    color: #fff;
+    color: var(--color-paper);
   }
 
   .blog-post {
@@ -303,17 +303,11 @@ renderedContent = addHeadingIds(renderedContent)
   }
 
   h1 {
-    font-size: 3rem;
+    font-size: var(--text-2xl);
     margin-bottom: 1rem;
-    background: linear-gradient(to right, #fff, #a3a3a3);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  :global(.light) h1 {
-    background: linear-gradient(to right, #0f172a, #475569);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    line-height: var(--leading-snug);
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
   }
 
   .meta {
@@ -502,7 +496,7 @@ renderedContent = addHeadingIds(renderedContent)
   }
 
   .content h1, .content h2, .content h3 {
-    color: #fff;
+    color: var(--color-ink);
     margin-top: 2.5rem;
     margin-bottom: 1rem;
   }
@@ -725,7 +719,7 @@ renderedContent = addHeadingIds(renderedContent)
   .back-button:hover {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
-    color: #fff;
+    color: var(--color-paper);
   }
 
   .post-navigation {
@@ -759,7 +753,7 @@ renderedContent = addHeadingIds(renderedContent)
 
   .nav-link:hover .nav-label,
   .nav-link:hover .nav-title {
-    color: #fff;
+    color: var(--color-ink);
   }
 
   .prev-link {
@@ -1081,8 +1075,11 @@ renderedContent = addHeadingIds(renderedContent)
         lineColor: isDark ? '#4ade80' : '#10b981',
         secondaryColor: isDark ? '#1e293b' : '#f1f5f9',
         tertiaryColor: isDark ? '#334155' : '#e2e8f0',
-        background: isDark ? '#0f172a' : '#ffffff',
-        mainBkg: isDark ? '#1e293b' : '#f8fafc',
+        // Mermaid takes literal colours, not CSS variables. These mirror the
+        // Phosphor paper tokens so diagrams sit on the page instead of on a
+        // white rectangle. Keep in sync with tokens.css.
+        background: isDark ? '#0e0e0e' : '#e4ddca',
+        mainBkg: isDark ? '#181818' : '#ded6c1',
         textColor: isDark ? '#e2e8f0' : '#1e293b',
         fontSize: '16px'
       }

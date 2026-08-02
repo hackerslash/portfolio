@@ -1,0 +1,172 @@
+---
+import { basics } from "@cv"
+import Mail from "@/icons/Mail.astro"
+import GitHub from "@/icons/GitHub.astro"
+import LinkedIn from "@/icons/LinkedIn.astro"
+
+const { name, label, email, location, profiles } = basics
+const github = profiles.find((p) => p.network === "GitHub")?.url
+const linkedin = profiles.find((p) => p.network === "LinkedIn")?.url
+const year = new Date().getFullYear()
+---
+
+<footer class="colophon no-print">
+  <div class="colophon__inner">
+    <p class="colophon__line">
+      <span class="colophon__key">who</span>
+      <span>{name.toLowerCase()} — {label.toLowerCase()}, {location.city.toLowerCase()}</span>
+    </p>
+
+    <p class="colophon__line">
+      <span class="colophon__key">reach</span>
+      <span class="colophon__links">
+        <a href={`mailto:${email}`} aria-label={`Email ${name}`}><Mail /><span>mail</span></a>
+        {
+          github && (
+            <a href={github} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+              <GitHub />
+              <span>github</span>
+            </a>
+          )
+        }
+        {
+          linkedin && (
+            <a href={linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+              <LinkedIn />
+              <span>linkedin</span>
+            </a>
+          )
+        }
+      </span>
+    </p>
+
+    <p class="colophon__line colophon__line--meta">
+      <span class="colophon__key">build</span>
+      <span>
+        astro · mit licensed · © {year} ·
+        <span class="colophon__count"><span id="visitor-count">…</span> visitors</span>
+      </span>
+    </p>
+  </div>
+</footer>
+
+<script is:inline>
+  ;(function () {
+    var el = document.getElementById("visitor-count")
+    if (!el) return
+
+    var attempts = 0
+
+    function load() {
+      attempts++
+      fetch("https://hackerslash.goatcounter.com/counter/TOTAL.json")
+        .then(function (r) {
+          if (!r.ok) throw new Error("bad response")
+          return r.json()
+        })
+        .then(function (data) {
+          if (!data || data.count === undefined) throw new Error("bad payload")
+          el.textContent = data.count_unique || data.count || "0"
+        })
+        .catch(function () {
+          if (attempts < 2) {
+            setTimeout(load, 3000)
+          } else {
+            el.textContent = "—"
+            el.title = "Visitor count unavailable"
+          }
+        })
+    }
+
+    load()
+  })()
+</script>
+
+<style>
+  .colophon {
+    border-block-start: var(--rule-hair) solid var(--color-rule);
+    margin-block-start: var(--space-xl);
+  }
+
+  .colophon__inner {
+    max-width: var(--page);
+    margin-inline: auto;
+    padding: var(--space-md) var(--gutter) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .colophon__line {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: var(--space-2xs);
+    align-items: baseline;
+    color: var(--color-ink-3);
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+  }
+
+  .colophon__key {
+    color: var(--color-ink-4);
+    text-transform: lowercase;
+  }
+
+  .colophon__key::after {
+    content: " ›";
+    color: var(--color-accent-text);
+  }
+
+  .colophon__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs);
+    margin-block: calc(var(--space-2xs) * -1);
+    margin-inline-start: calc(var(--space-2xs) * -1);
+  }
+
+  .colophon__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
+    min-height: 44px;
+    padding-inline: var(--space-2xs);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-3);
+    white-space: nowrap;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .colophon__links a:hover {
+    color: var(--color-accent-text);
+    background: var(--color-accent-dim);
+  }
+
+  .colophon__links a:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    color: var(--color-accent-text);
+  }
+
+  .colophon__line--meta {
+    color: var(--color-ink-4);
+  }
+
+  .colophon__count {
+    white-space: nowrap;
+  }
+
+  #visitor-count {
+    color: var(--color-accent-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (width <= 30rem) {
+    .colophon__line {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+</style>

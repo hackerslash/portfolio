@@ -43,7 +43,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
 >
   <main>
     <nav class="blog-nav">
-      <a href="/#blogs" class="home-link" title="Back to Blogs">
+      <a href="/blog" class="home-link" title="Back to Blogs">
         <Home />
         <span>Back to Blogs</span>
       </a>
@@ -147,7 +147,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
   .home-link:hover {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
-    color: #fff;
+    color: var(--color-paper);
   }
 
   .tag-header {
@@ -207,7 +207,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
 
   .pagination-btn:hover:not(:disabled) {
     background-color: var(--accent-color);
-    color: #fff;
+    color: var(--color-paper);
     transform: translateY(-2px);
   }
 
@@ -264,7 +264,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
 
   .read-more-overlay:hover {
     background-color: var(--accent-color);
-    color: #fff;
+    color: var(--color-paper);
     transform: translateY(0) scale(1.05);
   }
 
@@ -304,7 +304,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
   }
 
   h3 a {
-    color: #fff;
+    color: var(--color-ink);
     font-size: 1.4rem;
   }
 
@@ -403,7 +403,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
   backToBlogsLinks.forEach(link => {
     link.addEventListener('click', function(event) {
       event.preventDefault();
-      window.location.href = '/#blogs';
+      window.location.href = '/blog';
     });
   });
 

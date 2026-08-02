@@ -1,0 +1,119 @@
+/* Design tokens for hackerslash.dev. Imported once by src/layouts/Layout.astro. */
+
+:root {
+  /* ── Paper (dark is the default canvas) ─────────────────────────── */
+  --color-paper:      oklch(11.5% 0 0);   /* #050505 */
+  --color-paper-2:    oklch(16.5% 0 0);
+  --color-paper-3:    oklch(21%   0 0);
+
+  /* ── Ink ────────────────────────────────────────────────────────── */
+  --color-ink:        oklch(97%   0 0);
+  --color-ink-2:      oklch(92.2% 0 0);   /* #e5e5e5 */
+  --color-ink-3:      oklch(71.5% 0 0);   /* #a3a3a3 — 8.1:1 on paper */
+  --color-ink-4:      oklch(58% 0 0);     /* 4.7:1 — the dimmest legible step */
+  --color-ink-faint:  oklch(97% 0 0 / 0.13);
+
+  /* ── Rules ──────────────────────────────────────────────────────── */
+  --color-rule:       oklch(24% 0 0);
+  --color-rule-2:     oklch(32% 0 0);
+
+  /* ── Accent — the site's phosphor green ─────────────────────────── */
+  --color-accent:     oklch(60.6% 0.149 155.3);  /* #019b59 */
+  --color-accent-text:oklch(60.6% 0.149 155.3);  /* 5.66:1 on paper ✓ */
+  --color-accent-ink: oklch(11.5% 0 0);          /* ink ON an accent fill, 5.66:1 ✓ */
+  --color-accent-dim: oklch(60.6% 0.149 155.3 / 0.12);
+  --color-accent-mid: oklch(60.6% 0.149 155.3 / 0.28);
+  --color-focus:      oklch(72% 0.15 155.3);
+
+  /* ── Type ───────────────────────────────────────────────────────── */
+  --font-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                  Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+                  "Helvetica Neue", sans-serif;
+  --font-body:    Menlo, Monaco, "Lucida Console", "Courier New", Courier,
+                  monospace;
+
+  --text-xs:        0.75rem;
+  --text-sm:        0.8125rem;
+  --text-base:      0.875rem;
+  --text-md:        1rem;
+  --text-lg:        1.25rem;
+  --text-xl:        1.625rem;
+  --text-2xl:       2.25rem;
+  --text-display-s: clamp(2.25rem, 5vw + 0.5rem, 3.5rem);
+  --text-display:   clamp(2.75rem, 9vw, 6rem);
+
+  --track-display: -0.03em;
+  --track-body:    -0.025em;
+  --leading-tight: 1.05;
+  --leading-snug:  1.35;
+  --leading-body:  1.65;
+  --measure:       68ch;
+  --measure-lede:  46ch;
+
+  /* ── Space — 4pt scale ──────────────────────────────────────────── */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs:  0.75rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2rem;
+  --space-xl:  3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 7rem;
+
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --page:   72rem;
+
+  /* ── Shape ──────────────────────────────────────────────────────── */
+  --radius-sm:   6px;
+  --radius-card: 10px;
+  --radius-pill: 999px;
+  --rule-hair:   1px;
+  --rule-thick:  2px;
+
+  /* ── Motion ─────────────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:  120ms;
+  --dur-short: 220ms;
+  --dur-med:   380ms;
+
+  /* ── Layers ─────────────────────────────────────────────────────── */
+  --z-base:    0;
+  --z-raised:  1;
+  --z-sticky:  20;
+
+  /* Legacy aliases — the blog and tag pages predate these tokens. Do not
+     use in new code. */
+  --bg-color:     var(--color-paper);
+  --text-color:   var(--color-ink-2);
+  --text-muted:   var(--color-ink-3);
+  --accent-color: var(--color-accent-text);
+  --card-bg:      var(--color-paper-2);
+  --card-border:  var(--color-rule);
+}
+
+:root.light {
+  --color-paper:      oklch(93.1% 0.026 92);  /* #EEE8D5 */
+  --color-paper-2:    oklch(90%   0.026 92);
+  --color-paper-3:    oklch(86.5% 0.028 92);
+
+  --color-ink:        oklch(20.8% 0.040 266); /* #0f172a */
+  --color-ink-2:      oklch(30%   0.038 264);
+  --color-ink-3:      oklch(44.6% 0.037 258); /* #475569 */
+  --color-ink-4:      oklch(50%   0.030 258); /* 4.9:1 on light paper */
+  --color-ink-faint:  oklch(20.8% 0.040 266 / 0.15);
+
+  --color-rule:       oklch(80% 0.025 92);
+  --color-rule-2:     oklch(70% 0.028 92);
+
+  /* #059669 is only 3.08:1 on this paper — it stays for fills and marks,
+     while a darker green (6.27:1) carries anything that is text. */
+  --color-accent:     oklch(59.6% 0.127 163); /* #059669 */
+  --color-accent-text:oklch(43.2% 0.086 167); /* #065f46 — 6.27:1 ✓ */
+  --color-accent-ink: oklch(20.8% 0.040 266); /* 4.74:1 on the fill ✓ */
+  --color-accent-dim: oklch(59.6% 0.127 163 / 0.14);
+  --color-accent-mid: oklch(59.6% 0.127 163 / 0.32);
+  --color-focus:      oklch(43.2% 0.086 167);
+}

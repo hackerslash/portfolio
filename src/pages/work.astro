@@ -1,0 +1,105 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import ProjectTile from "@/components/ProjectTile.astro"
+import { basics } from "@cv"
+import { allProjects, hasYears } from "@/utils/projects"
+
+const liveCount = allProjects.filter((p) => p.isActive).length
+const total = allProjects.length
+
+const pageTitle = "Work — Md Afridi Sk"
+const pageDescription = `Every project by Md Afridi Sk — ${total} of them, from peer-to-peer desktop apps and MCP crawlers to voice-first marketplaces and CLI tooling. Source and live links for each.`
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${basics.url}/work#collection`,
+  url: `${basics.url}/work`,
+  name: pageTitle,
+  description: pageDescription,
+  isPartOf: { "@id": `${basics.url}/#website` },
+  about: { "@id": `${basics.url}/#person` },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: total,
+    itemListElement: allProjects.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "CreativeWork",
+        name: p.name,
+        description: p.description,
+        url: p.href ?? undefined,
+      },
+    })),
+  },
+}
+---
+
+<Layout title={pageTitle} description={pageDescription} jsonLd={jsonLd}>
+  <main class="page">
+    <header class="index-head">
+      <h1>Work, indexed.</h1>
+      <p class="index-head__count">
+        {total} projects · {liveCount} with something running.
+      </p>
+    </header>
+
+    <ul class="index">
+      {
+        allProjects.map((project, i) => (
+          <li>
+            <ProjectTile project={project} variant="index" showYear={hasYears} eager={i < 3} />
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>
+
+<style>
+  .index-head {
+    padding-block-end: var(--space-lg);
+    margin-block-end: var(--space-lg);
+    border-block-end: var(--rule-thick) solid var(--color-rule-2);
+  }
+
+  h1 {
+    font-size: var(--text-display-s);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--track-display);
+  }
+
+  .index-head__count {
+    margin-block-start: var(--space-2xs);
+    color: var(--color-ink-3);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .index {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (width >= 40rem) {
+    .index {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .index {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (width <= 40rem) {
+    .index-head {
+      padding-block-end: var(--space-md);
+      margin-block-end: var(--space-md);
+    }
+  }
+</style>

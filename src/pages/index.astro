@@ -1,233 +1,359 @@
 ---
 import Layout from "@/layouts/Layout.astro"
+import Section from "@/components/Section.astro"
+import ProjectTile from "@/components/ProjectTile.astro"
+import Identity from "@/components/Identity.astro"
+import Mail from "@/icons/Mail.astro"
+import Phone from "@/icons/Phone.astro"
+import GitHub from "@/icons/GitHub.astro"
+import LinkedIn from "@/icons/LinkedIn.astro"
 import { basics, work, education, skills } from "@cv"
+import { featuredProjects, allProjects, hasYears } from "@/utils/projects"
+import { getBlogs } from "@blogs"
+import { formatDate } from "@/utils/formatDate"
 
-import About from "@/components/sections/About.astro"
-import Education from "@/components/sections/Education.astro"
-import Experience from "@/components/sections/Experience.astro"
-import Hero from "@/components/sections/Hero.astro"
-import Projects from "@/components/sections/Projects.astro"
-import Skills from "@/components/sections/Skills.astro"
-import Blogs from "@/components/sections/Blogs.astro"
+const { name, headline, intro, image, profiles, email, phone } = basics
 
-const currentYear = new Date().getFullYear()
+const github = profiles.find((p) => p.network === "GitHub")?.url
+const linkedin = profiles.find((p) => p.network === "LinkedIn")?.url
+const printInfo = [email, phone, linkedin].filter(Boolean).join(" • ")
 
-// SEO optimized title and description
-const pageTitle = "Md Afridi Sk | Backend Developer & Full Stack Engineer | IIT Kharagpur"
-const pageDescription = "Md Afridi Sk - Backend Developer based in Bangalore, India. IIT Kharagpur graduate specializing in Python, Node.js, React, and AI. Building scalable applications at Ayoo.care. View projects, skills, and technical blog."
+const posts = getBlogs().slice(0, 2)
 
-// JSON-LD Structured Data for Person + WebSite
+const pageTitle = "Md Afridi Sk | Backend Engineer | AI-Native Systems | IIT Kharagpur"
+const pageDescription =
+  "Md Afridi Sk — backend engineer in Bangalore, India, building AI-native systems at Ayoo.care. Agentic AI, real-time voice pipelines and distributed coordination in TypeScript, Python, Rust and Go. IIT Kharagpur, 2023."
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebSite",
       "@id": `${basics.url}/#website`,
-      "url": basics.url,
-      "name": "Md Afridi Sk - Portfolio",
-      "description": pageDescription,
-      "publisher": {
-        "@id": `${basics.url}/#person`
-      },
-      "inLanguage": "en-US"
+      url: basics.url,
+      name: "Md Afridi Sk - Portfolio",
+      description: pageDescription,
+      publisher: { "@id": `${basics.url}/#person` },
+      inLanguage: "en-US",
     },
     {
       "@type": "ProfilePage",
       "@id": `${basics.url}/#profilepage`,
-      "url": basics.url,
-      "name": pageTitle,
-      "isPartOf": {
-        "@id": `${basics.url}/#website`
-      },
-      "mainEntity": {
-        "@id": `${basics.url}/#person`
-      },
-      "description": pageDescription,
-      "inLanguage": "en-US"
+      url: basics.url,
+      name: pageTitle,
+      isPartOf: { "@id": `${basics.url}/#website` },
+      mainEntity: { "@id": `${basics.url}/#person` },
+      description: pageDescription,
+      inLanguage: "en-US",
     },
     {
       "@type": "Person",
       "@id": `${basics.url}/#person`,
-      "name": basics.name,
-      "alternateName": "hackerslash",
-      "url": basics.url,
-      "mainEntityOfPage": {
-        "@id": `${basics.url}/#profilepage`
-      },
-      "image": {
+      name: basics.name,
+      alternateName: "hackerslash",
+      url: basics.url,
+      mainEntityOfPage: { "@id": `${basics.url}/#profilepage` },
+      image: {
         "@type": "ImageObject",
-        "url": `${basics.url}/profile-pic.png`,
-        "width": 400,
-        "height": 400
+        url: `${basics.url}/profile-pic.png`,
+        width: 557,
+        height: 557,
       },
-      "description": basics.summary,
-      "email": `mailto:${basics.email}`,
-      "telephone": basics.phone,
-      "jobTitle": basics.label,
-      "worksFor": {
-        "@type": "Organization",
-        "name": work[0].name,
-        "url": work[0].url
-      },
-      "alumniOf": {
+      description: basics.summary,
+      email: `mailto:${basics.email}`,
+      telephone: basics.phone,
+      jobTitle: basics.label,
+      worksFor: { "@type": "Organization", name: work[0].name, url: work[0].url },
+      alumniOf: {
         "@type": "CollegeOrUniversity",
-        "name": education[0].institution,
-        "url": "https://www.iitkgp.ac.in"
+        name: education[0].institution,
+        url: "https://www.iitkgp.ac.in",
       },
-      "address": {
+      address: {
         "@type": "PostalAddress",
-        "addressLocality": basics.location.city,
-        "addressRegion": basics.location.region,
-        "addressCountry": basics.location.countryCode
+        addressLocality: basics.location.city,
+        addressRegion: basics.location.region,
+        addressCountry: basics.location.countryCode,
       },
-      "sameAs": [
-        basics.profiles.find(p => p.network === "GitHub")?.url,
-        basics.profiles.find(p => p.network === "LinkedIn")?.url
-      ].filter(Boolean),
-      "knowsAbout": skills.map(s => s.name)
-    }
-  ]
+      sameAs: [github, linkedin].filter(Boolean),
+      knowsAbout: skills.map((s) => s.name),
+    },
+    ...allProjects.map((p) => ({
+      "@type": "CreativeWork",
+      name: p.name,
+      description: p.description,
+      url: p.href ?? undefined,
+      author: { "@id": `${basics.url}/#person` },
+    })),
+  ],
 }
 ---
 
-<Layout
-  title={pageTitle}
-  description={pageDescription}
-  jsonLd={jsonLd}
->
+<Layout title={pageTitle} description={pageDescription} jsonLd={jsonLd} preloadImage>
   <main>
-    <Hero />
-    <About />
-    <Experience />
-    <Education />
-    <Projects />
-    <Skills />
-    <Blogs />
-  </main>
+    <header class="fold">
+      <h1 class="fold__headline">{headline}</h1>
 
-  <footer class="no-print">
-    <p>© {currentYear} Md Afridi Sk - Made with ❤️</p>
-    <div class="visitor-counter">
-      <span class="counter-icon">👁️</span>
-      <span id="visitor-count">—</span>
-      <span class="counter-label">visitors</span>
-    </div>
-  </footer>
-</Layout>
+      <div class="fold__body">
+        <div class="fold__text">
+          <Identity />
 
-<script is:inline>
-  // Fetch total visitor count from GoatCounter JSON API with retry logic
-  (function() {
-    var el = document.getElementById('visitor-count');
-    if (!el) return;
+          <p class="fold__intro">{intro}</p>
 
-    var maxRetries = 2;
-    var retryDelay = 3000; // 3 seconds
-    var attemptCount = 0;
+          <p class="print">{printInfo}</p>
 
-    function fetchVisitorCount() {
-      attemptCount++;
+          <ul class="fold__contact no-print">
+            <li>
+              <a href={`mailto:${email}`} aria-label={`Email ${name}`}><Mail /><span>email</span></a>
+            </li>
+            <li>
+              <a href={`tel:${phone}`} aria-label={`Call ${name}`}><Phone /><span>call</span></a>
+            </li>
+            {
+              github && (
+                <li>
+                  <a href={github} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+                    <GitHub />
+                    <span>github</span>
+                  </a>
+                </li>
+              )
+            }
+            {
+              linkedin && (
+                <li>
+                  <a href={linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+                    <LinkedIn />
+                    <span>linkedin</span>
+                  </a>
+                </li>
+              )
+            }
+          </ul>
+        </div>
 
-      fetch('https://hackerslash.goatcounter.com/counter/TOTAL.json')
-        .then(function(response) {
-          if (!response.ok) throw new Error('Failed to fetch');
-          return response.json();
-        })
-        .then(function(data) {
-          if (data && data.count !== undefined) {
-            el.textContent = data.count_unique || data.count || '0';
-            el.style.color = 'var(--accent-color)';
-          } else {
-            throw new Error('Invalid data');
-          }
-        })
-        .catch(function(error) {
-          console.warn('Visitor count fetch attempt ' + attemptCount + ' failed:', error);
+        <figure class="fold__portrait">
+          <img src={image} alt={name} width="152" height="152" fetchpriority="high" decoding="async" />
+        </figure>
+      </div>
+    </header>
 
-          if (attemptCount < maxRetries) {
-            // Show loading state and retry
-            el.textContent = '...';
-            el.style.color = 'var(--text-muted)';
-            setTimeout(fetchVisitorCount, retryDelay);
-          } else {
-            // All retries failed
-            el.textContent = 'N/A';
-            el.style.color = 'var(--text-muted)';
-            el.title = 'Unable to load visitor count';
-          }
-        });
+    <hr class="fold__break" />
+
+    <Section wide title="Selected work" id="work" action={`all ${allProjects.length} projects`} actionHref="/work">
+      <ul class="work">
+        {
+          featuredProjects.map((project, i) => (
+            <li>
+              <ProjectTile project={project} variant="feature" showYear={hasYears} eager={i < 3} />
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+
+    {
+      posts.length > 0 && (
+        <Section wide title="Recent writing" action="all writing" actionHref="/blog">
+          <ul class="writing">
+            {posts.map((post) => (
+              <li>
+                <a href={`/blog/${post.id}`}>
+                  <span class="writing__title">{post.title}</span>
+                  <span class="writing__meta">
+                    <time datetime={post.date}>{formatDate(post.date)}</time> · {post.readingTime}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )
     }
-
-    // Initial loading state
-    el.textContent = '...';
-    el.style.color = 'var(--text-muted)';
-
-    // Start fetching
-    fetchVisitorCount();
-  })();
-</script>
+  </main>
+</Layout>
 
 <style>
   main {
-    padding: 4rem;
-    margin: auto;
-    width: 100%;
+    max-width: var(--page);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
   }
 
-  footer {
+  .fold {
+    padding-block: var(--space-2xl) var(--space-xl);
+    animation: fadeInUp 0.5s var(--ease-out) both;
+  }
+
+  .fold__headline {
+    font-size: var(--text-display);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--track-display);
+    white-space: pre-line;
+  }
+
+  .fold__body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    margin-block-start: var(--space-lg);
+  }
+
+  .fold__text {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 2rem;
-    color: var(--text-muted);
-    font-size: 0.8rem;
+    gap: var(--space-xs);
+    min-width: 0;
   }
 
-  .visitor-counter {
+  .fold__intro {
+    max-width: var(--measure-lede);
+    color: var(--color-ink-2);
+    font-size: var(--text-base);
+  }
+
+  .fold__contact {
     display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs);
+    margin-block-start: var(--space-2xs);
+    margin-inline-start: calc(var(--space-2xs) * -1);
+  }
+
+  .fold__contact a {
+    display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 0.8rem;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    font-size: 0.75rem;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+    gap: var(--space-3xs);
+    min-height: 44px;
+    padding-inline: var(--space-2xs);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-3);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out);
   }
 
-  .visitor-counter:hover {
-    opacity: 1;
+  .fold__contact a:hover {
+    color: var(--color-accent-text);
+    background: var(--color-accent-dim);
   }
 
-  .counter-icon {
-    font-size: 0.85rem;
+  .fold__contact a:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    color: var(--color-accent-text);
   }
 
-  #visitor-count {
-    font-weight: 600;
-    color: var(--accent-color);
+  .fold__portrait img {
+    display: block;
+    width: 152px;
+    height: 152px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: var(--rule-hair) solid var(--color-rule-2);
   }
 
-  .counter-label {
-    color: var(--text-muted);
+  .fold__break {
+    height: var(--rule-thick);
+    border: 0;
+    margin: 0 0 var(--space-2xl);
+    background: var(--color-rule-2);
   }
 
-  /* Mobile landscape optimizations */
-  @media (max-height: 500px) and (orientation: landscape) {
-    main {
-      padding: 2rem;
+  .work {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (width >= 40rem) {
+    .work {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .work {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .writing li + li {
+    border-block-start: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .writing a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding-block: var(--space-xs);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .writing a:hover .writing__title {
+    color: var(--color-accent-text);
+    border-block-end-color: var(--color-accent);
+  }
+
+  .writing a:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  .writing__title {
+    color: var(--color-ink);
+    font-size: var(--text-base);
+    border-block-end: var(--rule-hair) solid transparent;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .writing__meta {
+    flex-shrink: 0;
+    color: var(--color-ink-3);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (width <= 48rem) {
+    .fold {
+      padding-block: var(--space-xl) var(--space-lg);
     }
 
-    footer {
-      padding: 1rem;
+    .fold__body {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+
+    .fold__break {
+      margin-block-end: var(--space-xl);
+    }
+
+    .writing a {
+      flex-direction: column;
+      gap: var(--space-3xs);
     }
   }
 
-  @media (width <= 700px) {
-    main {
-      padding: 1.5rem;
+  @media (width <= 40rem) {
+    .fold__portrait img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fold {
+      animation: none;
     }
   }
 </style>

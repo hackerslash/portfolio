@@ -1,4 +1,5 @@
 export interface CV {
+  site: Site
   basics: Basics
   work: Array<Work>
   volunteer: Array<Volunteer>
@@ -13,9 +14,28 @@ export interface CV {
   projects: Array<Projects>
 }
 
+interface Site {
+  projects: {
+    /** How many tiles the homepage shows. */
+    featuredCount: number
+    /** Where a whole-tile click goes when a project doesn't override it. */
+    defaultLink: "live" | "github"
+    /** Render the year alongside each project (rows without a year stay bare). */
+    showYear: boolean
+  }
+}
+
 interface Basics {
   name: string
+  /** Handle. The fold's identity line glitches between this and `name`. */
+  username?: string
+  /** Lead-in before the identity line, e.g. "hi, i'm". */
+  greeting?: string
   label: string
+  /** Marquee statement on the homepage fold. */
+  headline: string
+  /** Short first-person intro under the headline. */
+  intro: string
   image: string
   email: string
   phone: string
@@ -125,11 +145,25 @@ type Language =
 
 interface Projects {
   name: string
-  isActive: boolean
+  /** Stable id — cover plate seed and anchor. Derived from `name` when absent. */
+  slug?: string
+  /** One line for the homepage tile; falls back to `description`. */
+  tagline?: string
   description: string
+  /** Real screenshot under /public. Empty renders a generated plate instead. */
+  image?: string
+  imageAlt?: string
+  year?: string
+  /** Show on the homepage. */
+  featured?: boolean
+  isActive: boolean
+  /** Tile tags. Falls back to the first three `highlights`. */
+  stack?: Array<string>
   highlights: Highlight
   url: string
   github?: string
+  /** Overrides `site.projects.defaultLink` for this project only. */
+  primary?: "live" | "github"
 }
 
 interface Interests {

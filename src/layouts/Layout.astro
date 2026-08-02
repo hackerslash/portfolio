@@ -1,5 +1,8 @@
 ---
 import { basics } from "@cv"
+import Nav from "@/components/Nav.astro"
+import SiteFooter from "@/components/SiteFooter.astro"
+import "../../tokens.css"
 
 interface Props {
   title: string
@@ -9,20 +12,22 @@ interface Props {
   ogType?: string
   keywords?: string
   jsonLd?: object
+  /** Preload the portrait. Only the home page renders it. */
+  preloadImage?: boolean
 }
 
-const { title, description, canonicalUrl, ogImage, ogType, keywords, jsonLd } = Astro.props
+const { title, description, canonicalUrl, ogImage, ogType, keywords, jsonLd, preloadImage = false } =
+  Astro.props
 
 const { image, summary, url, name, location } = basics
 
-// Default keywords for SEO
-const defaultKeywords = "Md Afridi Sk, Backend Developer, Full Stack Developer, Software Engineer, IIT Kharagpur, Bangalore Developer, Python Developer, Node.js Developer, React Developer, AI Developer, Web Developer India, hackerslash"
+const defaultKeywords =
+  "Md Afridi Sk, Backend Engineer, Backend Developer, Software Engineer, IIT Kharagpur, Bangalore Developer, Python Developer, TypeScript Developer, Rust Developer, Go Developer, FastAPI, AI Engineer, LLM Agents, RAG, MCP, WebRTC, hackerslash"
 
-// Use props or fall back to defaults from cv.json
 const metaDescription = description || summary
 const pageCanonicalUrl = canonicalUrl || new URL(Astro.url.pathname, url).href
 const pageOgImage = ogImage || `${url}/profile-pic.png`
-const pageOgType = ogType || 'website'
+const pageOgType = ogType || "website"
 const metaKeywords = keywords || defaultKeywords
 ---
 
@@ -34,13 +39,16 @@ const metaKeywords = keywords || defaultKeywords
     <meta name="description" content={metaDescription} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preload" as="image" href={image} />
+    {preloadImage && <link rel="preload" as="image" href={image} />}
     <link rel="canonical" href={pageCanonicalUrl} />
 
     <!-- SEO Meta Tags -->
     <meta name="keywords" content={metaKeywords} />
     <meta name="author" content={name} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
     <meta name="googlebot" content="index, follow" />
     <meta name="theme-color" content="#019b59" />
 
@@ -56,14 +64,14 @@ const metaKeywords = keywords || defaultKeywords
     <meta property="og:title" content={title} />
     <meta property="og:description" content={metaDescription} />
     <meta property="og:image" content={pageOgImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="557" />
+    <meta property="og:image:height" content="557" />
     <meta property="og:site_name" content="Md Afridi Sk - Portfolio" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta property="twitter:domain" content={url.split("//")[1] ?? ''} />
+    <meta property="twitter:domain" content={url.split("//")[1] ?? ""} />
     <meta property="twitter:url" content={pageCanonicalUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={metaDescription} />
@@ -74,65 +82,124 @@ const metaKeywords = keywords || defaultKeywords
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
-    <div id="theme-reveal" class="no-print"></div>
+    <Nav />
     <slot />
+    <SiteFooter />
+
     <script is:inline>
-      // Initialize theme from localStorage
-      const root = document.documentElement;
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light') {
-        root.classList.add('light');
+      const root = document.documentElement
+      if (localStorage.getItem("theme") === "light") {
+        root.classList.add("light")
       }
 
-      // Prevent auto-scroll on page load
-      if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
+      // Land at the top on a fresh visit, but never fight a #hash deep link.
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual"
       }
-      window.scrollTo(0, 0);
+      if (!location.hash) {
+        window.scrollTo(0, 0)
+      }
     </script>
-    <script data-goatcounter="https://hackerslash.goatcounter.com/count"
-            async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://hackerslash.goatcounter.com/count" async src="//gc.zgo.at/count.js"
+    ></script>
   </body>
 </html>
 
 <style is:global>
-  /* Ensure content is above any background effects but maintains transparency */
-  main, section, article, nav, footer {
-    position: relative;
-    z-index: 10;
-  }
-  :root {
-    --bg-color: #050505;
-    --text-color: #e5e5e5;
-    --text-muted: #a3a3a3;
-    --accent-color: #019b59;
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --glass-bg: rgba(10, 10, 10, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.1);
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
-  :root.light {
-    --bg-color: #EEE8D5;
-    --text-color: #0f172a;
-    --text-muted: #475569;
-    --accent-color: #059669;
-    --card-bg: rgba(0, 0, 0, 0.02);
-    --card-border: rgba(0, 0, 0, 0.08);
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.1);
+  html {
+    font-family: var(--font-body);
+    font-size: 100%;
+    letter-spacing: var(--track-body);
+    background: var(--color-paper);
+    color: var(--color-ink-2);
+    scrollbar-gutter: stable;
+    scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
-  :root.light h1, :root.light h2, :root.light h3, :root.light h4, :root.light h3 a {
-    color: #0f172a !important;
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--color-paper);
+    overflow-x: clip;
   }
 
-  :root.light body {
-    background-image: none;
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-style: normal;
+    color: var(--color-ink);
+    overflow-wrap: anywhere;
+    min-width: 0;
   }
 
-  #theme-reveal {
-    display: none;
+  p {
+    margin: 0;
+    color: var(--color-ink-3);
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ul,
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  figure {
+    margin: 0;
+    padding: 0;
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
+  }
+
+  ::selection {
+    background: var(--color-accent-mid);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .page {
+    max-width: var(--page);
+    margin-inline: auto;
+    padding: var(--space-xl) var(--gutter) 0;
   }
 
   ::view-transition-old(root),
@@ -142,123 +209,33 @@ const metaKeywords = keywords || defaultKeywords
   }
 
   ::view-transition-old(root) {
-    z-index: 1;
+    z-index: var(--z-base);
   }
 
   ::view-transition-new(root) {
-    z-index: 9999;
+    z-index: var(--z-raised);
     clip-path: circle(0% at var(--reveal-x, 50%) var(--reveal-y, 50%));
-    animation: reveal-out 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    animation: reveal-out 1.2s var(--ease-in-out) forwards;
   }
 
   @keyframes reveal-out {
-    from { clip-path: circle(0% at var(--reveal-x, 50%) var(--reveal-y, 50%)); }
-    to { clip-path: circle(150% at var(--reveal-x, 50%) var(--reveal-y, 50%)); }
+    from {
+      clip-path: circle(0% at var(--reveal-x, 50%) var(--reveal-y, 50%));
+    }
+    to {
+      clip-path: circle(150% at var(--reveal-x, 50%) var(--reveal-y, 50%));
+    }
   }
 
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(12px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  html {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      "Courier New",
-      Courier,
-      monospace;
-    background: var(--bg-color);
-    color: var(--text-color);
-    letter-spacing: -0.025rem;
-    scrollbar-gutter: stable;
-    scroll-behavior: smooth;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background-image: none;
-    background-attachment: scroll;
-    background-color: var(--bg-color);
-    animation: subtleGlow 8s ease-in-out infinite;
-  }
-
-  @keyframes subtleGlow {
-    0%, 100% {
-      background-position: 0% 0%;
-    }
-    50% {
-      background-position: 10% 5%;
-    }
-  }
-
-  figure {
-    margin: 0;
-    padding: 0;
-  }
-
-  a {
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    margin: 0;
-    color: #fff;
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      Oxygen,
-      Ubuntu,
-      Cantarell,
-      "Open Sans",
-      "Helvetica Neue",
-      sans-serif;
-  }
-
-  p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin: 0;
-    text-wrap: pretty;
   }
 
   .print {
@@ -283,22 +260,24 @@ const metaKeywords = keywords || defaultKeywords
     }
   }
 
-  /* Mobile landscape optimizations */
-  @media (max-height: 500px) and (orientation: landscape) {
-    body {
-      font-size: 14px;
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
     }
 
-    h1 {
-      font-size: 1.5rem !important;
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 150ms !important;
+      scroll-behavior: auto !important;
     }
 
-    h2 {
-      font-size: 1.2rem !important;
-    }
-
-    section {
-      padding: 1rem 0 !important;
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none !important;
+      clip-path: none !important;
     }
   }
 </style>
