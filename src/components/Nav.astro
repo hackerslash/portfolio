@@ -13,9 +13,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 <nav class="nav no-print" aria-label="Primary">
   <span class="nav__lead">
     <a class="nav__prompt" href="/" aria-current={path === "/" ? "page" : undefined}>
-      <span class="nav__user">mdafridisk@hackerslash</span><span class="nav__sigil">:~$</span><span
-        class="nav__short">~$</span
-      >
+      <span class="nav__user">mdafridisk@hackerslash</span><span class="nav__sigil">:~$</span>
     </a>
     <span class="nav__cursor" aria-hidden="true">▮</span>
   </span>
@@ -118,14 +116,8 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     color: var(--color-ink-2);
   }
 
-  .nav__sigil,
-  .nav__short {
-    color: var(--color-accent-text);
-  }
-
-  .nav__user,
   .nav__sigil {
-    display: none;
+    color: var(--color-accent-text);
   }
 
   .nav__flags {
@@ -238,15 +230,6 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       grid-template-areas: "prompt flags toggle";
       grid-template-columns: auto 1fr auto;
       padding-block: var(--space-3xs);
-    }
-
-    .nav__user,
-    .nav__sigil {
-      display: inline;
-    }
-
-    .nav__short {
-      display: none;
     }
 
     .nav__flags {
