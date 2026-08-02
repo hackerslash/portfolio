@@ -1,6 +1,6 @@
 ---
 id: agency-in-the-ai-era
-title: Agency Is the Only Dev Skill That Still Compounds
+title: Agency Is the Only Dev Skill That Still Counts
 date: 2026-08-03
 author: Md Afridi Sk
 excerpt: A fleet of agents can already ship code nonstop. What a company still can't buy from an API is a human who owns the outcome — and that's the entire value a developer provides now.
