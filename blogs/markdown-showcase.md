@@ -4,7 +4,7 @@ title: Blog Feature Showcase
 date: 2024-12-31
 author: Md Afridi Sk
 excerpt: A comprehensive demonstration of all supported blog features including text formatting, code blocks, mermaid diagrams, tables, lists, blockquotes, images, videos, and more.
-active: true
+active: false
 tags:
   - Markdown
   - Tutorial
