@@ -15,7 +15,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     <a class="nav__prompt" href="/" aria-current={path === "/" ? "page" : undefined}>
       <span class="nav__user">mdafridisk@hackerslash</span><span class="nav__sigil">:~$</span>
     </a>
-    <span class="nav__cursor" aria-hidden="true">▮</span>
+    <span class="nav__cursor" aria-hidden="true"></span>
   </span>
 
   <ul class="nav__flags">
@@ -100,7 +100,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   .nav__lead {
     grid-area: prompt;
     display: inline-flex;
-    align-items: center;
+    align-items: baseline;
     gap: 3px;
     min-width: 0;
   }
@@ -175,7 +175,10 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   }
 
   .nav__cursor {
-    color: var(--color-accent);
+    display: inline-block;
+    inline-size: 0.7ch;
+    block-size: 1cap;
+    background: var(--color-accent);
     animation: blink 1.1s steps(1) infinite;
   }
 
