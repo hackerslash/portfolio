@@ -33,7 +33,13 @@ const isCurrent = (href: string) => path.startsWith(href)
     }
   </ul>
 
-  <button id="theme-toggle" class="nav__toggle" type="button" aria-label="Toggle dark and light theme">
+  <button
+    id="theme-toggle"
+    class="nav__toggle"
+    type="button"
+    data-sound="toggle"
+    aria-label="Toggle dark and light theme"
+  >
     <svg
       class="nav__sun"
       xmlns="http://www.w3.org/2000/svg"

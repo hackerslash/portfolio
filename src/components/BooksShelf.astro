@@ -3,6 +3,13 @@ import { books } from "@/data/books"
 ---
 
 <div class="shelf-wrap">
+  <button class="shelf__arrow shelf__arrow--prev no-print" type="button" data-sound="back" aria-label="Scroll shelf left">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+  </button>
+  <button class="shelf__arrow shelf__arrow--next no-print" type="button" data-sound="forward" aria-label="Scroll shelf right">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg>
+  </button>
+
   <ul class="shelf">
     {
       books.map((book) => (
@@ -10,6 +17,7 @@ import { books } from "@/data/books"
           <button
             type="button"
             class="book"
+            data-sound="card"
             data-title={book.title}
             data-author={book.author}
             data-category={book.category}
@@ -30,7 +38,7 @@ import { books } from "@/data/books"
 
 <dialog class="book-dialog" id="book-dialog" aria-label="Book detail">
   <form method="dialog" class="book-dialog__inner">
-    <button class="book-dialog__close" value="close" aria-label="Close">×</button>
+    <button class="book-dialog__close" value="close" data-sound="close" aria-label="Close">×</button>
     <div class="book-dialog__cover">
       <img id="bd-cover-img" src="" alt="" />
     </div>
@@ -52,7 +60,10 @@ import { books } from "@/data/books"
 <style>
   .shelf-wrap {
     /* Bleed past the reading measure so the shelf can scroll edge to edge. */
+    position: relative;
     margin-inline: calc(var(--gutter) * -1);
+    --book-w: 130px;
+    --cover-h: calc(var(--book-w) * 3 / 2);
   }
 
   .shelf {
@@ -66,6 +77,76 @@ import { books } from "@/data/books"
        first cover under the bleed, clipping it against the edge. */
     scroll-padding-inline: var(--gutter);
     -webkit-overflow-scrolling: touch;
+    /* Gesture-only: the arrows stand in for the bar. */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .shelf::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Centred on the covers, and only present once the shelf is engaged —
+     hover, keyboard focus, or a touch scroll. */
+  .shelf__arrow {
+    position: absolute;
+    z-index: var(--z-raised);
+    inset-block-start: calc(var(--space-3xs) + var(--cover-h) / 2);
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    background: var(--color-paper);
+    border: var(--rule-hair) solid var(--color-rule-2);
+    border-radius: 50%;
+    color: var(--color-ink-3);
+    cursor: pointer;
+    opacity: 0;
+    /* visibility, not pointer-events — an idle arrow must drop out of hit
+       testing entirely, or clicks meant for the cover beneath land on it. */
+    visibility: hidden;
+    transition:
+      opacity var(--dur-short) var(--ease-out),
+      visibility var(--dur-short) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+
+  /* Sit in the bleed margin so a visible arrow doesn't cover a book. */
+  .shelf__arrow--prev {
+    inset-inline-start: calc((var(--gutter) - 34px) / 2);
+  }
+
+  .shelf__arrow--next {
+    inset-inline-end: calc((var(--gutter) - 34px) / 2);
+  }
+
+  .shelf-wrap:hover .shelf__arrow:not([disabled]),
+  .shelf-wrap:focus-within .shelf__arrow:not([disabled]) {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .shelf__arrow:hover {
+    color: var(--color-accent-text);
+    border-color: var(--color-accent-mid);
+  }
+
+  .shelf__arrow:focus-visible {
+    opacity: 1;
+    visibility: visible;
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Below this the gutter is too narrow to hold an arrow clear of the covers,
+     and the viewport is touch-shaped anyway — the gesture carries it. */
+  @media (width < 52rem), (hover: none) {
+    .shelf__arrow {
+      display: none;
+    }
   }
 
   .shelf__item {
@@ -76,7 +157,7 @@ import { books } from "@/data/books"
   .book {
     display: flex;
     flex-direction: column;
-    width: 130px;
+    width: var(--book-w);
     padding: 0;
     background: none;
     border: 0;
@@ -251,6 +332,34 @@ import { books } from "@/data/books"
 </style>
 
 <script>
+  // ── Shelf arrows ──────────────────────────────────────────────────
+  const shelf = document.querySelector<HTMLElement>(".shelf")
+  const prevArrow = document.querySelector<HTMLButtonElement>(".shelf__arrow--prev")
+  const nextArrow = document.querySelector<HTMLButtonElement>(".shelf__arrow--next")
+
+  if (shelf && prevArrow && nextArrow) {
+    // A page is one viewport of covers, less a sliver so the next one peeks in.
+    const page = () => Math.max(shelf.clientWidth * 0.8, 160)
+
+    const syncArrows = () => {
+      const max = shelf.scrollWidth - shelf.clientWidth
+      prevArrow.disabled = shelf.scrollLeft <= 1
+      nextArrow.disabled = shelf.scrollLeft >= max - 1
+    }
+
+    const nudge = (direction: 1 | -1) => {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      shelf.scrollBy({ left: direction * page(), behavior: reduce ? "auto" : "smooth" })
+    }
+
+    prevArrow.addEventListener("click", () => nudge(-1))
+    nextArrow.addEventListener("click", () => nudge(1))
+    shelf.addEventListener("scroll", syncArrows, { passive: true })
+    window.addEventListener("resize", syncArrows)
+    syncArrows()
+  }
+
+  // ── Book dialog ───────────────────────────────────────────────────
   const dialog = document.getElementById("book-dialog") as HTMLDialogElement
   const title = document.getElementById("bd-title")!
   const author = document.getElementById("bd-author")!

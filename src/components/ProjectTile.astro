@@ -37,7 +37,7 @@ const stackShown = variant === "index" ? stack : stack.slice(0, 4)
       <h3 class="tile__name">
         {
           href ? (
-            <a class="tile__stretch" href={href} target="_blank" rel="noopener noreferrer">
+            <a class="tile__stretch" href={href} target="_blank" rel="noopener noreferrer" data-sound="card">
               {name}
               <span class="sr-only"> — open {openLabel}</span>
             </a>

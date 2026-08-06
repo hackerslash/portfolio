@@ -2,6 +2,7 @@
 import { basics } from "@cv"
 import Nav from "@/components/Nav.astro"
 import SiteFooter from "@/components/SiteFooter.astro"
+import Sound from "@/components/Sound.astro"
 import "../../tokens.css"
 
 interface Props {
@@ -90,6 +91,7 @@ const metaKeywords = keywords || defaultKeywords
     <Nav />
     <slot />
     <SiteFooter />
+    <Sound />
 
     <script is:inline>
       const root = document.documentElement

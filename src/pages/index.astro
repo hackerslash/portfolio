@@ -145,7 +145,7 @@ const jsonLd = {
       <ul class="work">
         {
           featuredProjects.map((project, i) => (
-            <li>
+            <li class="reveal-hidden" data-reveal-delay={Math.min(i, 3) * 60}>
               <ProjectTile project={project} variant="feature" showYear={hasYears} eager={i < 3} />
             </li>
           ))
@@ -157,12 +157,16 @@ const jsonLd = {
       posts.length > 0 && (
         <Section wide title="Recent writing" action="all writing" actionHref="/blog/">
           <ul class="writing">
-            {posts.map((post) => (
-              <li>
-                <a href={`/blog/${post.id}/`}>
-                  <span class="writing__title">{post.title}</span>
-                  <span class="writing__meta">
+            {posts.map((post, i) => (
+              <li class="reveal-hidden" data-reveal-delay={Math.min(i, 3) * 60}>
+                <a class="note" href={`/blog/${post.id}/`} data-sound="card">
+                  <p class="note__meta mono-label">
                     <time datetime={post.date}>{formatDate(post.date)}</time> · {post.readingTime}
+                  </p>
+                  <h3 class="note__title">{post.title}</h3>
+                  <p class="note__excerpt">{post.excerpt}</p>
+                  <span class="note__more" aria-hidden="true">
+                    read →
                   </span>
                 </a>
               </li>
@@ -288,44 +292,53 @@ const jsonLd = {
     }
   }
 
-  .writing li + li {
-    border-block-start: var(--rule-hair) solid var(--color-rule);
+  /* auto-fit rather than a fixed pair — with a single recent post the card
+     should span the row instead of stranding a half-width column. */
+  .writing {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: var(--space-md);
   }
 
-  .writing a {
+  /* Same card shell as ProjectTile so work and writing read as one system. */
+  .note {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-sm);
-    padding-block: var(--space-xs);
-    transition: color var(--dur-fast) var(--ease-out);
+    flex-direction: column;
+    gap: var(--space-2xs);
+    height: 100%;
+    padding: var(--space-sm);
+    background: var(--color-paper-2);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-card);
   }
 
-  .writing a:hover .writing__title {
-    color: var(--color-accent-text);
-    border-block-end-color: var(--color-accent);
-  }
-
-  .writing a:focus-visible {
-    outline: 2px solid var(--color-focus);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
-  }
-
-  .writing__title {
-    color: var(--color-ink);
-    font-size: var(--text-base);
-    border-block-end: var(--rule-hair) solid transparent;
-    transition:
-      color var(--dur-fast) var(--ease-out),
-      border-color var(--dur-fast) var(--ease-out);
-  }
-
-  .writing__meta {
-    flex-shrink: 0;
-    color: var(--color-ink-3);
-    font-size: var(--text-xs);
+  .note__meta {
     font-variant-numeric: tabular-nums;
+  }
+
+  .note__title {
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: var(--leading-snug);
+  }
+
+  .note__excerpt {
+    flex: 1;
+    color: var(--color-ink-3);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .note__more {
+    margin-block-start: var(--space-3xs);
+    color: var(--color-ink-4);
+    font-size: var(--text-xs);
   }
 
   @media (width <= 48rem) {
@@ -341,11 +354,6 @@ const jsonLd = {
 
     .fold__break {
       margin-block-end: var(--space-xl);
-    }
-
-    .writing a {
-      flex-direction: column;
-      gap: var(--space-3xs);
     }
   }
 
