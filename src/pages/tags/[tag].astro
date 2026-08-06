@@ -5,24 +5,23 @@ import { formatDate } from "@/utils/formatDate"
 import Home from "@/icons/Home.astro"
 import Tag from "@/components/Tag.astro"
 import { BLOG_POSTS_PER_PAGE_TAG } from "@/utils/constants"
+import { slugify } from "@/utils/slugify"
 
 export async function getStaticPaths() {
   const blogs = getBlogs()
 
-  const allTags = new Set<string>()
+  // Keyed by slug so two labels that slugify alike collapse into one route
+  // instead of crashing the build with duplicate params.
+  const labelBySlug = new Map<string, string>()
   blogs.forEach(blog => {
-    if (blog.tags && Array.isArray(blog.tags)) {
-      blog.tags.forEach((tag: string) => allTags.add(tag))
-    }
+    blog.tags?.forEach((tag: string) => labelBySlug.set(slugify(tag), tag))
   })
 
-  return Array.from(allTags).map(tag => ({
-    params: { tag },
+  return Array.from(labelBySlug, ([slug, tag]) => ({
+    params: { tag: slug },
     props: {
       tag,
-      blogs: blogs.filter(blog =>
-        blog.tags && blog.tags.includes(tag)
-      )
+      blogs: blogs.filter(blog => blog.tags?.includes(tag))
     },
   }))
 }
@@ -43,7 +42,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
 >
   <main>
     <nav class="blog-nav">
-      <a href="/blog" class="home-link" title="Back to Blogs">
+      <a href="/blog/" class="home-link" title="Back to Blogs">
         <Home />
         <span>Back to Blogs</span>
       </a>
@@ -72,7 +71,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
                       <div class="text-content">
                         <header>
                           <h3>
-                            <a href={`/blog/${id}`} title={`Read ${title}`}>
+                            <a href={`/blog/${id}/`} title={`Read ${title}`}>
                               {title}
                             </a>
                           </h3>
@@ -97,7 +96,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
                         <img src="https://picsum.photos/200" alt={title} loading="lazy" />
                       </div>
                     </div>
-                    <a href={`/blog/${id}`} class="read-more-overlay">Read More →</a>
+                    <a href={`/blog/${id}/`} class="read-more-overlay">Read More →</a>
                   </article>
                 </li>
               )
@@ -403,7 +402,7 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
   backToBlogsLinks.forEach(link => {
     link.addEventListener('click', function(event) {
       event.preventDefault();
-      window.location.href = '/blog';
+      window.location.href = '/blog/';
     });
   });
 

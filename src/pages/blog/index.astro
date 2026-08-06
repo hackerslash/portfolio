@@ -14,8 +14,8 @@ const pageDescription =
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Blog",
-  "@id": `${basics.url}/blog#blog`,
-  url: `${basics.url}/blog`,
+  "@id": `${basics.url}/blog/#blog`,
+  url: `${basics.url}/blog/`,
   name: pageTitle,
   description: pageDescription,
   isPartOf: { "@id": `${basics.url}/#website` },
@@ -25,7 +25,7 @@ const jsonLd = {
     headline: p.title,
     datePublished: p.date,
     description: p.excerpt,
-    url: `${basics.url}/blog/${p.id}`,
+    url: `${basics.url}/blog/${p.id}/`,
     keywords: (p.tags ?? []).join(", "),
   })),
 }

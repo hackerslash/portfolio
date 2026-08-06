@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 }
 
 const { blog, prevPost, nextPost } = Astro.props
-const { title, date, author, content, tags, readingTime, excerpt } = blog
+const { title, date, updated, author, content, tags, readingTime, excerpt, image } = blog
 const formattedDate = formatDate(date)
 
 // Generate table of contents
@@ -33,8 +33,9 @@ const showTOC = toc.length >= 3 // Only show TOC if there are 3+ headings
 
 // SEO props
 const siteUrl = basics.url
-const canonicalUrl = `${siteUrl}/blog/${blog.id}`
+const canonicalUrl = `${siteUrl}/blog/${blog.id}/`
 const pageTitle = `${title} - Blog | Md Afridi Sk`
+const ogImage = image ? new URL(image, siteUrl).href : `${siteUrl}/profile-pic.png`
 
 // JSON-LD structured data for BlogPosting with BreadcrumbList
 const jsonLd = {
@@ -47,13 +48,13 @@ const jsonLd = {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": siteUrl
+          "item": `${siteUrl}/`
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": `${siteUrl}/blog`
+          "item": `${siteUrl}/blog/`
         },
         {
           "@type": "ListItem",
@@ -68,20 +69,20 @@ const jsonLd = {
       "@id": canonicalUrl,
       "headline": title,
       "description": excerpt,
-      "image": `${siteUrl}/profile-pic.png`,
+      "image": ogImage,
       "author": {
         "@type": "Person",
         "@id": `${siteUrl}/#person`,
         "name": author,
-        "url": siteUrl
+        "url": `${siteUrl}/`
       },
       "datePublished": date,
-      "dateModified": date,
+      "dateModified": updated || date,
       "publisher": {
         "@type": "Person",
         "@id": `${siteUrl}/#person`,
         "name": "Md Afridi Sk",
-        "url": siteUrl
+        "url": `${siteUrl}/`
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
@@ -97,7 +98,7 @@ const jsonLd = {
 }
 
 // Blog-specific keywords
-const blogKeywords = `${tags?.join(", ") || ""}, Md Afridi Sk, ${author}, tech blog, software engineering, ${title}`
+const blogKeywords = `${tags?.join(", ") || ""}, ${author}, tech blog, software engineering, ${title}`
 
 const highlighter = await createHighlighter({
   themes: ['github-dark', 'solarized-light'],
@@ -181,6 +182,7 @@ renderedContent = addHeadingIds(renderedContent)
   title={pageTitle}
   description={excerpt}
   canonicalUrl={canonicalUrl}
+  ogImage={ogImage}
   ogType="article"
   keywords={blogKeywords}
   jsonLd={jsonLd}
@@ -204,7 +206,7 @@ renderedContent = addHeadingIds(renderedContent)
     )}
 
     <div class="post-topbar">
-      <a href="/blog" class="glass-btn" aria-label="Back to writing">
+      <a href="/blog/" class="glass-btn" aria-label="Back to writing">
         <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
           <path d="M8 5 3.5 9.5 8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
           <path d="M3.5 9.5H12a4.5 4.5 0 0 1 0 9h-1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
@@ -247,7 +249,7 @@ renderedContent = addHeadingIds(renderedContent)
         <footer class="post-foot">
           <nav class="foot-nav" aria-label="Post navigation">
             {prevPost ? (
-              <a href={`/blog/${prevPost.id}`} class="foot-nav__link foot-nav__prev" rel="prev">
+              <a href={`/blog/${prevPost.id}/`} class="foot-nav__link foot-nav__prev" rel="prev">
                 <span class="foot-nav__dir"><span aria-hidden="true">←</span> Previous</span>
                 <span class="foot-nav__title">{prevPost.title}</span>
               </a>
@@ -255,7 +257,7 @@ renderedContent = addHeadingIds(renderedContent)
               <span></span>
             )}
             {nextPost ? (
-              <a href={`/blog/${nextPost.id}`} class="foot-nav__link foot-nav__next" rel="next">
+              <a href={`/blog/${nextPost.id}/`} class="foot-nav__link foot-nav__next" rel="next">
                 <span class="foot-nav__dir">Next <span aria-hidden="true">→</span></span>
                 <span class="foot-nav__title">{nextPost.title}</span>
               </a>

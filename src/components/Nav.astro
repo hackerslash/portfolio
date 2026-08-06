@@ -1,13 +1,13 @@
 ---
-const path = Astro.url.pathname.replace(/\/+$/, "") || "/"
+const path = Astro.url.pathname.replace(/\/?$/, "/")
 
 const flags = [
-  { href: "/work", label: "work" },
-  { href: "/about", label: "about" },
-  { href: "/blog", label: "writing" },
+  { href: "/work/", label: "work" },
+  { href: "/about/", label: "about" },
+  { href: "/blog/", label: "writing" },
 ]
 
-const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
+const isCurrent = (href: string) => path.startsWith(href)
 ---
 
 <nav class="nav no-print" aria-label="Primary">

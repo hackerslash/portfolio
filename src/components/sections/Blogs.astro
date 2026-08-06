@@ -42,7 +42,7 @@ const totalPages = Math.ceil(blogs.length / perPage)
                 <time datetime={date}>{formatDate(date)}</time> · {readingTime}
               </p>
               <h3 class="post__title">
-                <a href={`/blog/${id}`}>{title}</a>
+                <a href={`/blog/${id}/`}>{title}</a>
               </h3>
               <p class="post__excerpt">{excerpt}</p>
               {tags && tags.length > 0 && (

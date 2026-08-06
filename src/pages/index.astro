@@ -31,7 +31,7 @@ const jsonLd = {
     {
       "@type": "WebSite",
       "@id": `${basics.url}/#website`,
-      url: basics.url,
+      url: `${basics.url}/`,
       name: "Md Afridi Sk - Portfolio",
       description: pageDescription,
       publisher: { "@id": `${basics.url}/#person` },
@@ -40,7 +40,7 @@ const jsonLd = {
     {
       "@type": "ProfilePage",
       "@id": `${basics.url}/#profilepage`,
-      url: basics.url,
+      url: `${basics.url}/`,
       name: pageTitle,
       isPartOf: { "@id": `${basics.url}/#website` },
       mainEntity: { "@id": `${basics.url}/#person` },
@@ -52,7 +52,7 @@ const jsonLd = {
       "@id": `${basics.url}/#person`,
       name: basics.name,
       alternateName: "hackerslash",
-      url: basics.url,
+      url: `${basics.url}/`,
       mainEntityOfPage: { "@id": `${basics.url}/#profilepage` },
       image: {
         "@type": "ImageObject",
@@ -141,7 +141,7 @@ const jsonLd = {
 
     <hr class="fold__break" />
 
-    <Section wide title="Selected work" id="work" action={`all ${allProjects.length} projects`} actionHref="/work">
+    <Section wide title="Selected work" id="work" action={`all ${allProjects.length} projects`} actionHref="/work/">
       <ul class="work">
         {
           featuredProjects.map((project, i) => (
@@ -155,11 +155,11 @@ const jsonLd = {
 
     {
       posts.length > 0 && (
-        <Section wide title="Recent writing" action="all writing" actionHref="/blog">
+        <Section wide title="Recent writing" action="all writing" actionHref="/blog/">
           <ul class="writing">
             {posts.map((post) => (
               <li>
-                <a href={`/blog/${post.id}`}>
+                <a href={`/blog/${post.id}/`}>
                   <span class="writing__title">{post.title}</span>
                   <span class="writing__meta">
                     <time datetime={post.date}>{formatDate(post.date)}</time> · {post.readingTime}

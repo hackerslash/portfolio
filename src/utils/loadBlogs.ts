@@ -7,8 +7,12 @@ export interface BlogPost {
   id: string;
   title: string;
   date: string;
+  /** Last substantive edit, if any. Feeds schema.org dateModified. */
+  updated?: string;
   author: string;
   excerpt: string;
+  /** Social preview image path, e.g. "/blog-og/my-post.png". */
+  image?: string;
   content: string;
   readingTime: string;
   active: boolean;
@@ -19,8 +23,10 @@ export interface BlogFrontmatter {
   id?: string;
   title: string;
   date: string;
+  updated?: string;
   author: string;
   excerpt: string;
+  image?: string;
   active?: boolean;
   tags?: string[];
 }
@@ -111,8 +117,10 @@ export function getBlogs(): BlogPost[] {
             id: data.id || fileName.replace(/\.md$/, ''),
             title: data.title,
             date: data.date,
+            updated: data.updated,
             author: data.author,
             excerpt: data.excerpt,
+            image: data.image,
             content: content,
             readingTime: calculateReadingTime(content),
             active: data.active !== false, // Default to true if not specified
