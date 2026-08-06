@@ -80,8 +80,12 @@ const metaKeywords = keywords || defaultKeywords
 
     <!-- JSON-LD Structured Data -->
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+    <!-- Without JS nothing ever clears .reveal-hidden, so unhide it up front. -->
+    <noscript><style>.reveal-hidden { opacity: 1; }</style></noscript>
   </head>
   <body>
+    <div class="grain no-print" aria-hidden="true"></div>
     <Nav />
     <slot />
     <SiteFooter />
@@ -98,6 +102,38 @@ const metaKeywords = keywords || defaultKeywords
       }
       if (!location.hash) {
         window.scrollTo(0, 0)
+      }
+    </script>
+
+    <script>
+      // Reveal-on-scroll: any element with .reveal-hidden rises into view once.
+      // Fails safe — if observation can't run, everything is shown immediately.
+      const revealables = document.querySelectorAll<HTMLElement>(".reveal-hidden")
+      if (revealables.length) {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        if (reduceMotion || !("IntersectionObserver" in window)) {
+          revealables.forEach((el) => el.classList.remove("reveal-hidden"))
+        } else {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (!entry.isIntersecting) continue
+                const el = entry.target as HTMLElement
+                el.style.animationDelay = `${Number(el.dataset.revealDelay ?? 0)}ms`
+                el.classList.remove("reveal-hidden")
+                el.classList.add("reveal-play")
+                // Drop the class once done: a filled animation pins opacity and
+                // would outrank later rules such as .dim-list:hover > .dim-row.
+                el.addEventListener("animationend", () => el.classList.remove("reveal-play"), {
+                  once: true,
+                })
+                observer.unobserve(el)
+              }
+            },
+            { rootMargin: "0px 0px -10% 0px" }
+          )
+          revealables.forEach((el) => observer.observe(el))
+        }
       }
     </script>
     <script data-goatcounter="https://hackerslash.goatcounter.com/count" async src="//gc.zgo.at/count.js"
@@ -141,6 +177,30 @@ const metaKeywords = keywords || defaultKeywords
     color: var(--color-ink);
     overflow-wrap: anywhere;
     min-width: 0;
+  }
+
+  /* The noise tile is a cached data-URI raster, repeated — a live
+     full-viewport feTurbulence would repaint every scroll frame. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 140px 140px;
+  }
+
+  :root.light .grain {
+    opacity: 0.03;
+  }
+
+  .mono-label {
+    font-size: var(--text-xs);
+    line-height: 1.33;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--color-ink-3);
   }
 
   p {
@@ -238,6 +298,44 @@ const metaKeywords = keywords || defaultKeywords
     }
   }
 
+  /* Reveal-on-scroll — set .reveal-hidden initially, JS swaps to .reveal-play. */
+  .reveal-hidden {
+    opacity: 0;
+  }
+
+  .reveal-play {
+    animation: fadeInUp 700ms var(--ease-out) both;
+  }
+
+  /* Page-enter fade, applied to <main> on first paint. */
+  @keyframes page-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .page-enter {
+    animation: page-fade var(--dur-med) var(--ease-out) both;
+  }
+
+  /* Hovering a list dims every sibling but the one under the cursor. Rows still
+     waiting to reveal are excluded — these selectors would outrank their
+     opacity: 0 and surface them early. */
+  .dim-list:hover > .dim-row:not(.reveal-hidden) {
+    opacity: 0.5;
+  }
+
+  .dim-list:hover > .dim-row:not(.reveal-hidden):hover {
+    opacity: 1;
+  }
+
+  .dim-row {
+    transition: opacity var(--dur-short) var(--ease-out);
+  }
+
   .print {
     display: none !important;
   }
@@ -263,6 +361,10 @@ const metaKeywords = keywords || defaultKeywords
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+
+    .reveal-hidden {
+      opacity: 1;
     }
 
     *,

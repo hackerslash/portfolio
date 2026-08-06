@@ -29,20 +29,21 @@ const totalPages = Math.ceil(blogs.length / perPage)
         <p class="search__count" id="search-results" aria-live="polite" />
       </div>
 
-      <ol class="posts" data-per-page={perPage}>
+      <ol class="posts dim-list" data-per-page={perPage}>
         {blogs.map(({ id, title, date, excerpt, tags, readingTime }, index) => (
           <li
             data-post-index={index}
             data-search={[title, excerpt, ...(tags ?? [])].join(" ").toLowerCase()}
-            class={paginated && index >= perPage ? "is-hidden" : ""}
+            data-reveal-delay={Math.min(index, 3) * 60}
+            class={`dim-row reveal-hidden${paginated && index >= perPage ? " is-hidden" : ""}`}
           >
             <article class="post">
+              <p class="post__meta mono-label">
+                <time datetime={date}>{formatDate(date)}</time> · {readingTime}
+              </p>
               <h3 class="post__title">
                 <a href={`/blog/${id}`}>{title}</a>
               </h3>
-              <p class="post__meta">
-                <time datetime={date}>{formatDate(date)}</time> · {readingTime}
-              </p>
               <p class="post__excerpt">{excerpt}</p>
               {tags && tags.length > 0 && (
                 <div class="post__tags">
@@ -156,8 +157,6 @@ const totalPages = Math.ceil(blogs.length / perPage)
   }
 
   .post__meta {
-    color: var(--color-ink-3);
-    font-size: var(--text-xs);
     font-variant-numeric: tabular-nums;
   }
 

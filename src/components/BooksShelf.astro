@@ -1,0 +1,286 @@
+---
+import { books } from "@/data/books"
+---
+
+<div class="shelf-wrap">
+  <ul class="shelf">
+    {
+      books.map((book) => (
+        <li class="shelf__item">
+          <button
+            type="button"
+            class="book"
+            data-title={book.title}
+            data-author={book.author}
+            data-category={book.category}
+            data-progress={String(book.progress)}
+            data-cover={book.cover}
+          >
+            <span class="book__cover">
+              <img src={book.cover} alt={`${book.title} by ${book.author}`} loading="lazy" decoding="async" />
+            </span>
+            <span class="book__title">{book.title}</span>
+            <span class="book__author">{book.author}</span>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<dialog class="book-dialog" id="book-dialog" aria-label="Book detail">
+  <form method="dialog" class="book-dialog__inner">
+    <button class="book-dialog__close" value="close" aria-label="Close">×</button>
+    <div class="book-dialog__cover">
+      <img id="bd-cover-img" src="" alt="" />
+    </div>
+    <p class="book-dialog__title" id="bd-title"></p>
+    <p class="book-dialog__author" id="bd-author"></p>
+    <span class="book-dialog__tag" id="bd-category"></span>
+    <div class="book-dialog__progress">
+      <div class="book-dialog__progress-head">
+        <span>Progress</span>
+        <span id="bd-progress-pct" class="book-dialog__pct"></span>
+      </div>
+      <div class="book-dialog__bar" aria-hidden="true">
+        <div id="bd-progress-fill" class="book-dialog__fill"></div>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<style>
+  .shelf-wrap {
+    /* Bleed past the reading measure so the shelf can scroll edge to edge. */
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  .shelf {
+    display: flex;
+    gap: var(--space-md);
+    padding-inline: var(--gutter);
+    padding-block: var(--space-3xs);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    /* Without this the snapport ignores the gutter and the browser scrolls the
+       first cover under the bleed, clipping it against the edge. */
+    scroll-padding-inline: var(--gutter);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shelf__item {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+
+  .book {
+    display: flex;
+    flex-direction: column;
+    width: 130px;
+    padding: 0;
+    background: none;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .book__cover {
+    display: block;
+    aspect-ratio: 2 / 3;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    border: var(--rule-hair) solid var(--color-rule);
+    background: var(--color-paper-2);
+    transition: border-color var(--dur-short) var(--ease-out);
+  }
+
+  .book:hover .book__cover {
+    border-color: var(--color-accent-mid);
+  }
+
+  .book__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity var(--dur-short) var(--ease-out);
+  }
+
+  .book:hover .book__cover img {
+    opacity: 0.85;
+  }
+
+  .book__title {
+    margin-block-start: var(--space-2xs);
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .book__author {
+    color: var(--color-ink-4);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .book:focus-visible .book__cover {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* ── Dialog ─────────────────────────────────────────────────────── */
+  .book-dialog {
+    width: min(90vw, 30rem);
+    padding: 0;
+    border: var(--rule-hair) solid var(--color-rule-2);
+    border-radius: var(--radius-card);
+    background: var(--color-paper-2);
+    color: var(--color-ink-2);
+  }
+
+  .book-dialog::backdrop {
+    background: rgb(0 0 0 / 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  .book-dialog__inner {
+    position: relative;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .book-dialog__close {
+    position: absolute;
+    inset-block-start: var(--space-2xs);
+    inset-inline-end: var(--space-2xs);
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-3);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .book-dialog__close:hover {
+    color: var(--color-ink);
+  }
+
+  .book-dialog__cover {
+    width: 110px;
+    aspect-ratio: 2 / 3;
+    margin-block-end: var(--space-md);
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    border: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .book-dialog__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .book-dialog__title {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .book-dialog__author {
+    margin-block-start: var(--space-3xs);
+    color: var(--color-ink-3);
+    font-size: var(--text-base);
+  }
+
+  .book-dialog__tag {
+    margin-block-start: var(--space-sm);
+    padding: 2px var(--space-2xs);
+    border: var(--rule-hair) solid var(--color-accent-mid);
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-dim);
+    color: var(--color-accent-text);
+    font-size: var(--text-xs);
+  }
+
+  .book-dialog__progress {
+    width: 100%;
+    max-width: 16rem;
+    margin-block-start: var(--space-lg);
+  }
+
+  .book-dialog__progress-head {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-ink-3);
+    font-size: var(--text-xs);
+  }
+
+  .book-dialog__pct {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .book-dialog__bar {
+    margin-block-start: var(--space-2xs);
+    height: 8px;
+    overflow: hidden;
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-pill);
+  }
+
+  .book-dialog__fill {
+    height: 100%;
+    width: 0;
+    background: var(--color-accent);
+    transition: width var(--dur-med) var(--ease-out);
+  }
+</style>
+
+<script>
+  const dialog = document.getElementById("book-dialog") as HTMLDialogElement
+  const title = document.getElementById("bd-title")!
+  const author = document.getElementById("bd-author")!
+  const category = document.getElementById("bd-category")!
+  const pct = document.getElementById("bd-progress-pct")!
+  const fill = document.getElementById("bd-progress-fill") as HTMLElement
+  const coverImg = document.getElementById("bd-cover-img") as HTMLImageElement
+
+  document.querySelectorAll<HTMLButtonElement>(".book").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const d = btn.dataset
+      title.textContent = d.title!
+      author.textContent = `By ${d.author}`
+      category.textContent = d.category!
+      pct.textContent = `${d.progress}%`
+      coverImg.src = d.cover!
+      coverImg.alt = `${d.title} by ${d.author}`
+      dialog.showModal()
+      // Animate the bar after the dialog paints.
+      requestAnimationFrame(() => {
+        fill.style.width = `${d.progress}%`
+      })
+    })
+  })
+
+  // Reset the bar once closed so it re-animates next open.
+  dialog.addEventListener("close", () => {
+    fill.style.width = "0"
+  })
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close()
+  })
+</script>

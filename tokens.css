@@ -31,6 +31,8 @@
                   "Helvetica Neue", sans-serif;
   --font-body:    Menlo, Monaco, "Lucida Console", "Courier New", Courier,
                   monospace;
+  /* Blog prose uses serif italic for emphasis and pull-quotes. */
+  --font-serif:   Georgia, Cambria, "Times New Roman", Times, serif;
 
   --text-xs:        0.75rem;
   --text-sm:        0.8125rem;
@@ -44,6 +46,7 @@
 
   --track-display: -0.03em;
   --track-body:    -0.025em;
+  --track-label:   0.14em;
   --leading-tight: 1.05;
   --leading-snug:  1.35;
   --leading-body:  1.65;
