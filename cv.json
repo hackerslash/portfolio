@@ -396,6 +396,188 @@
       "github": "https://github.com/hackerslash/doc-shadow-removal"
     }
   ],
+  "gallery": [
+    {
+      "seed": "g-01",
+      "w": 800,
+      "h": 1000,
+      "alt": "Misty pine ridge at dawn, Kodagu",
+      "caption": "Kodagu — dawn mist",
+      "description": "Fog held the ridge for ten minutes before the sun cut through the pines.",
+      "tag": "nature"
+    },
+    {
+      "seed": "g-02",
+      "w": 800,
+      "h": 600,
+      "alt": "Amber desert highway stretching to horizon",
+      "caption": "Rajasthan — amber highway",
+      "description": "An empty road shimmering in heat, the kind you drive just to feel distance.",
+      "tag": "travel"
+    },
+    {
+      "seed": "g-03",
+      "w": 800,
+      "h": 1100,
+      "alt": "Narrow alley with hanging laundry in old city",
+      "caption": "Old city — hanging laundry",
+      "description": "Afternoon light caught the cotton like small flags above the lane.",
+      "tag": "street"
+    },
+    {
+      "seed": "g-04",
+      "w": 800,
+      "h": 800,
+      "alt": "Window light on a sparse desk with film camera",
+      "caption": "Desk light — film camera",
+      "description": "One camera, one roll, and the quiet before you decide what matters.",
+      "tag": "film"
+    },
+    {
+      "seed": "g-05",
+      "w": 800,
+      "h": 650,
+      "alt": "Urban train crossing a river bridge at blue hour",
+      "caption": "Blue hour — river bridge",
+      "description": "City lights flickered on while the river stayed perfectly still.",
+      "tag": "urban"
+    },
+    {
+      "seed": "g-06",
+      "w": 800,
+      "h": 1200,
+      "alt": "Tall bookstore shelf, spines catching afternoon sun",
+      "caption": "Bookstore — afternoon stacks",
+      "description": "Dust and paper and that warm smell only old books have.",
+      "tag": "archive"
+    },
+    {
+      "seed": "g-07",
+      "w": 800,
+      "h": 700,
+      "alt": "Coastal road with scooter and sea haze",
+      "caption": "Coast — sea haze",
+      "description": "Salt in the air, a second-hand scooter, nowhere particular to be.",
+      "tag": "coast"
+    },
+    {
+      "seed": "g-08",
+      "w": 800,
+      "h": 1000,
+      "alt": "Portraits of hands in workshop light, tools on wall",
+      "caption": "Workshop — hands & tools",
+      "description": "Years of use polished the wood smoother than any varnish could.",
+      "tag": "craft"
+    },
+    {
+      "seed": "g-09",
+      "w": 800,
+      "h": 900,
+      "alt": "Monsoon clouds over terraced fields",
+      "caption": "Monsoon — terraced fields",
+      "description": "Clouds stacked low, waiting — the fields already knew rain was coming.",
+      "tag": "monsoon"
+    },
+    {
+      "seed": "g-10",
+      "w": 800,
+      "h": 600,
+      "alt": "Night market glow reflected in wet pavement",
+      "caption": "Night market — wet glow",
+      "description": "Neon doubled in every puddle, footsteps soft on the wet stone.",
+      "tag": "night"
+    },
+    {
+      "seed": "g-11",
+      "w": 800,
+      "h": 1150,
+      "alt": "Temple steps ghat at sunrise, silhouettes in water",
+      "caption": "Ghat — first light",
+      "description": "Water caught the temple, and the temple caught the sky — all before chai.",
+      "tag": "heritage"
+    },
+    {
+      "seed": "g-12",
+      "w": 800,
+      "h": 850,
+      "alt": "Brutalist concrete stairwell with soft top light",
+      "caption": "Concrete — stairwell light",
+      "description": "Hard geometry softened by a single shaft of late afternoon light.",
+      "tag": "architecture"
+    },
+    {
+      "seed": "g-13",
+      "w": 800,
+      "h": 620,
+      "alt": "Cafe table with coffee steam and morning paper",
+      "caption": "Café — morning steam",
+      "description": "The news could wait; the coffee could not.",
+      "tag": "café"
+    },
+    {
+      "seed": "g-14",
+      "w": 800,
+      "h": 1050,
+      "alt": "Train window portrait, fields blurring past",
+      "caption": "Train window — fields",
+      "description": "Green smeared past the glass, village after village without names.",
+      "tag": "transit"
+    },
+    {
+      "seed": "g-15",
+      "w": 800,
+      "h": 780,
+      "alt": "Leaves against a textured wall, hard shadow",
+      "caption": "Shadow — leaves on wall",
+      "description": "Wind drew lace on plaster, there and gone with every gust.",
+      "tag": "light"
+    },
+    {
+      "seed": "g-16",
+      "w": 800,
+      "h": 950,
+      "alt": "Harbour boats at rest, pastel sky",
+      "caption": "Harbour — boats at rest",
+      "description": "Ropes creaked, water lapped — the harbour breathing in its sleep.",
+      "tag": "harbour"
+    },
+    {
+      "seed": "g-17",
+      "w": 800,
+      "h": 1200,
+      "alt": "Forest trail with sun flecks through canopy",
+      "caption": "Forest — sun flecks",
+      "description": "Light fell in pieces through leaves, making a map on the path.",
+      "tag": "forest"
+    },
+    {
+      "seed": "g-18",
+      "w": 800,
+      "h": 680,
+      "alt": "City skyline at twilight from rooftop",
+      "caption": "Skyline — twilight",
+      "description": "The hour when buildings turn to silhouettes and windows turn to stars.",
+      "tag": "skyline"
+    },
+    {
+      "seed": "g-19",
+      "w": 800,
+      "h": 1000,
+      "alt": "Detail of old typewriter keys and paper",
+      "caption": "Typewriter — keys",
+      "description": "Each key a little worn from the letters it loved most.",
+      "tag": "analog"
+    },
+    {
+      "seed": "g-20",
+      "w": 800,
+      "h": 800,
+      "alt": "Mountain lake reflecting snow peaks",
+      "caption": "Lake — snow peaks",
+      "description": "So still it was hard to tell where mountain ended and lake began.",
+      "tag": "mountain"
+    }
+  ],
   "skills": [
     { "name": "TypeScript", "category": "Languages" },
     { "name": "Python", "category": "Languages" },

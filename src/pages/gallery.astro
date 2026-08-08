@@ -1,0 +1,610 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { basics, gallery as galleryData } from "@cv"
+import type { Gallery } from "@/cv"
+
+const pageTitle = "Gallery — Md Afridi Sk"
+const pageDescription = "Frames I love — places I've lived, people I've met, and moments of light I couldn't let pass."
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  "@id": `${basics.url}/gallery/#gallery`,
+  url: `${basics.url}/gallery/`,
+  name: pageTitle,
+  description: pageDescription,
+  isPartOf: { "@id": `${basics.url}/#website` },
+  about: { "@id": `${basics.url}/#person` },
+}
+
+const frames = (galleryData ?? []) as Gallery[]
+
+const thumb = (f: Gallery) => `https://picsum.photos/seed/${f.seed}/800/${f.h}`
+const full = (f: Gallery) => `https://picsum.photos/seed/${f.seed}/1600/${f.h * 2}`
+---
+
+<Layout title={pageTitle} description={pageDescription} jsonLd={jsonLd}>
+  <main class="page gallery page-enter">
+    <header class="gallery-head">
+      <h1>Gallery.</h1>
+      <p class="gallery-head__lede">
+        Frames I love — places I&rsquo;ve lived, people I&rsquo;ve met, and small moments of light I didn&rsquo;t want to forget.
+      </p>
+    </header>
+
+    <div class="mosaic" role="list">
+      {
+        frames.map((f, i) => (
+          <figure class="mosaic__item reveal-hidden" data-reveal-delay={Math.min(i, 8) * 55} role="listitem">
+            <button
+              class="mosaic__btn"
+              type="button"
+              data-sound="card"
+              data-full={full(f)}
+              data-alt={f.alt}
+              data-caption={f.caption}
+              data-desc={f.description}
+              data-tag={f.tag}
+              aria-label={`Open ${f.caption}`}
+            >
+              <img
+                src={thumb(f)}
+                alt={f.alt}
+                width={f.w}
+                height={f.h}
+                loading={i < 6 ? "eager" : "lazy"}
+                decoding="async"
+              />
+              <span class="mosaic__overlay" aria-hidden="true">
+                <span class="mosaic__zoom">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/><path d="M8 11h6"/><path d="M11 8v6"/></svg>
+                  expand
+                </span>
+              </span>
+            </button>
+            <figcaption class="mosaic__cap mono-label">{f.caption}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <!-- Lightbox -->
+    <dialog id="gallery-lightbox" class="lightbox" aria-label="Image lightbox">
+      <div class="lightbox__inner">
+        <button class="lightbox__close" type="button" data-sound="close" aria-label="Close lightbox">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+
+        <button class="lightbox__nav lightbox__nav--prev" type="button" data-sound="back" aria-label="Previous image">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="lightbox__nav lightbox__nav--next" type="button" data-sound="forward" aria-label="Next image">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+
+        <figure class="lightbox__figure">
+          <img id="lb-img" class="lightbox__img" src="" alt="" decoding="async" />
+          <figcaption class="lightbox__meta">
+            <span id="lb-caption" class="lightbox__caption"></span>
+            <p id="lb-desc" class="lightbox__desc"></p>
+            <div class="lightbox__foot">
+              <span id="lb-tag" class="lightbox__tag"></span>
+              <span id="lb-count" class="lightbox__count mono-label" aria-live="polite"></span>
+            </div>
+          </figcaption>
+        </figure>
+
+        <p class="lightbox__hint mono-label" aria-hidden="true">esc to close · ← → to navigate</p>
+      </div>
+    </dialog>
+  </main>
+</Layout>
+
+<style>
+  .gallery-head {
+    padding-block-end: var(--space-lg);
+    margin-block-end: var(--space-lg);
+    border-block-end: var(--rule-thick) solid var(--color-rule-2);
+  }
+
+  h1 {
+    font-size: var(--text-display-s);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--track-display);
+  }
+
+  .gallery-head__lede {
+    max-width: var(--measure);
+    margin-block-start: var(--space-sm);
+    color: var(--color-ink-3);
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+  }
+
+  /* ── Mosaic — columns-based masonry (true collage feel) ── */
+  .mosaic {
+    columns: 1;
+    column-gap: var(--space-sm);
+  }
+
+  @media (width >= 38rem) {
+    .mosaic {
+      columns: 2;
+    }
+  }
+
+  @media (width >= 68rem) {
+    .mosaic {
+      columns: 3;
+    }
+  }
+
+  .mosaic__item {
+    break-inside: avoid;
+    margin-block-end: var(--space-sm);
+  }
+
+  .mosaic__btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--color-paper-2);
+    cursor: zoom-in;
+    transition:
+      border-color var(--dur-short) var(--ease-out),
+      transform var(--dur-short) var(--ease-out);
+  }
+
+  .mosaic__btn:hover,
+  .mosaic__btn:focus-visible {
+    border-color: var(--color-accent-mid);
+    outline: none;
+  }
+
+  .mosaic__btn:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-focus);
+  }
+
+  .mosaic__btn img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition:
+      transform 500ms var(--ease-out),
+      opacity var(--dur-short) var(--ease-out),
+      filter var(--dur-short) var(--ease-out);
+  }
+
+  .mosaic__btn:hover img {
+    transform: scale(1.03);
+  }
+
+  .mosaic__overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: var(--space-xs);
+    background: linear-gradient(to top, rgb(0 0 0 / 0.55) 0%, rgb(0 0 0 / 0) 100%);
+    opacity: 0;
+    transition: opacity var(--dur-short) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .mosaic__btn:hover .mosaic__overlay,
+  .mosaic__btn:focus-visible .mosaic__overlay {
+    opacity: 1;
+  }
+
+  .mosaic__zoom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.92);
+    color: oklch(20% 0 0);
+    font-size: var(--text-xs);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    line-height: 1;
+    backdrop-filter: blur(6px);
+  }
+
+  :global(.light) .mosaic__zoom {
+    background: rgb(255 255 255 / 0.94);
+  }
+
+  .mosaic__cap {
+    margin-block-start: var(--space-3xs);
+    padding-inline: 2px;
+    color: var(--color-ink-4);
+    font-size: 0.68rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Lightbox dialog ── */
+  .lightbox {
+    width: 100%;
+    max-width: 100vw;
+    height: 100%;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .lightbox:not([open]) {
+    display: none;
+  }
+
+  .lightbox::backdrop {
+    background: rgb(0 0 0 / 0.72);
+    backdrop-filter: blur(10px) saturate(1.05);
+  }
+
+  :global(.light) .lightbox::backdrop {
+    background: rgb(8 8 12 / 0.62);
+  }
+
+  .lightbox__inner {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    padding: clamp(16px, 3vw, 40px);
+    overflow: auto;
+  }
+
+  .lightbox__figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    max-width: min(92vw, 1200px);
+    width: fit-content;
+    animation: lbIn 360ms var(--ease-out) both;
+  }
+
+  @keyframes lbIn {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .lightbox__img {
+    display: block;
+    max-width: min(92vw, 1200px);
+    max-height: min(72vh, 860px);
+    width: auto;
+    height: auto;
+    border-radius: var(--radius-card);
+    border: var(--rule-hair) solid rgb(255 255 255 / 0.12);
+    box-shadow:
+      0 24px 60px rgb(0 0 0 / 0.45),
+      0 1px 0 rgb(255 255 255 / 0.08) inset;
+    background: var(--color-paper-2);
+  }
+
+  .lightbox__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs);
+    max-width: 42rem;
+    text-align: center;
+  }
+
+  .lightbox__caption {
+    color: rgb(255 255 255 / 0.92);
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: var(--leading-snug);
+  }
+
+  .lightbox__desc {
+    margin: 0;
+    max-width: 36ch;
+    color: rgb(255 255 255 / 0.72);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    text-wrap: pretty;
+  }
+
+  .lightbox__desc:empty {
+    display: none;
+  }
+
+  .lightbox__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2xs) var(--space-sm);
+    margin-block-start: var(--space-3xs);
+  }
+
+  .lightbox__tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border: var(--rule-hair) solid rgb(255 255 255 / 0.18);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.10);
+    backdrop-filter: blur(8px);
+    color: rgb(255 255 255 / 0.90);
+    font-size: 0.68rem;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .lightbox__tag:empty {
+    display: none;
+  }
+
+  .lightbox__count {
+    color: rgb(255 255 255 / 0.52);
+    font-size: 0.68rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .lightbox__hint {
+    position: absolute;
+    inset-block-end: clamp(12px, 2vh, 20px);
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    color: rgb(255 255 255 / 0.48);
+    font-size: 0.66rem;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .lightbox__close {
+    position: absolute;
+    inset-block-start: clamp(12px, 2vw, 20px);
+    inset-inline-end: clamp(12px, 2vw, 20px);
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: var(--rule-hair) solid rgb(255 255 255 / 0.16);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.08);
+    color: rgb(255 255 255 / 0.9);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition:
+      background var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .lightbox__close:hover {
+    background: rgb(255 255 255 / 0.14);
+    border-color: rgb(255 255 255 / 0.24);
+    color: white;
+  }
+
+  .lightbox__close:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .lightbox__nav {
+    position: absolute;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: var(--rule-hair) solid rgb(255 255 255 / 0.16);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.08);
+    color: rgb(255 255 255 / 0.9);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition:
+      background var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      opacity var(--dur-fast) var(--ease-out);
+  }
+
+  .lightbox__nav:hover {
+    background: rgb(255 255 255 / 0.14);
+    border-color: rgb(255 255 255 / 0.24);
+  }
+
+  .lightbox__nav:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .lightbox__nav--prev {
+    inset-inline-start: clamp(10px, 2vw, 24px);
+  }
+
+  .lightbox__nav--next {
+    inset-inline-end: clamp(10px, 2vw, 24px);
+  }
+
+  @media (width <= 48rem) {
+    .lightbox__nav {
+      inset-block-start: auto;
+      inset-block-end: clamp(44px, 8vh, 64px);
+      translate: 0 0;
+    }
+    .lightbox__nav--prev {
+      inset-inline-start: calc(50% - 56px);
+    }
+    .lightbox__nav--next {
+      inset-inline-start: calc(50% + 12px);
+      inset-inline-end: auto;
+    }
+    .lightbox__img {
+      max-height: min(62vh, 760px);
+    }
+    .lightbox__hint {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mosaic__btn img {
+      transition: none;
+    }
+    .mosaic__btn:hover img {
+      transform: none;
+    }
+    .lightbox__figure {
+      animation: none;
+    }
+    .lightbox::backdrop {
+      backdrop-filter: none;
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.getElementById("gallery-lightbox") as HTMLDialogElement
+  const lbImg = document.getElementById("lb-img") as HTMLImageElement
+  const lbCaption = document.getElementById("lb-caption")!
+  const lbDesc = document.getElementById("lb-desc")!
+  const lbTag = document.getElementById("lb-tag")!
+  const lbCount = document.getElementById("lb-count")!
+  const closeBtn = dialog?.querySelector<HTMLButtonElement>(".lightbox__close")
+  const prevBtn = dialog?.querySelector<HTMLButtonElement>(".lightbox__nav--prev")
+  const nextBtn = dialog?.querySelector<HTMLButtonElement>(".lightbox__nav--next")
+  const triggers = Array.from(document.querySelectorAll<HTMLButtonElement>(".mosaic__btn"))
+
+  if (dialog && lbImg && triggers.length) {
+    let current = 0
+    let lastFocus: HTMLElement | null = null
+
+    const total = triggers.length
+
+    function sync(index: number) {
+      current = (index + total) % total
+      const btn = triggers[current]!
+      const { full, alt, caption, desc, tag } = btn.dataset as {
+        full: string
+        alt: string
+        caption: string
+        desc: string
+        tag: string
+      }
+      // subtle crossfade: fade out then swap then fade in via lbIn re-trigger
+      lbImg.style.opacity = "0"
+      // force reflow to restart animation on figure
+      const fig = lbImg.closest(".lightbox__figure") as HTMLElement | null
+      if (fig) {
+        fig.style.animation = "none"
+        void fig.offsetHeight
+        fig.style.animation = ""
+      }
+      lbImg.src = full
+      lbImg.alt = alt
+      lbCaption.textContent = caption
+      lbDesc.textContent = desc ?? ""
+      lbTag.textContent = tag ? `#${tag}` : ""
+      lbCount.textContent = `${current + 1} / ${total}`
+      requestAnimationFrame(() => (lbImg.style.opacity = "1"))
+    }
+
+    function open(index: number) {
+      lastFocus = document.activeElement as HTMLElement | null
+      sync(index)
+      if (!dialog.open) dialog.showModal()
+      document.documentElement.style.overflow = "hidden"
+      // move focus into dialog for a11y
+      closeBtn?.focus()
+    }
+
+    function close() {
+      if (dialog.open) dialog.close()
+    }
+
+    triggers.forEach((btn, i) => {
+      btn.addEventListener("click", () => open(i))
+    })
+
+    closeBtn?.addEventListener("click", close)
+    prevBtn?.addEventListener("click", () => sync(current - 1))
+    nextBtn?.addEventListener("click", () => sync(current + 1))
+
+    // Backdrop click: clicking the outer inner (outside figure/nav/close) closes.
+    dialog.addEventListener("click", (e) => {
+      if (e.target === dialog || e.target === dialog.querySelector(".lightbox__inner")) close()
+    })
+    dialog.querySelector(".lightbox__inner")?.addEventListener("click", (e) => {
+      if (e.target === e.currentTarget) close()
+    })
+
+    dialog.addEventListener("close", () => {
+      document.documentElement.style.overflow = ""
+      lbImg.removeAttribute("src")
+      // restore focus
+      if (lastFocus && typeof lastFocus.focus === "function") {
+        lastFocus.focus()
+      }
+    })
+
+    // Keyboard: Esc handled by dialog natively, but also arrows.
+    dialog.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault()
+        sync(current - 1)
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault()
+        sync(current + 1)
+      }
+    })
+
+    // Swipe support (touch)
+    let touchX = 0
+    let touchY = 0
+    dialog.addEventListener(
+      "touchstart",
+      (e) => {
+        touchX = e.touches[0]!.clientX
+        touchY = e.touches[0]!.clientY
+      },
+      { passive: true }
+    )
+    dialog.addEventListener(
+      "touchend",
+      (e) => {
+        const dx = e.changedTouches[0]!.clientX - touchX
+        const dy = e.changedTouches[0]!.clientY - touchY
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
+          if (dx > 0) sync(current - 1)
+          else sync(current + 1)
+        }
+      },
+      { passive: true }
+    )
+  }
+</script>

@@ -12,6 +12,7 @@ export interface CV {
   interests: Array<Interests>
   references: Array<References>
   projects: Array<Projects>
+  gallery?: Array<Gallery>
 }
 
 interface Site {
@@ -174,6 +175,16 @@ interface Interests {
 interface References {
   name: string
   reference: string
+}
+
+interface Gallery {
+  seed: string
+  w: number
+  h: number
+  alt: string
+  caption: string
+  description: string
+  tag: string
 }
 
 type Highlight = Array<String>
