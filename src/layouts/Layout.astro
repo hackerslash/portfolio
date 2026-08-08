@@ -277,16 +277,18 @@ const metaKeywords = keywords || defaultKeywords
 
   ::view-transition-new(root) {
     z-index: var(--z-raised);
-    clip-path: circle(0% at var(--reveal-x, 50%) var(--reveal-y, 50%));
-    animation: reveal-out 1.2s var(--ease-in-out) forwards;
+    /* WAAPI drives the clip when JS runs; this is the fallback for
+       browsers without pseudoElement WAAPI — origin is the toggle button */
+    clip-path: circle(0px at var(--reveal-x, 50%) var(--reveal-y, 50%));
+    animation: reveal-out 650ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
   @keyframes reveal-out {
     from {
-      clip-path: circle(0% at var(--reveal-x, 50%) var(--reveal-y, 50%));
+      clip-path: circle(0px at var(--reveal-x, 50%) var(--reveal-y, 50%));
     }
     to {
-      clip-path: circle(150% at var(--reveal-x, 50%) var(--reveal-y, 50%));
+      clip-path: circle(var(--reveal-r, 150vmax) at var(--reveal-x, 50%) var(--reveal-y, 50%));
     }
   }
 

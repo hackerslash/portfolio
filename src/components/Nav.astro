@@ -3,16 +3,16 @@ const path = Astro.url.pathname.replace(/\/?$/, "/")
 
 const flags = [
   { href: "/work/", label: "work" },
+  { href: "/gallery/", label: "gallery" },
   { href: "/about/", label: "about" },
   { href: "/blog/", label: "writing" },
-  { href: "/gallery/", label: "gallery" }
 ]
 
 const isCurrent = (href: string) => path.startsWith(href)
 ---
 
 <nav class="nav no-print" aria-label="Primary">
-  <span class="nav__lead">
+  <span class="nav__lead" id="nav-prompt" role="button" tabindex="0" aria-label="Open terminal" title="Open terminal — ⌘K / Ctrl+K">
     <a class="nav__prompt" href="/" aria-current={path === "/" ? "page" : undefined}>
       <span class="nav__user">mdafridisk@hackerslash</span><span class="nav__sigil">:~$</span>
     </a>
@@ -34,54 +34,506 @@ const isCurrent = (href: string) => path.startsWith(href)
     }
   </ul>
 
-  <button
-    id="theme-toggle"
-    class="nav__toggle"
-    type="button"
-    data-sound="toggle"
-    aria-label="Toggle dark and light theme"
-  >
-    <svg
-      class="nav__sun"
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-      ><circle cx="12" cy="12" r="4"></circle><path
-        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-      ></path></svg
+  <div class="nav__actions">
+    <button
+      id="term-toggle"
+      class="nav__toggle"
+      type="button"
+      data-sound="card"
+      aria-label="Open terminal"
+      aria-controls="term"
+      aria-expanded="false"
+      title="Terminal (⌘K / Ctrl+K)"
     >
-    <svg
-      class="nav__moon"
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg
+      <svg
+        class="nav__term-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        ><polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line></svg
+      >
+    </button>
+
+    <button
+      id="theme-toggle"
+      class="nav__toggle"
+      type="button"
+      data-sound="toggle"
+      aria-label="Toggle dark and light theme"
     >
-  </button>
+      <svg
+        class="nav__sun"
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        ><circle cx="12" cy="12" r="4"></circle><path
+          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+        ></path></svg
+      >
+      <svg
+        class="nav__moon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg
+      >
+    </button>
+  </div>
 </nav>
+
+<!-- Terminal — hidden until icon (⌘K / Ctrl+K) or click on prompt. Proper terminal: prompt starts at top, continuous history. -->
+<div id="term" class="term" hidden>
+  <div class="term__backdrop" data-term-close aria-hidden="true"></div>
+  <div
+    class="term__window"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Terminal"
+  >
+    <div class="term__bar">
+      <span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="term__title">mdafridisk@hackerslash: ~</span>
+      <button class="term__close" type="button" data-term-close aria-label="Close terminal">×</button>
+    </div>
+
+    <div class="term__body" id="term-body">
+      <div id="term-out" class="term__out" aria-live="polite" aria-atomic="false"></div>
+      <form id="term-form" class="term__line term__line--input" autocomplete="off" spellcheck="false">
+        <label class="term__ps1" for="term-input">mdafridisk@hackerslash:~$</label>
+        <input
+          id="term-input"
+          class="term__input"
+          type="text"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-label="Terminal input"
+          placeholder=""
+        />
+      </form>
+    </div>
+  </div>
+</div>
 
 <script>
   import { toggleTheme } from "@/utils/theme"
 
-  const toggle = document.getElementById("theme-toggle")
-
-  toggle?.addEventListener("click", () => {
-    const rect = toggle.getBoundingClientRect()
-    toggleTheme(rect.left + rect.width / 2, rect.top + rect.height / 2)
+  const themeToggle = document.getElementById("theme-toggle") as HTMLButtonElement | null
+  themeToggle?.addEventListener("click", (e: MouseEvent) => {
+    const rect = themeToggle.getBoundingClientRect()
+    // Pointer click inside the button → use exact pointer; keyboard
+    // activation (clientX/Y === 0) → use button center so reveal
+    // always originates from the toggle itself.
+    const x =
+      e.clientX !== 0 || e.clientY !== 0 ? e.clientX : rect.left + rect.width / 2
+    const y =
+      e.clientX !== 0 || e.clientY !== 0 ? e.clientY : rect.top + rect.height / 2
+    toggleTheme(x, y)
   })
+
+  // ── Terminal — proper continuous terminal, prompt at top ─────────────
+  const term = document.getElementById("term") as HTMLElement
+  const termToggle = document.getElementById("term-toggle") as HTMLButtonElement
+  const termOut = document.getElementById("term-out") as HTMLElement
+  const termBody = document.getElementById("term-body") as HTMLElement
+  const termForm = document.getElementById("term-form") as HTMLFormElement
+  const termInput = document.getElementById("term-input") as HTMLInputElement
+  const navPrompt = document.getElementById("nav-prompt") as HTMLElement | null
+
+  if (term && termToggle && termOut && termBody && termForm && termInput) {
+    const STORAGE_OUT = "term:out"
+    const STORAGE_HIST = "term:hist"
+
+    let cmdHistory: string[] = []
+    try {
+      const h = sessionStorage.getItem(STORAGE_HIST)
+      if (h) cmdHistory = JSON.parse(h)
+    } catch {}
+    let hIndex = cmdHistory.length
+    let savedCurrent = ""
+
+    // restore continuous screen from previous page / previous open
+    try {
+      const saved = sessionStorage.getItem(STORAGE_OUT)
+      if (saved) {
+        termOut.innerHTML = saved
+        // ensure we start at bottom (latest prompt visible) but prompt itself is at top when empty
+        requestAnimationFrame(() => (termBody.scrollTop = termBody.scrollHeight))
+      }
+    } catch {}
+
+    const USER = "mdafridisk@hackerslash"
+
+    type Cmd = { desc: string; run: (args: string[]) => boolean | void }
+
+    const go = (href: string) => {
+      const url = href.endsWith("/") ? href : `${href}/`
+      window.location.href = url
+    }
+
+    const saveOut = () => {
+      try {
+        sessionStorage.setItem(STORAGE_OUT, termOut.innerHTML)
+      } catch {}
+    }
+
+    const saveHist = () => {
+      try {
+        sessionStorage.setItem(STORAGE_HIST, JSON.stringify(cmdHistory.slice(-50)))
+      } catch {}
+    }
+
+    const print = (html: string, cls = "") => {
+      const line = document.createElement("div")
+      line.className = cls ? `term__line ${cls}` : "term__line"
+      line.innerHTML = html
+      termOut.appendChild(line)
+      termBody.scrollTop = termBody.scrollHeight
+      saveOut()
+    }
+
+    const printHelp = () => {
+      print(`<span class="term__muted">Available commands — type a name and press enter:</span>`, "term__help-head")
+      const rows: Array<[string, string]> = [
+        ["help", "show this list"],
+        ["ls", "list pages"],
+        ["work", "go to /work/"],
+        ["gallery", "go to /gallery/"],
+        ["about", "go to /about/"],
+        ["writing", "go to /blog/  (alias: blog)"],
+        ["home", "go to /  (aliases: cd, cd ~)"],
+        ["clear", "clear the screen"],
+        ["whoami", "about me"],
+        ["pwd", "where am I"],
+        ["theme", "toggle light / dark"],
+        ["email", "open mail client"],
+        ["github", "open GitHub"],
+        ["linkedin", "open LinkedIn"],
+        ["exit", "close terminal"],
+      ]
+      for (const [cmd, desc] of rows) {
+        print(`<span class="term__cmd">${cmd}</span><span class="term__sep"> — </span><span>${desc}</span>`)
+      }
+      print(`<span class="term__muted">Tip: everything here is a command — random input also shows this help.</span>`)
+    }
+
+    const commands: Record<string, Cmd> = {
+      help: {
+        desc: "show help",
+        run() {
+          printHelp()
+        },
+      },
+      "?": {
+        desc: "show help",
+        run() {
+          printHelp()
+        },
+      },
+      ls: {
+        desc: "list pages",
+        run() {
+          print(`<span class="term__accent">work</span>  <span class="term__accent">gallery</span>  <span class="term__accent">about</span>  <span class="term__accent">writing</span>`)
+        },
+      },
+      clear: {
+        desc: "clear",
+        run() {
+          termOut.innerHTML = ""
+          saveOut()
+        },
+      },
+      cls: {
+        desc: "clear",
+        run() {
+          commands.clear.run([])
+        },
+      },
+      work: { desc: "work", run() { print(`→ /work/`); go("/work/") } },
+      gallery: { desc: "gallery", run() { print(`→ /gallery/`); go("/gallery/") } },
+      about: { desc: "about", run() { print(`→ /about/`); go("/about/") } },
+      writing: { desc: "writing", run() { print(`→ /blog/`); go("/blog/") } },
+      blog: { desc: "blog", run() { print(`→ /blog/`); go("/blog/") } },
+      home: { desc: "home", run() { print(`→ /`); go("/") } },
+      cd: {
+        desc: "cd",
+        run(args) {
+          const dest = (args[0] ?? "").replace(/\/$/, "")
+          if (!dest || dest === "~" || dest === "/") return commands.home.run([])
+          if (["work", "gallery", "about", "blog", "writing"].includes(dest)) {
+            const map: Record<string, string> = { writing: "/blog/", blog: "/blog/" }
+            go(map[dest] ?? `/${dest}/`)
+          } else {
+            print(`<span class="term__err">cd: no such directory: ${dest}</span>`)
+            printHelp()
+          }
+        },
+      },
+      pwd: {
+        desc: "pwd",
+        run() {
+          print(window.location.pathname)
+        },
+      },
+      whoami: {
+        desc: "whoami",
+        run() {
+          print(`<span class="term__accent">Md Afridi Sk</span> — Backend Engineer, Bangalore. Agentic AI, voice, sync. IIT KGP '23.`)
+        },
+      },
+      theme: {
+        desc: "toggle theme",
+        run() {
+          const btn = document.getElementById("theme-toggle") as HTMLButtonElement | null
+          btn?.click()
+          const isLight = document.documentElement.classList.contains("light")
+          print(`theme → ${isLight ? "light" : "dark"}`)
+        },
+      },
+      email: {
+        desc: "email",
+        run() {
+          print(`opening mail client…`)
+          window.location.href = "mailto:afridijnv19@gmail.com"
+        },
+      },
+      github: {
+        desc: "github",
+        run() {
+          print(`→ github.com/hackerslash`)
+          window.open("https://github.com/hackerslash", "_blank", "noopener")
+        },
+      },
+      linkedin: {
+        desc: "linkedin",
+        run() {
+          print(`→ linkedin.com/in/md-afridi-sk`)
+          window.open("https://www.linkedin.com/in/md-afridi-sk/", "_blank", "noopener")
+        },
+      },
+      exit: {
+        desc: "close",
+        run() {
+          closeTerm()
+        },
+      },
+      quit: {
+        desc: "close",
+        run() {
+          closeTerm()
+        },
+      },
+    }
+
+    const handle = (raw: string) => {
+      const trimmed = raw.trim()
+      if (!trimmed) return
+      cmdHistory.push(trimmed)
+      hIndex = cmdHistory.length
+      saveHist()
+      const parts = trimmed.split(/\s+/).filter(Boolean)
+      const base = parts[0]!.toLowerCase()
+      const args = parts.slice(1).map((s) => s.toLowerCase())
+      const isValidEcho = base in commands || ["open", "ls", "cd"].includes(base)
+      // echo — continuous screen, with syntax color: green for valid, yellow for invalid
+      print(
+        `<span class="term__ps1-echo">${USER}:~$</span> <span class="${isValidEcho ? "term__echo-cmd--valid" : "term__echo-cmd--invalid"}">${escapeHtml(trimmed)}</span>`,
+        "term__echo"
+      )
+
+      if (base === "ls" && args.length === 1) {
+        const dest = args[0]!
+        if (["work", "gallery", "about", "blog", "writing", "home", "~", "/"].includes(dest)) {
+          const map: Record<string, string> = { writing: "blog", "~": "home", "/": "home" }
+          const cmd = map[dest] ?? dest
+          const c = commands[cmd]
+          if (c) return c.run([])
+        }
+      }
+      if (base === "open" && args.length === 1) {
+        const dest = args[0]!
+        const c = commands[dest]
+        if (c) return c.run([])
+      }
+
+      const cmd = commands[base]
+      if (cmd) {
+        cmd.run(args)
+        return
+      }
+
+      print(`<span class="term__err">bash: ${escapeHtml(base)}: command not found</span>`)
+      print(`<span class="term__muted">Type <span class="term__cmd">help</span> to see available commands.</span>`)
+    }
+
+    function escapeHtml(s: string) {
+      return s.replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]!))
+    }
+
+    let lastFocus: HTMLElement | null = null
+    let isOpen = false
+
+    function openTerm(seed?: string) {
+      if (isOpen) {
+        termInput.focus()
+        if (seed) termInput.value += seed
+        return
+      }
+      lastFocus = document.activeElement as HTMLElement | null
+      term.hidden = false
+      termToggle.setAttribute("aria-expanded", "true")
+      isOpen = true
+      document.documentElement.style.overflow = "hidden"
+      requestAnimationFrame(() => {
+        termInput.focus()
+        termBody.scrollTop = termBody.scrollHeight
+      })
+      if (seed) {
+        termInput.value = seed
+      }
+    }
+
+    function closeTerm() {
+      if (!isOpen) return
+      term.hidden = true
+      termToggle.setAttribute("aria-expanded", "false")
+      isOpen = false
+      document.documentElement.style.overflow = ""
+      if (lastFocus && typeof lastFocus.focus === "function") {
+        try {
+          lastFocus.focus()
+        } catch {}
+      } else {
+        termToggle.focus()
+      }
+    }
+
+    termToggle.addEventListener("click", () => {
+      if (isOpen) closeTerm()
+      else openTerm()
+    })
+
+    navPrompt?.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement
+      if (target.closest("a")) {
+        return
+      }
+      e.preventDefault()
+      openTerm()
+    })
+
+    navPrompt?.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault()
+        openTerm()
+      }
+    })
+
+    term.querySelectorAll("[data-term-close]").forEach((el) => {
+      el.addEventListener("click", closeTerm)
+    })
+
+    const updateSyntax = () => {
+      const raw = termInput.value.trim()
+      if (!raw) {
+        termInput.classList.remove("term__input--valid", "term__input--invalid")
+        return
+      }
+      const base = raw.split(/\s+/)[0]!.toLowerCase()
+      const isValid =
+        base in commands ||
+        base === "open" ||
+        base === "ls" ||
+        base === "cd"
+      termInput.classList.toggle("term__input--valid", isValid)
+      termInput.classList.toggle("term__input--invalid", !isValid)
+    }
+
+    termInput.addEventListener("input", updateSyntax)
+
+    termForm.addEventListener("submit", (e) => {
+      e.preventDefault()
+      const v = termInput.value
+      termInput.value = ""
+      termInput.classList.remove("term__input--valid", "term__input--invalid")
+      savedCurrent = ""
+      hIndex = cmdHistory.length
+      handle(v)
+    })
+
+    termInput.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowUp") {
+        e.preventDefault()
+        if (hIndex === cmdHistory.length) savedCurrent = termInput.value
+        if (hIndex > 0) {
+          hIndex--
+          termInput.value = cmdHistory[hIndex] ?? ""
+          updateSyntax()
+          requestAnimationFrame(() => termInput.setSelectionRange(termInput.value.length, termInput.value.length))
+        }
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault()
+        if (hIndex < cmdHistory.length - 1) {
+          hIndex++
+          termInput.value = cmdHistory[hIndex] ?? ""
+        } else {
+          hIndex = cmdHistory.length
+          termInput.value = savedCurrent
+        }
+        updateSyntax()
+        requestAnimationFrame(() => termInput.setSelectionRange(termInput.value.length, termInput.value.length))
+      } else if (e.key === "Escape") {
+        e.preventDefault()
+        closeTerm()
+      }
+    })
+
+    document.addEventListener("keydown", (e) => {
+      // Cmd+K / Ctrl+K — only shortcut
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault()
+        if (isOpen) closeTerm()
+        else openTerm()
+        return
+      }
+      if (e.key === "Escape" && isOpen) {
+        e.preventDefault()
+        closeTerm()
+        return
+      }
+    })
+
+    term.addEventListener("click", (e) => {
+      if (e.target === term) closeTerm()
+    })
+
+    // keep input focused when clicking inside terminal body (like real terminal)
+    termBody.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement
+      if (target.closest("a") || target.closest("button")) return
+      termInput.focus()
+    })
+  }
 </script>
 
 <style>
@@ -91,7 +543,7 @@ const isCurrent = (href: string) => path.startsWith(href)
     z-index: var(--z-sticky);
     display: grid;
     grid-template-areas:
-      "prompt toggle"
+      "prompt actions"
       "flags  flags";
     grid-template-columns: 1fr auto;
     align-items: center;
@@ -110,6 +562,13 @@ const isCurrent = (href: string) => path.startsWith(href)
     align-items: baseline;
     gap: 3px;
     min-width: 0;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+
+  .nav__lead:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
   }
 
   .nav__prompt {
@@ -200,8 +659,14 @@ const isCurrent = (href: string) => path.startsWith(href)
     }
   }
 
+  .nav__actions {
+    grid-area: actions;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
+  }
+
   .nav__toggle {
-    grid-area: toggle;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -223,6 +688,12 @@ const isCurrent = (href: string) => path.startsWith(href)
     border-color: var(--color-accent-mid);
   }
 
+  .nav__toggle[aria-expanded="true"] {
+    color: var(--color-accent-text);
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+
   .nav__moon {
     display: none;
   }
@@ -235,9 +706,349 @@ const isCurrent = (href: string) => path.startsWith(href)
     display: none;
   }
 
+  /* ── Terminal — macOS-like window, continuous, prompt at top ── */
+  .term[hidden] {
+    display: none !important;
+  }
+
+  .term {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    place-items: start center;
+    padding: clamp(16px, 4vw, 32px);
+    padding-block-start: clamp(20px, 8vh, 48px);
+  }
+
+  .term__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 0.52);
+    backdrop-filter: blur(10px) saturate(1.05);
+  }
+
+  :global(.light) .term__backdrop {
+    background: rgb(8 8 12 / 0.42);
+  }
+
+  .term__window {
+    position: relative;
+    width: min(860px, 96vw);
+    max-height: 78vh;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #0a0a0b;
+    color: #e6e6e6;
+    border: 1px solid #2a2a2e;
+    border-radius: 12px;
+    box-shadow:
+      0 24px 60px rgb(0 0 0 / 0.55),
+      0 0 0 1px rgb(255 255 255 / 0.04) inset;
+    font-family: var(--font-body);
+    animation: termIn 200ms var(--ease-out) both;
+  }
+
+  @keyframes termIn {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .term__bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #141417;
+    border-block-end: 1px solid #242428;
+    flex-shrink: 0;
+  }
+
+  .term__dots {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .term__dots i {
+    inline-size: 12px;
+    block-size: 12px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .term__dots i:nth-child(1) {
+    background: #ff5f56;
+  }
+  .term__dots i:nth-child(2) {
+    background: #ffbd2e;
+  }
+  .term__dots i:nth-child(3) {
+    background: #27c93f;
+  }
+
+  .term__title {
+    flex: 1;
+    text-align: center;
+    color: #9a9aa0;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .term__close {
+    inline-size: 28px;
+    block-size: 28px;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    color: #9a9aa0;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .term__close:hover {
+    background: rgb(255 255 255 / 0.08);
+    color: white;
+  }
+
+  .term__close:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .term__body {
+    flex: 1;
+    overflow: auto;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 280px;
+    scrollbar-width: thin;
+    scrollbar-color: #3a3a3e transparent;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    letter-spacing: -0.01em;
+  }
+
+  .term__body::-webkit-scrollbar {
+    width: 8px;
+  }
+  .term__body::-webkit-scrollbar-thumb {
+    background: #3a3a3e;
+    border-radius: 999px;
+  }
+
+  .term__out {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .term__line {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .term__line--input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-block-start: 2px;
+  }
+
+  .term__echo {
+    color: #c2c2cc;
+  }
+
+  .term__ps1-echo {
+    color: #27c93f;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+  }
+
+  .term__echo-cmd--valid {
+    color: #27c93f;
+    font-weight: 700;
+  }
+
+  .term__echo-cmd--invalid {
+    color: #ffbd2e;
+    font-weight: 700;
+  }
+
+  .term__cmd {
+    color: #e6e6e6;
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 6px;
+    padding: 1px 6px;
+    font-size: 0.74rem;
+  }
+
+  .term__accent {
+    color: #27c93f;
+    font-weight: 700;
+  }
+
+  .term__muted {
+    color: #8e8e96;
+    font-style: italic;
+  }
+
+  .term__sep {
+    color: #5a5a62;
+  }
+
+  .term__err {
+    color: #ff5f56;
+    font-weight: 600;
+  }
+
+  .term__help-head {
+    margin-block-start: 6px;
+    color: #b8b8c0;
+    font-weight: 600;
+  }
+
+  .term__ps1 {
+    color: #27c93f;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    font-size: 0.78rem;
+    user-select: none;
+    flex-shrink: 0;
+    text-shadow: 0 0 12px rgb(39 201 63 / 0.22);
+  }
+
+  .term__input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: #e6e6e6;
+    font: inherit;
+    font-size: 0.78rem;
+    caret-color: #27c93f;
+    transition: color 120ms ease;
+  }
+
+  .term__input::placeholder {
+    color: #5a5a62;
+  }
+
+  .term__input--valid {
+    color: #27c93f;
+    caret-color: #27c93f;
+  }
+
+  .term__input--invalid {
+    color: #ffbd2e;
+    caret-color: #ffbd2e;
+  }
+
+  /* ── Light mode — terminal follows theme toggle ── */
+  :global(.light) .term__window {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border-color: var(--color-rule-2);
+    box-shadow:
+      0 24px 60px rgb(0 0 0 / 0.18),
+      0 0 0 1px rgb(0 0 0 / 0.06) inset;
+  }
+
+  :global(.light) .term__bar {
+    background: var(--color-paper-2);
+    border-block-end-color: var(--color-rule);
+  }
+
+  :global(.light) .term__title,
+  :global(.light) .term__close {
+    color: var(--color-ink-4);
+  }
+
+  :global(.light) .term__close:hover {
+    background: rgb(0 0 0 / 0.06);
+    color: var(--color-ink);
+  }
+
+  :global(.light) .term__body {
+    scrollbar-color: var(--color-rule-2) transparent;
+  }
+
+  :global(.light) .term__body::-webkit-scrollbar-thumb {
+    background: var(--color-rule-2);
+  }
+
+  :global(.light) .term__echo {
+    color: var(--color-ink-3);
+  }
+
+  :global(.light) .term__muted {
+    color: var(--color-ink-4);
+  }
+
+  :global(.light) .term__help-head {
+    color: var(--color-ink-2);
+  }
+
+  :global(.light) .term__sep {
+    color: var(--color-ink-4);
+  }
+
+  :global(.light) .term__cmd {
+    color: var(--color-ink);
+    background: var(--color-paper-2);
+    border-color: var(--color-rule);
+  }
+
+  :global(.light) .term__err {
+    color: #d32f2f;
+  }
+
+  :global(.light) .term__ps1,
+  :global(.light) .term__ps1-echo,
+  :global(.light) .term__accent,
+  :global(.light) .term__echo-cmd--valid,
+  :global(.light) .term__input--valid {
+    color: var(--color-accent-text);
+    caret-color: var(--color-accent-text);
+    text-shadow: none;
+  }
+
+  :global(.light) .term__echo-cmd--invalid,
+  :global(.light) .term__input--invalid {
+    color: #b45309;
+    caret-color: #b45309;
+  }
+
+  :global(.light) .term__input {
+    color: var(--color-ink);
+  }
+
+  :global(.light) .term__input::placeholder {
+    color: var(--color-ink-4);
+  }
+
   @media (width >= 40rem) {
     .nav {
-      grid-template-areas: "prompt flags toggle";
+      grid-template-areas: "prompt flags actions";
       grid-template-columns: auto 1fr auto;
       padding-block: var(--space-3xs);
     }
@@ -249,6 +1060,9 @@ const isCurrent = (href: string) => path.startsWith(href)
 
   @media (prefers-reduced-motion: reduce) {
     .nav__cursor {
+      animation: none;
+    }
+    .term__window {
       animation: none;
     }
   }
