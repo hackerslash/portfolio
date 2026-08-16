@@ -92,9 +92,6 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
                           </div>
                         )}
                       </div>
-                      <div class="image-container">
-                        <img src="https://picsum.photos/200" alt={title} loading="lazy" />
-                      </div>
                     </div>
                     <a href={`/blog/${id}/`} class="read-more-overlay">Read More →</a>
                   </article>
@@ -278,22 +275,6 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
     flex: 1;
   }
 
-  .image-container {
-    flex-shrink: 0;
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .image-container img {
-    width: 200px;
-    height: 100%;
-    min-height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid var(--card-border);
-  }
-
   header {
     margin-bottom: 12px;
   }
@@ -375,17 +356,6 @@ const tagKeywords = `${tag}, ${tag} tutorial, ${tag} guide, Md Afridi Sk, tech b
     .article-content {
       flex-direction: column;
       padding-bottom: 0;
-    }
-
-    .image-container {
-      align-self: auto;
-    }
-
-    .image-container img {
-      width: 100%;
-      height: auto;
-      min-height: auto;
-      aspect-ratio: 16 / 9;
     }
 
     .read-more-overlay {

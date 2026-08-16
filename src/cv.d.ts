@@ -178,13 +178,14 @@ interface References {
 }
 
 interface Gallery {
-  seed: string
+  src: string
+  full: string
   w: number
   h: number
   alt: string
-  caption: string
-  description: string
-  tag: string
+  caption?: string
+  description?: string
+  tag?: string
 }
 
 type Highlight = Array<String>

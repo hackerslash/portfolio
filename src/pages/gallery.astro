@@ -19,8 +19,8 @@ const jsonLd = {
 
 const frames = (galleryData ?? []) as Gallery[]
 
-const thumb = (f: Gallery) => `https://picsum.photos/seed/${f.seed}/800/${f.h}`
-const full = (f: Gallery) => `https://picsum.photos/seed/${f.seed}/1600/${f.h * 2}`
+const thumb = (f: Gallery) => f.src
+const full = (f: Gallery) => f.full
 ---
 
 <Layout title={pageTitle} description={pageDescription} jsonLd={jsonLd}>
@@ -45,7 +45,7 @@ const full = (f: Gallery) => `https://picsum.photos/seed/${f.seed}/1600/${f.h * 
               data-caption={f.caption}
               data-desc={f.description}
               data-tag={f.tag}
-              aria-label={`Open ${f.caption}`}
+              aria-label={`Open ${f.caption || f.alt}`}
             >
               <img
                 src={thumb(f)}
@@ -229,6 +229,10 @@ const full = (f: Gallery) => `https://picsum.photos/seed/${f.seed}/1600/${f.h * 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .mosaic__cap:empty {
+    display: none;
   }
 
   /* ── Lightbox dialog ── */
