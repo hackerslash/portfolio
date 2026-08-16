@@ -471,12 +471,22 @@
   ],
   "gallery": [
     {
+      "src": "/gallery/pxl-20230825-062159384-t.jpg",
+      "full": "/gallery/pxl-20230825-062159384.jpg",
+      "w": 602,
+      "h": 800,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "A Rainy Day - Kolkata",
+      "description": "",
+      "tag": ""
+    },
+    {
       "src": "/gallery/dsc00275-t.jpg",
       "full": "/gallery/dsc00275.jpg",
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Parents Love - Lottegollahalli, Bangalore",
       "description": "",
       "tag": ""
     },
@@ -486,7 +496,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Workers - Bangalore",
       "description": "",
       "tag": ""
     },
@@ -496,7 +506,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Mechanic - Bangalore",
       "description": "",
       "tag": ""
     },
@@ -506,7 +516,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Freedom - Central Bangalore",
       "description": "",
       "tag": ""
     },
@@ -516,7 +526,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Homecoming - Devinagar, Bangalore",
       "description": "",
       "tag": ""
     },
@@ -526,7 +536,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Mother's Love ",
       "description": "",
       "tag": ""
     },
@@ -536,7 +546,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Life",
       "description": "",
       "tag": ""
     },
@@ -546,17 +556,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
-      "description": "",
-      "tag": ""
-    },
-    {
-      "src": "/gallery/dsc02182-t.jpg",
-      "full": "/gallery/dsc02182.jpg",
-      "w": 800,
-      "h": 533,
-      "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Slum ",
       "description": "",
       "tag": ""
     },
@@ -566,7 +566,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Crow Parliament",
       "description": "",
       "tag": ""
     },
@@ -576,7 +576,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Wings of Span - Mumbai",
       "description": "",
       "tag": ""
     },
@@ -586,7 +586,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Seagull in flight",
       "description": "",
       "tag": ""
     },
@@ -596,7 +596,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Western Marsh Harrier",
       "description": "",
       "tag": ""
     },
@@ -606,7 +606,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Flame of the forest",
       "description": "",
       "tag": ""
     },
@@ -616,7 +616,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Sleeping Flamingo - Bhandup, Mumbai",
       "description": "",
       "tag": ""
     },
@@ -626,7 +626,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Virupaksha Temple - Hampi",
       "description": "",
       "tag": ""
     },
@@ -636,7 +636,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Lightsaber",
       "description": "",
       "tag": ""
     },
@@ -646,7 +646,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Birding Memories - Hesaraghatta Grasslands",
       "description": "",
       "tag": ""
     },
@@ -656,7 +656,7 @@
       "w": 800,
       "h": 533,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Female Worker - Hesaraghatta Grasslands",
       "description": "",
       "tag": ""
     },
@@ -666,17 +666,7 @@
       "w": 800,
       "h": 600,
       "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
-      "description": "",
-      "tag": ""
-    },
-    {
-      "src": "/gallery/pxl-20230825-062159384-t.jpg",
-      "full": "/gallery/pxl-20230825-062159384.jpg",
-      "w": 602,
-      "h": 800,
-      "alt": "Photograph by Md Afridi Sk",
-      "caption": "",
+      "caption": "Ancient Evening - Mahula, WB",
       "description": "",
       "tag": ""
     }
@@ -860,13 +850,13 @@
       "name": "Applied Algorithms & Data Structures",
       "date": "2021",
       "issuer": "AlgoZenith",
-      "url": ""
+      "url": "https://maang.in/"
     },
     {
       "name": "Full Stack Open",
       "date": "2023",
       "issuer": "University of Helsinki",
-      "url": ""
+      "url": "https://fullstackopen.com/"
     }
   ]
 }
