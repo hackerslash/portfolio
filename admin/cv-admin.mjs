@@ -60,6 +60,14 @@ export default function cvAdmin() {
               return
             }
 
+            // ── Site design tokens (single source of truth) ──
+            if (url === '/admin/tokens.css') {
+              const css = await readFile(path.join(root, 'tokens.css'))
+              res.setHeader('content-type', 'text/css; charset=utf-8')
+              res.end(css)
+              return
+            }
+
             // ── Read whole cv.json ──
             if (url === '/api/cv' && req.method === 'GET') {
               const cv = JSON.parse(await readFile(cvPath, 'utf8'))
