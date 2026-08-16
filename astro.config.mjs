@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import cvAdmin from './admin/cv-admin.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,5 +9,5 @@ export default defineConfig({
   // canonical, sitemap entry and internal link has to carry the trailing
   // slash — otherwise each one costs a redirect hop.
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [sitemap(), cvAdmin()],
 });
