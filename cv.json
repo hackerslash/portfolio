@@ -96,7 +96,14 @@
       "featured": true,
       "isActive": false,
       "primary": "github",
-      "stack": ["Tauri v2", "Rust", "WebRTC", "SQLCipher", "React", "ffmpeg"],
+      "stack": [
+        "Tauri v2",
+        "Rust",
+        "WebRTC",
+        "SQLCipher",
+        "React",
+        "ffmpeg"
+      ],
       "highlights": [
         "Consensus-free sync via hybrid logical clocks and gap-based state transfer",
         "4K60 screen share over adaptive WebRTC Transport BWE",
@@ -117,7 +124,13 @@
       "featured": true,
       "isActive": true,
       "primary": "live",
-      "stack": ["Node.js", "Redis", "TMDB", "IBM Code Engine", "Express"],
+      "stack": [
+        "Node.js",
+        "Redis",
+        "TMDB",
+        "IBM Code Engine",
+        "Express"
+      ],
       "highlights": [
         "95% cache hit rate across 10k+ API calls in its first week",
         "Credentials sealed with AES-256-GCM stream sealing",
@@ -138,7 +151,14 @@
       "featured": true,
       "isActive": true,
       "primary": "github",
-      "stack": ["Next.js", "Flutter", "AWS Transcribe", "PostgreSQL", "TypeScript", "Prisma"],
+      "stack": [
+        "Next.js",
+        "Flutter",
+        "AWS Transcribe",
+        "PostgreSQL",
+        "TypeScript",
+        "Prisma"
+      ],
       "highlights": [
         "Real-time PCM over WebSocket to AWS Transcribe, back via Polly TTS",
         "Geospatial demand aggregation under Haversine distance constraints",
@@ -159,7 +179,12 @@
       "featured": true,
       "isActive": false,
       "primary": "github",
-      "stack": ["Go", "HTTP Range", "Concurrency", "TUI"],
+      "stack": [
+        "Go",
+        "HTTP Range",
+        "Concurrency",
+        "TUI"
+      ],
       "highlights": [
         "Segmented Range downloads with configurable worker counts",
         "Pause and resume from a task file kept out of the working directory",
@@ -180,7 +205,11 @@
       "featured": true,
       "isActive": true,
       "primary": "live",
-      "stack": ["React", "JavaScript", "Recharts"],
+      "stack": [
+        "React",
+        "JavaScript",
+        "Recharts"
+      ],
       "highlights": [
         "Filter by company, frequency and difficulty",
         "Solved-problem tracking with completion stats",
@@ -201,7 +230,12 @@
       "featured": false,
       "isActive": false,
       "primary": "github",
-      "stack": ["Bash", "Agent Skills", "AWS SSM", "nginx"],
+      "stack": [
+        "Bash",
+        "Agent Skills",
+        "AWS SSM",
+        "nginx"
+      ],
       "highlights": [
         "Resolves targets from a declarative host inventory",
         "SSH via PEM key, or AWS SSM",
@@ -222,7 +256,12 @@
       "featured": false,
       "isActive": false,
       "primary": "github",
-      "stack": ["Python", "Agent Skills", "LaTeX", "tectonic"],
+      "stack": [
+        "Python",
+        "Agent Skills",
+        "LaTeX",
+        "tectonic"
+      ],
       "highlights": [
         "One structured career database — no invented claims or metrics",
         "Researches the role and company before selecting material",
@@ -243,7 +282,12 @@
       "featured": true,
       "isActive": false,
       "primary": "live",
-      "stack": ["JavaScript", "Canvas", "Vite", "LLM APIs"],
+      "stack": [
+        "JavaScript",
+        "Canvas",
+        "Vite",
+        "LLM APIs"
+      ],
       "highlights": [
         "Two independently configurable AI models fight live",
         "Works with any OpenAI-compatible endpoint, local or hosted",
@@ -264,7 +308,11 @@
       "featured": false,
       "isActive": false,
       "primary": "github",
-      "stack": ["CSS", "userChrome.css", "Firefox"],
+      "stack": [
+        "CSS",
+        "userChrome.css",
+        "Firefox"
+      ],
       "highlights": [
         "Patches only the tab throbber — zero other UI changes",
         "Classic grey-then-green spinner from Firefox 4–29",
@@ -285,7 +333,10 @@
       "featured": false,
       "isActive": false,
       "primary": "github",
-      "stack": ["Node.js", "CLI"],
+      "stack": [
+        "Node.js",
+        "CLI"
+      ],
       "highlights": [
         "Zero runtime dependencies",
         "Live key and base-URL testing before you switch",
@@ -305,7 +356,11 @@
       "featured": false,
       "isActive": true,
       "primary": "live",
-      "stack": ["React", "IndexedDB", "Markdown"],
+      "stack": [
+        "React",
+        "IndexedDB",
+        "Markdown"
+      ],
       "highlights": [
         "Notes stored locally in IndexedDB — nothing leaves the browser",
         "Tabs, pinned notes, search and live preview",
@@ -326,7 +381,12 @@
       "featured": false,
       "isActive": true,
       "primary": "live",
-      "stack": ["Next.js", "WebRTC", "PeerJS", "CI/CD"],
+      "stack": [
+        "Next.js",
+        "WebRTC",
+        "PeerJS",
+        "CI/CD"
+      ],
       "highlights": [
         "Direct browser-to-browser transfer, no server storage",
         "Real-time transfer status",
@@ -346,7 +406,12 @@
       "featured": false,
       "isActive": true,
       "primary": "live",
-      "stack": ["Node.js", "Redis", "MongoDB", "OAuth 2.0"],
+      "stack": [
+        "Node.js",
+        "Redis",
+        "MongoDB",
+        "OAuth 2.0"
+      ],
       "highlights": [
         "OAuth 2.0 and request-signature verification from scratch",
         "Modular service architecture",
@@ -366,7 +431,12 @@
       "featured": false,
       "isActive": true,
       "primary": "live",
-      "stack": ["Astro", "TypeScript", "Markdown", "Shiki"],
+      "stack": [
+        "Astro",
+        "TypeScript",
+        "Markdown",
+        "Shiki"
+      ],
       "highlights": [
         "Markdown blog with Shiki highlighting and Mermaid diagrams",
         "Tag filtering and search",
@@ -387,7 +457,10 @@
       "featured": false,
       "isActive": false,
       "primary": "github",
-      "stack": ["MATLAB", "Image Processing"],
+      "stack": [
+        "MATLAB",
+        "Image Processing"
+      ],
       "highlights": [
         "Background estimation for shadow detection and removal",
         "Neighbouring-pixel shadow mapping"
@@ -398,231 +471,375 @@
   ],
   "gallery": [
     {
-      "seed": "g-01",
+      "src": "/gallery/dsc00275-t.jpg",
+      "full": "/gallery/dsc00275.jpg",
       "w": 800,
-      "h": 1000,
-      "alt": "Misty pine ridge at dawn, Kodagu",
-      "caption": "Kodagu — dawn mist",
-      "description": "Fog held the ridge for ten minutes before the sun cut through the pines.",
-      "tag": "nature"
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
     },
     {
-      "seed": "g-02",
+      "src": "/gallery/dsc00507-t.jpg",
+      "full": "/gallery/dsc00507.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc00509-t.jpg",
+      "full": "/gallery/dsc00509.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc00971-t.jpg",
+      "full": "/gallery/dsc00971.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc00979-t.jpg",
+      "full": "/gallery/dsc00979.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc00996-t.jpg",
+      "full": "/gallery/dsc00996.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc01094-2-t.jpg",
+      "full": "/gallery/dsc01094-2.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc01095-t.jpg",
+      "full": "/gallery/dsc01095.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc02182-t.jpg",
+      "full": "/gallery/dsc02182.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc02430-t.jpg",
+      "full": "/gallery/dsc02430.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc02577-t.jpg",
+      "full": "/gallery/dsc02577.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc03771-enhanced-nr-t.jpg",
+      "full": "/gallery/dsc03771-enhanced-nr.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc03854-enhanced-nr-t.jpg",
+      "full": "/gallery/dsc03854-enhanced-nr.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc04044-t.jpg",
+      "full": "/gallery/dsc04044.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc04093-t.jpg",
+      "full": "/gallery/dsc04093.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc04892-t.jpg",
+      "full": "/gallery/dsc04892.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc09682-t.jpg",
+      "full": "/gallery/dsc09682.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc09786-t.jpg",
+      "full": "/gallery/dsc09786.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/dsc09851-t.jpg",
+      "full": "/gallery/dsc09851.jpg",
+      "w": 800,
+      "h": 533,
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
+    },
+    {
+      "src": "/gallery/img-20210808-182032-t.jpg",
+      "full": "/gallery/img-20210808-182032.jpg",
       "w": 800,
       "h": 600,
-      "alt": "Amber desert highway stretching to horizon",
-      "caption": "Rajasthan — amber highway",
-      "description": "An empty road shimmering in heat, the kind you drive just to feel distance.",
-      "tag": "travel"
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
     },
     {
-      "seed": "g-03",
-      "w": 800,
-      "h": 1100,
-      "alt": "Narrow alley with hanging laundry in old city",
-      "caption": "Old city — hanging laundry",
-      "description": "Afternoon light caught the cotton like small flags above the lane.",
-      "tag": "street"
-    },
-    {
-      "seed": "g-04",
-      "w": 800,
+      "src": "/gallery/pxl-20230825-062159384-t.jpg",
+      "full": "/gallery/pxl-20230825-062159384.jpg",
+      "w": 602,
       "h": 800,
-      "alt": "Window light on a sparse desk with film camera",
-      "caption": "Desk light — film camera",
-      "description": "One camera, one roll, and the quiet before you decide what matters.",
-      "tag": "film"
-    },
-    {
-      "seed": "g-05",
-      "w": 800,
-      "h": 650,
-      "alt": "Urban train crossing a river bridge at blue hour",
-      "caption": "Blue hour — river bridge",
-      "description": "City lights flickered on while the river stayed perfectly still.",
-      "tag": "urban"
-    },
-    {
-      "seed": "g-06",
-      "w": 800,
-      "h": 1200,
-      "alt": "Tall bookstore shelf, spines catching afternoon sun",
-      "caption": "Bookstore — afternoon stacks",
-      "description": "Dust and paper and that warm smell only old books have.",
-      "tag": "archive"
-    },
-    {
-      "seed": "g-07",
-      "w": 800,
-      "h": 700,
-      "alt": "Coastal road with scooter and sea haze",
-      "caption": "Coast — sea haze",
-      "description": "Salt in the air, a second-hand scooter, nowhere particular to be.",
-      "tag": "coast"
-    },
-    {
-      "seed": "g-08",
-      "w": 800,
-      "h": 1000,
-      "alt": "Portraits of hands in workshop light, tools on wall",
-      "caption": "Workshop — hands & tools",
-      "description": "Years of use polished the wood smoother than any varnish could.",
-      "tag": "craft"
-    },
-    {
-      "seed": "g-09",
-      "w": 800,
-      "h": 900,
-      "alt": "Monsoon clouds over terraced fields",
-      "caption": "Monsoon — terraced fields",
-      "description": "Clouds stacked low, waiting — the fields already knew rain was coming.",
-      "tag": "monsoon"
-    },
-    {
-      "seed": "g-10",
-      "w": 800,
-      "h": 600,
-      "alt": "Night market glow reflected in wet pavement",
-      "caption": "Night market — wet glow",
-      "description": "Neon doubled in every puddle, footsteps soft on the wet stone.",
-      "tag": "night"
-    },
-    {
-      "seed": "g-11",
-      "w": 800,
-      "h": 1150,
-      "alt": "Temple steps ghat at sunrise, silhouettes in water",
-      "caption": "Ghat — first light",
-      "description": "Water caught the temple, and the temple caught the sky — all before chai.",
-      "tag": "heritage"
-    },
-    {
-      "seed": "g-12",
-      "w": 800,
-      "h": 850,
-      "alt": "Brutalist concrete stairwell with soft top light",
-      "caption": "Concrete — stairwell light",
-      "description": "Hard geometry softened by a single shaft of late afternoon light.",
-      "tag": "architecture"
-    },
-    {
-      "seed": "g-13",
-      "w": 800,
-      "h": 620,
-      "alt": "Cafe table with coffee steam and morning paper",
-      "caption": "Café — morning steam",
-      "description": "The news could wait; the coffee could not.",
-      "tag": "café"
-    },
-    {
-      "seed": "g-14",
-      "w": 800,
-      "h": 1050,
-      "alt": "Train window portrait, fields blurring past",
-      "caption": "Train window — fields",
-      "description": "Green smeared past the glass, village after village without names.",
-      "tag": "transit"
-    },
-    {
-      "seed": "g-15",
-      "w": 800,
-      "h": 780,
-      "alt": "Leaves against a textured wall, hard shadow",
-      "caption": "Shadow — leaves on wall",
-      "description": "Wind drew lace on plaster, there and gone with every gust.",
-      "tag": "light"
-    },
-    {
-      "seed": "g-16",
-      "w": 800,
-      "h": 950,
-      "alt": "Harbour boats at rest, pastel sky",
-      "caption": "Harbour — boats at rest",
-      "description": "Ropes creaked, water lapped — the harbour breathing in its sleep.",
-      "tag": "harbour"
-    },
-    {
-      "seed": "g-17",
-      "w": 800,
-      "h": 1200,
-      "alt": "Forest trail with sun flecks through canopy",
-      "caption": "Forest — sun flecks",
-      "description": "Light fell in pieces through leaves, making a map on the path.",
-      "tag": "forest"
-    },
-    {
-      "seed": "g-18",
-      "w": 800,
-      "h": 680,
-      "alt": "City skyline at twilight from rooftop",
-      "caption": "Skyline — twilight",
-      "description": "The hour when buildings turn to silhouettes and windows turn to stars.",
-      "tag": "skyline"
-    },
-    {
-      "seed": "g-19",
-      "w": 800,
-      "h": 1000,
-      "alt": "Detail of old typewriter keys and paper",
-      "caption": "Typewriter — keys",
-      "description": "Each key a little worn from the letters it loved most.",
-      "tag": "analog"
-    },
-    {
-      "seed": "g-20",
-      "w": 800,
-      "h": 800,
-      "alt": "Mountain lake reflecting snow peaks",
-      "caption": "Lake — snow peaks",
-      "description": "So still it was hard to tell where mountain ended and lake began.",
-      "tag": "mountain"
+      "alt": "Photograph by Md Afridi Sk",
+      "caption": "",
+      "description": "",
+      "tag": ""
     }
   ],
   "skills": [
-    { "name": "TypeScript", "category": "Languages" },
-    { "name": "Python", "category": "Languages" },
-    { "name": "Rust", "category": "Languages" },
-    { "name": "C/C++", "category": "Languages" },
-    { "name": "Java", "category": "Languages" },
-    { "name": "Go", "category": "Languages" },
-    { "name": "Dart", "category": "Languages" },
-    { "name": "SQL", "category": "Languages" },
-    { "name": "Bash", "category": "Languages" },
-
-    { "name": "FastAPI", "category": "Backend" },
-    { "name": "Express", "category": "Backend" },
-    { "name": "Node.js", "category": "Backend" },
-    { "name": "Spring Boot", "category": "Backend" },
-    { "name": "gRPC", "category": "Backend" },
-    { "name": "REST", "category": "Backend" },
-    { "name": "WebSocket", "category": "Backend" },
-    { "name": "WebRTC", "category": "Backend" },
-    { "name": "Celery", "category": "Backend" },
-    { "name": "JWT/OAuth", "category": "Backend" },
-
-    { "name": "LLMs", "category": "AI/ML" },
-    { "name": "RAG", "category": "AI/ML" },
-    { "name": "Tool-calling agents", "category": "AI/ML" },
-    { "name": "MCP", "category": "AI/ML" },
-    { "name": "RLHF", "category": "AI/ML" },
-    { "name": "Embeddings", "category": "AI/ML" },
-    { "name": "Vector search", "category": "AI/ML" },
-    { "name": "AWS Bedrock", "category": "AI/ML" },
-
-    { "name": "PostgreSQL", "category": "Data & infra" },
-    { "name": "MongoDB", "category": "Data & infra" },
-    { "name": "Redis", "category": "Data & infra" },
-    { "name": "Kafka", "category": "Data & infra" },
-    { "name": "Elasticsearch", "category": "Data & infra" },
-    { "name": "Docker", "category": "Data & infra" },
-    { "name": "Kubernetes", "category": "Data & infra" },
-    { "name": "AWS", "category": "Data & infra" },
-    { "name": "Terraform", "category": "Data & infra" },
-    { "name": "CI/CD", "category": "Data & infra" }
+    {
+      "name": "TypeScript",
+      "category": "Languages"
+    },
+    {
+      "name": "Python",
+      "category": "Languages"
+    },
+    {
+      "name": "Rust",
+      "category": "Languages"
+    },
+    {
+      "name": "C/C++",
+      "category": "Languages"
+    },
+    {
+      "name": "Java",
+      "category": "Languages"
+    },
+    {
+      "name": "Go",
+      "category": "Languages"
+    },
+    {
+      "name": "Dart",
+      "category": "Languages"
+    },
+    {
+      "name": "SQL",
+      "category": "Languages"
+    },
+    {
+      "name": "Bash",
+      "category": "Languages"
+    },
+    {
+      "name": "FastAPI",
+      "category": "Backend"
+    },
+    {
+      "name": "Express",
+      "category": "Backend"
+    },
+    {
+      "name": "Node.js",
+      "category": "Backend"
+    },
+    {
+      "name": "Spring Boot",
+      "category": "Backend"
+    },
+    {
+      "name": "gRPC",
+      "category": "Backend"
+    },
+    {
+      "name": "REST",
+      "category": "Backend"
+    },
+    {
+      "name": "WebSocket",
+      "category": "Backend"
+    },
+    {
+      "name": "WebRTC",
+      "category": "Backend"
+    },
+    {
+      "name": "Celery",
+      "category": "Backend"
+    },
+    {
+      "name": "JWT/OAuth",
+      "category": "Backend"
+    },
+    {
+      "name": "LLMs",
+      "category": "AI/ML"
+    },
+    {
+      "name": "RAG",
+      "category": "AI/ML"
+    },
+    {
+      "name": "Tool-calling agents",
+      "category": "AI/ML"
+    },
+    {
+      "name": "MCP",
+      "category": "AI/ML"
+    },
+    {
+      "name": "RLHF",
+      "category": "AI/ML"
+    },
+    {
+      "name": "Embeddings",
+      "category": "AI/ML"
+    },
+    {
+      "name": "Vector search",
+      "category": "AI/ML"
+    },
+    {
+      "name": "AWS Bedrock",
+      "category": "AI/ML"
+    },
+    {
+      "name": "PostgreSQL",
+      "category": "Data & infra"
+    },
+    {
+      "name": "MongoDB",
+      "category": "Data & infra"
+    },
+    {
+      "name": "Redis",
+      "category": "Data & infra"
+    },
+    {
+      "name": "Kafka",
+      "category": "Data & infra"
+    },
+    {
+      "name": "Elasticsearch",
+      "category": "Data & infra"
+    },
+    {
+      "name": "Docker",
+      "category": "Data & infra"
+    },
+    {
+      "name": "Kubernetes",
+      "category": "Data & infra"
+    },
+    {
+      "name": "AWS",
+      "category": "Data & infra"
+    },
+    {
+      "name": "Terraform",
+      "category": "Data & infra"
+    },
+    {
+      "name": "CI/CD",
+      "category": "Data & infra"
+    }
   ],
   "languages": [
-    { "language": "English", "fluency": "Advanced" },
-    { "language": "Hindi", "fluency": "Native speaker" }
+    {
+      "language": "English",
+      "fluency": "Advanced"
+    },
+    {
+      "language": "Hindi",
+      "fluency": "Native speaker"
+    }
   ],
   "awards": [
     {
