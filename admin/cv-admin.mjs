@@ -84,6 +84,18 @@ export default function cvAdmin() {
               return
             }
 
+            // ── Delete image files (basename-confined to public/gallery) ──
+            if (url === '/api/cv/delete-files' && req.method === 'POST') {
+              const { files = [] } = JSON.parse((await body(req)).toString('utf8') || '{}')
+              const deleted = []
+              for (const f of files) {
+                const target = path.join(galleryDir, path.basename(f))
+                if (existsSync(target)) { rmSync(target, { force: true }); deleted.push(path.basename(f)) }
+              }
+              json(res, 200, { ok: true, deleted })
+              return
+            }
+
             // ── Optimize + save an uploaded image ──
             if (url === '/api/cv/upload' && req.method === 'POST') {
               const name = new URL(req.url, 'http://x').searchParams.get('name') || 'image.jpg'
