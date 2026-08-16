@@ -119,8 +119,9 @@ export default function cvAdmin() {
             json(res, 400, { error: String(err?.message || err) })
           }
         })
-
-        server.config.logger.info('  \x1b[36m➜\x1b[0m  \x1b[1mAdmin:\x1b[0m   http://localhost:' + (server.config.server.port || 4321) + '/admin')
+      },
+      'astro:server:start': ({ address, logger }) => {
+        logger.info(`\x1b[1mContent admin\x1b[0m ready at http://localhost:${address.port}/admin/`)
       },
     },
   }

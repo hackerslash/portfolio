@@ -223,7 +223,7 @@ function arrayEditor(parent, key) {
       mkBtn('✕', 'Remove', () => { arr.splice(i, 1); markDirty(); rerender() }, false, 'danger'),
     )
     const editor = primitive ? valueEditor(arr, i) : h('div', { class: 'obj' }, objEditor(item))
-    box.append(h('div', { class: 'item' + (primitive ? ' str' : '') }, editor, controls))
+    box.append(h('div', { class: 'item' }, editor, controls))
   })
 
   const add = h('button', { class: 'add', onClick: () => {
