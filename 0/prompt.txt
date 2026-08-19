@@ -1,0 +1,29 @@
+hey
+
+---
+
+hey commit
+
+---
+
+okay Backend engineer in Bangalore. I take systems from architecture to production: agentic loops, real-time voice, peer-to-peer sync. I reach for whatever language the problem wants, usually TypeScript, Python, Rust, or Go. IIT Kharagpur, 2023. this should be more ai application engineer sectric. its projecting many things
+
+---
+
+now come up with a best tagline for the profile
+
+---
+
+no not that intro i am talking about
+
+---
+
+AI application engineer. I build agentic systems end-to-end, architecture to production, with the telemetry and cost controls that keep them running. Usually TypeScript and Python. IIT Kharagpur, 2023. still bad come up with something more creative and solid use /humanizer
+
+---
+
+telemetry make this observability, evals add these fuck you
+
+---
+
+sounds more reliability
