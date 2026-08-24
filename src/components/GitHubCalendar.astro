@@ -149,17 +149,12 @@ const username = basics.profiles.find((p) => p.network === "GitHub")?.username
   .cal__scroll {
     overflow-x: auto;
     padding-block-end: var(--space-3xs);
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-rule-2) transparent;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   .cal__scroll::-webkit-scrollbar {
-    height: 8px;
-  }
-
-  .cal__scroll::-webkit-scrollbar-thumb {
-    background: var(--color-rule-2);
-    border-radius: 999px;
+    display: none;
   }
 
   .cal__tip {
