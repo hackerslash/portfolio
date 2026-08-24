@@ -5,12 +5,13 @@ interface Props {
   wide?: boolean
   action?: string
   actionHref?: string
+  class?: string
 }
 
-const { title, id, wide = false, action, actionHref } = Astro.props
+const { title, id, wide = false, action, actionHref, class: className } = Astro.props
 ---
 
-<section id={id} class:list={["section", { "section--wide": wide }]}>
+<section id={id} class:list={["section", { "section--wide": wide }, className]}>
   {
     title && (
       <div class="section__head">

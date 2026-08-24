@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro"
 import Section from "@/components/Section.astro"
 import ProjectTile from "@/components/ProjectTile.astro"
 import BooksShelf from "@/components/BooksShelf.astro"
+import GitHubCalendar from "@/components/GitHubCalendar.astro"
 import Identity from "@/components/Identity.astro"
 import Mail from "@/icons/Mail.astro"
 import Phone from "@/icons/Phone.astro"
@@ -175,6 +176,10 @@ const jsonLd = {
         </Section>
       )
     }
+
+    <Section wide title="GitHub" class="no-print">
+      <GitHubCalendar />
+    </Section>
 
     <Section wide title="Shelf">
       <BooksShelf />
