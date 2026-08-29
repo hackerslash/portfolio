@@ -12,7 +12,7 @@
     "greeting": "hi, i'm",
     "label": "Backend Engineer",
     "headline": "I breathe tokens\nfor life.",
-    "intro": " Backend engineer, focused on AI systems. I design production-grade microservices and the infra under them, then keep them alive with observability, evals, and cost controls, the plumbing nobody notices until it breaks. IIT Kharagpur, 2023.",
+    "intro": "Backend engineer, focused on AI systems. I build agent services and the infrastructure under them, then keep both alive on a budget, the plumbing nobody notices until it breaks. For fun I go a lot lower down the stack. IIT Kharagpur, 2023.",
     "image": "/profile-pic.png",
     "email": "afridijnv19@gmail.com",
     "phone": "+91 9351557660",
