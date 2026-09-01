@@ -86,6 +86,34 @@
   ],
   "projects": [
     {
+      "name": "Wink",
+      "slug": "wink",
+      "tagline": "A browser-only AI workspace with durable memory, an embedded knowledge base and a research mode that cites its sources, all with no server behind it.",
+      "description": "An AI workspace that runs entirely in the browser, with no server and no account. It remembers: durable facts are extracted from conversations, kept on device, and injected only when relevant, and you can pin, edit or forget any of them. It reads: PDFs, Markdown, text and code dropped into the knowledge base are chunked and embedded in a worker, then retrieved with citations back to the source. Research mode runs a plan, search, read and synthesise loop at a depth you pick, showing every step. Tools cover web search, page reading, document search, sandboxed JavaScript and any MCP server over HTTP, each call asking before it runs. Everything sits in IndexedDB with the keys encrypted on the device.",
+      "image": "/projects/wink.svg",
+      "imageAlt": "The Wink app icon",
+      "year": "2026",
+      "featured": true,
+      "isActive": true,
+      "primary": "live",
+      "stack": [
+        "React 19",
+        "TypeScript",
+        "Vite",
+        "IndexedDB",
+        "Tailwind 4"
+      ],
+      "highlights": [
+        "Durable memory: facts pulled out of chats, kept on device, injected only when they are relevant",
+        "Knowledge base of PDFs, Markdown, text and code, embedded on device and answered with citations",
+        "Research mode plans, searches, reads and synthesises at a chosen depth, with every step visible",
+        "Tools for web search, page reading, document search, sandboxed JavaScript and MCP servers over HTTP",
+        "Compare several models on one prompt, and branch, edit or regenerate any turn"
+      ],
+      "url": "https://wink.hackerslash.dev",
+      "github": "https://github.com/hackerslash/wink"
+    },
+    {
       "name": "Colloquium",
       "slug": "colloquium",
       "tagline": "A Discord-style P2P desktop app with no backend at all: direct WebRTC calls, encrypted local history.",
