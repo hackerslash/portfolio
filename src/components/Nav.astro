@@ -12,7 +12,7 @@ const isCurrent = (href: string) => path.startsWith(href)
 ---
 
 <nav class="nav no-print" aria-label="Primary">
-  <span class="nav__lead" id="nav-prompt" role="button" tabindex="0" aria-label="Open terminal" title="Open terminal — ⌘K / Ctrl+K">
+  <span class="nav__lead" id="nav-prompt" role="button" tabindex="0" aria-label="Open terminal" title="Open terminal (⌘K / Ctrl+K)">
     <a class="nav__prompt" href="/" aria-current={path === "/" ? "page" : undefined}>
       <span class="nav__user">mdafridisk@hackerslash</span><span class="nav__sigil">:~$</span>
     </a>
@@ -213,7 +213,7 @@ const isCurrent = (href: string) => path.startsWith(href)
     }
 
     const printHelp = () => {
-      print(`<span class="term__muted">Available commands — type a name and press enter:</span>`, "term__help-head")
+      print(`<span class="term__muted">Available commands. Type a name and press enter:</span>`, "term__help-head")
       const rows: Array<[string, string]> = [
         ["help", "show this list"],
         ["ls", "list pages"],
@@ -232,9 +232,9 @@ const isCurrent = (href: string) => path.startsWith(href)
         ["exit", "close terminal"],
       ]
       for (const [cmd, desc] of rows) {
-        print(`<span class="term__cmd">${cmd}</span><span class="term__sep"> — </span><span>${desc}</span>`)
+        print(`<span class="term__cmd">${cmd}</span><span class="term__sep"> · </span><span>${desc}</span>`)
       }
-      print(`<span class="term__muted">Tip: everything here is a command — random input also shows this help.</span>`)
+      print(`<span class="term__muted">Tip: everything here is a command. Random input also shows this help.</span>`)
     }
 
     const commands: Record<string, Cmd> = {
@@ -298,7 +298,7 @@ const isCurrent = (href: string) => path.startsWith(href)
       whoami: {
         desc: "whoami",
         run() {
-          print(`<span class="term__accent">Md Afridi Sk</span> — Backend Engineer, Bangalore. Agentic AI, voice, sync. IIT KGP '23.`)
+          print(`<span class="term__accent">Md Afridi Sk</span>, Backend Engineer, Bangalore. Agentic AI, voice, sync. IIT KGP '23.`)
         },
       },
       theme: {

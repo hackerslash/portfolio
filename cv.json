@@ -17,7 +17,7 @@
     "email": "afridijnv19@gmail.com",
     "phone": "+91 9351557660",
     "url": "https://hackerslash.dev",
-    "summary": "Backend engineer specializing in AI systems and production-grade microservices. Owns architecture end-to-end from agentic AI services to the infrastructure that runs them, consistently shipping with strict telemetry, tests, and cost controls.",
+    "summary": "Backend engineer working on AI systems and microservices. Owns the architecture for agentic AI services and the infrastructure underneath them, along with the telemetry, tests and cost controls that keep them running in production.",
     "location": {
       "city": "Bangalore",
       "countryCode": "IN",
@@ -43,11 +43,11 @@
       "url": "https://ayoo.care",
       "startDate": "2025-04-01",
       "endDate": null,
-      "summary": "Owning backend architecture for a healthtech platform — the agentic booking system, the abuse defence in front of it, the worker infrastructure behind it, and the AWS bill under it.",
+      "summary": "Owning backend architecture for a healthtech platform: the agentic booking system, the abuse defence in front of it, the worker infrastructure behind it, and the AWS bill under it.",
       "highlights": [
         "Built a patient-facing booking agent using a 17-tool calling loop matching doctors to complaints and handling payments, with typed error envelopes for in-loop model recovery.",
         "Layered abuse defence ahead of inference via pre-model extraction screening, an IP-banning strike tool, OTP quotas, HMAC-SHA256 session binding, and a 20-key PII redaction pipeline.",
-        "Closed the loop on agent outcomes with a reaper that classifies expired conversations via a 4-field structured LLM call, with robust retry accounting and retroactive status correction.",
+        "Closed the loop on agent outcomes with a reaper that classifies expired conversations via a 4-field structured LLM call, with retry accounting and retroactive status correction.",
         "Built an AI session summariser generating doctor notes and patient-specific summaries; audio is transcribed via Deepgram ASR and indexed in Pinecone (Gemini) for RAG.",
         "Led extraction of the notification and worker service from the FastAPI monolith; a 4-queue Redis Queue system with per-channel selective retry (FCM, Exotel SMS, SMTP) decouples lifecycle events and reminders from the request cycle.",
         "Cut slot-query latency to sub-50ms across 200+ endpoints with a MongoDB-backed doctor-availability cache using compound indexes and explicit invalidation.",
@@ -197,8 +197,8 @@
     {
       "name": "LeetCode Companywise",
       "slug": "leetcode-companywise",
-      "tagline": "Practise LeetCode filtered by company, frequency and difficulty, with progress charts that mean something.",
-      "description": "An interactive dashboard for practising LeetCode by company, frequency and difficulty. It tracks what you've solved and charts completion across both, so prep has a shape instead of a list.",
+      "tagline": "Practise LeetCode filtered by company, frequency and difficulty, with charts of what you have finished.",
+      "description": "An interactive dashboard for practising LeetCode by company, frequency and difficulty. It tracks what you've solved and charts completion by company and by difficulty.",
       "image": "/projects/leetcode.jpg",
       "imageAlt": "",
       "year": "2026",
@@ -222,7 +222,7 @@
     {
       "name": "opsbot",
       "slug": "ops-bot",
-      "tagline": "A DevOps agent skill that turns a coding agent into a careful senior engineer for your fleet.",
+      "tagline": "A DevOps agent skill that gives a coding agent tested procedures for running a fleet of remote hosts.",
       "description": "An agent skill that connects to remote hosts over SSH or AWS SSM and runs tested procedures for diagnosis, deployment, nginx, hardening and provisioning. It inspects before it mutates, and asks before any change, especially on prod.",
       "image": "",
       "imageAlt": "",
@@ -301,7 +301,7 @@
       "name": "GreenSpin Firefox",
       "slug": "greenspin-firefox",
       "tagline": "A Firefox theme that brings back the classic grey-and-green tab loading spinner.",
-      "description": "A minimal userChrome.css theme that patches only the tab throbber, bringing back the grey connecting circle and green spinning loader from the Firefox 4-to-29 era. Nothing else in the UI moves, the spinner brightens in dark mode, and its install path is built for AI coding agents to run themselves.",
+      "description": "A minimal userChrome.css theme that patches only the tab throbber, bringing back the grey connecting circle and green spinning loader from the Firefox 4-to-29 era. Nothing else in the UI moves. The spinner brightens in dark mode, and an AI coding agent can run the install itself.",
       "image": "",
       "imageAlt": "",
       "year": "2026",
@@ -348,7 +348,7 @@
     {
       "name": "Cloudpad",
       "slug": "cloudpad",
-      "tagline": "An offline-first markdown notepad. IndexedDB, tabs, PDF export, no account.",
+      "tagline": "An offline-first markdown notepad with tabs and PDF export. Everything lives in IndexedDB, so there is no account.",
       "description": "An offline-first markdown notepad that keeps every note in IndexedDB. Multiple tabs, pinned notes, search, live preview, PDF export and keyboard shortcuts, plus controls for theme, typography, sidebar position, density and width.",
       "image": "",
       "imageAlt": "",
@@ -373,7 +373,7 @@
     {
       "name": "P2P FileShare",
       "slug": "p2p-fileshare",
-      "tagline": "Browser-to-browser file transfer over WebRTC. No server in the middle, no size cap.",
+      "tagline": "Browser-to-browser file transfer over WebRTC, with no server in the middle.",
       "description": "A peer-to-peer file sharing app on WebRTC and PeerJS. Each side gets a peer ID, the two connect directly, and the file streams browser to browser. Nothing touches a server, so there's no upload limit and nothing left to delete.",
       "image": "",
       "imageAlt": "",
@@ -833,16 +833,16 @@
   ],
   "awards": [
     {
-      "title": "JEE Main 2019 — 99.10 percentile",
+      "title": "JEE Main 2019: 99.10 percentile",
       "date": "2019",
       "awarder": "National Testing Agency",
       "summary": "99.10 percentile among 8,74,469 candidates. Ranked 28th in the OBC category in WBJEE 2019."
     },
     {
-      "title": "National Youth Parliament 2016–17",
+      "title": "National Youth Parliament 2016-17",
       "date": "2017",
       "awarder": "Ministry of Parliamentary Affairs, Govt. of India",
-      "summary": "Awarded for 4th place nationally."
+      "summary": "Placed 4th nationally."
     }
   ],
   "certificates": [

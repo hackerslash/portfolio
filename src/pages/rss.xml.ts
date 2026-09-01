@@ -4,7 +4,7 @@ import { getBlogs } from "@blogs"
 
 export function GET(context: APIContext) {
   return rss({
-    title: "Md Afridi Sk — Writing",
+    title: "Writing by Md Afridi Sk",
     description:
       "Technical writing by Md Afridi Sk on backend engineering, AI systems, observability and the web.",
     site: context.site!,
