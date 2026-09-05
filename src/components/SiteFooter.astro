@@ -14,7 +14,9 @@ const year = new Date().getFullYear()
   <div class="colophon__inner">
     <p class="colophon__line">
       <span class="colophon__key">who</span>
-      <span>{name.toLowerCase()} · {label.toLowerCase()}, {location.city.toLowerCase()}</span>
+      <span>
+        {name.toLowerCase()} · {label.toLowerCase()}, {location.city.toLowerCase()}, {location.region.toLowerCase()}
+      </span>
     </p>
 
     <p class="colophon__line">
