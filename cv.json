@@ -114,6 +114,87 @@
       "github": "https://github.com/hackerslash/wink"
     },
     {
+      "name": "TVMate",
+      "slug": "tvmate",
+      "tagline": "A no-nonsense Android TV IPTV client for live TV only, built around fast zapping, a clean guide and the remote in your hand.",
+      "description": "An Android TV IPTV client that does live TV and nothing else. It cleans up Xtream Codes lists by dropping VOD and placeholder entries, merges SD/HD/FHD/4K variants into one channel with automatic fallback, and regroups everything by genre and country. Free channels are built in, a phone can act as the remote over a QR code, and the app updates itself from GitHub releases.",
+      "image": "/projects/tvmate.png",
+      "imageAlt": "The TVMate app icon",
+      "year": "2026",
+      "featured": true,
+      "isActive": true,
+      "primary": "github",
+      "stack": [
+        "Kotlin",
+        "Android TV",
+        "ExoPlayer",
+        "Xtream Codes"
+      ],
+      "highlights": [
+        "Merges quality variants into one channel with automatic stream fallback",
+        "Drops VOD, 24/7 loops and PPV placeholders, then regroups channels by genre and country",
+        "Optional free channel catalogue, deduplicated with dead streams removed",
+        "Phone remote over QR code to browse, play, pin channels and manage providers",
+        "Signed APK built and released on every version tag, with in-app updates"
+      ],
+      "url": "",
+      "github": "https://github.com/hackerslash/tvmate"
+    },
+    {
+      "name": "TinyOS",
+      "slug": "tinyos",
+      "tagline": "A complete graphical operating system in a 6 KB binary, booting from a 52 KB ISO built byte by byte from scratch.",
+      "description": "A graphical operating system written as one hand-written 16-bit x86 assembly file, with no libc and no bootloader framework. It boots into a VGA desktop with a launcher, taskbar clock, terminal, calculator, notepad, snake and a 7-segment clock. The bootable ISO is produced by a pure-Python ISO9660 and El Torito writer, with no mkisofs, xorriso or GRUB involved.",
+      "image": "/projects/tinyos.svg",
+      "imageAlt": "A pixel-art terminal window icon",
+      "year": "2026",
+      "featured": true,
+      "isActive": false,
+      "primary": "github",
+      "stack": [
+        "x86 Assembly",
+        "NASM",
+        "Python",
+        "QEMU"
+      ],
+      "highlights": [
+        "Kernel, GUI and apps in a single 6 KB binary",
+        "VGA mode 13h desktop with a custom palette programmed through the DAC ports",
+        "Terminal with a hex memory viewer, notes editor, calculator and snake",
+        "Pure-Python ISO9660 filesystem and El Torito boot record writer",
+        "Boots in VirtualBox or QEMU using under 1 MB of RAM"
+      ],
+      "url": "",
+      "github": "https://github.com/hackerslash/tinyos"
+    },
+    {
+      "name": "NuvioTV Lite",
+      "slug": "nuviotv-lite",
+      "tagline": "A performance fork of the NuvioTV Android TV player, tuned to stay alive on low-RAM boxes.",
+      "description": "A fork of NuvioTV, the Stremio-addon Android TV player, rebuilt for low-RAM boxes where the stock app gets killed by the kernel's low-memory killer. It tiers devices by physical RAM instead of heap size, caps the playback buffer at 250 MB and concurrent addon queries at three, and ships a Lite build flavor that strips plugins, trailers and launcher sync. Updates arrive over the air from GitHub Releases.",
+      "image": "/projects/nuviotv-lite.png",
+      "imageAlt": "The NuvioTV app mark",
+      "year": "2026",
+      "featured": false,
+      "isActive": true,
+      "primary": "github",
+      "stack": [
+        "Kotlin",
+        "Jetpack Compose",
+        "Media3",
+        "Android TV"
+      ],
+      "highlights": [
+        "Device tiering by physical RAM rather than reported heap size",
+        "Hard 250 MB playback buffer ceiling on low-RAM devices",
+        "Concurrent addon stream queries capped at 3 on low-RAM, 8 elsewhere",
+        "Lite flavor drops the JS plugin runtime, trailers, launcher sync and Sentry",
+        "In-app OTA updates from GitHub Releases, installed alongside stock NuvioTV"
+      ],
+      "url": "",
+      "github": "https://github.com/hackerslash/NuvioTV-Lite"
+    },
+    {
       "name": "Colloquium",
       "slug": "colloquium",
       "tagline": "A Discord-style P2P desktop app with no backend at all: direct WebRTC calls, encrypted local history.",
